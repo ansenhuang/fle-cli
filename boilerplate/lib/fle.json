@@ -1,0 +1,16 @@
+{
+  "boilerplate": "lib",
+  "iife": false,
+  "eslint": true,
+  "port": 5000,
+  "hot": true,
+  "https": false,
+  "extract": false,
+  "remUnit": 50,
+  "browsers": [
+    "last 2 versions",
+    "ie >= 9",
+    "ios >= 7",
+    "android >= 4"
+  ]
+}

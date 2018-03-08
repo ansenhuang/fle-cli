@@ -1,0 +1,9 @@
+{
+  "name": "fle-boilerplate-module",
+  "version": "0.0.1",
+  "description": "A module project created by fle-cli.",
+  "keywords": ["fle", "webpack", "component"],
+  "author": "huangancheng",
+  "license": "MIT",
+  "dependencies": {}
+}

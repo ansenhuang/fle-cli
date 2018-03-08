@@ -1,0 +1,13 @@
+{
+  "name": "fle-boilerplate-react",
+  "version": "0.0.1",
+  "description": "A React project created by fle-cli.",
+  "keywords": ["fle", "webpack", "react"],
+  "author": "huangancheng",
+  "license": "MIT",
+  "dependencies": {
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  }
+}

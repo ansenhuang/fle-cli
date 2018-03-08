@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <link rel="icon" href="<%= htmlWebpackPlugin.options.icon %>">
+</head>
+<body>
+  <ul id="DEV_ENTRY">
+    <% for (var i = 0; i < htmlWebpackPlugin.options.htmls.length; i++) { %>
+      <li>
+        <a href="/<%= htmlWebpackPlugin.options.htmls[i].filename %>">
+          <%= htmlWebpackPlugin.options.htmls[i].title %>
+        </a>
+      </li>
+    <% } %>
+  </ul>
+</body>
+</html>

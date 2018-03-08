@@ -1,0 +1,11 @@
+{
+  "name": "fle-boilerplate-vue",
+  "version": "0.0.1",
+  "description": "A Vue project created by fle-cli.",
+  "keywords": ["fle", "webpack", "vue"],
+  "author": "huangancheng",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^2.5.2"
+  }
+}

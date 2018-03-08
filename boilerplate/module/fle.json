@@ -1,0 +1,28 @@
+{
+  "boilerplate": "module",
+
+  "eslint": true,
+  "notify": true,
+  "inlineManifest": true,
+  "publicPath": "/",
+  "remUnit": 50,
+
+  "port": 5000,
+  "proxy": {},
+  "hot": true,
+  "open": false,
+  "https": false,
+
+  "css": [],
+  "prejs": [],
+  "js": [],
+
+  "browsers": [
+    "last 2 versions",
+    "ie >= 9",
+    "ios >= 7",
+    "android >= 4"
+  ],
+  "externals": {},
+  "libExternals": {}
+}
