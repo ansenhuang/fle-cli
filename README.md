@@ -6,9 +6,6 @@ A convenient global compiler.
 
 ``` bash
 $ npm install -g fle-cli
-
-# also you can use yarn
-$ yarn install -g fle-cli
 ```
 
 ## Usage
@@ -150,6 +147,10 @@ $ fle update
 * .eslintrc eslint配置
 
 ## Others
+
+js别名：
+
+* @ 表示src目录的绝对路径，如：@/common/module，即 src/common/module.js 或 src/common/module/index.js
 
 css单位：
 
