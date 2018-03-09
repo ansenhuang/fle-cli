@@ -1,9 +1,14 @@
 {
   "name": "fle-cli",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "A convenient global compiler.",
   "bin": {
-    "fle": "bin/fle.js"
+    "fle": "bin/fle.js",
+    "fle-init": "bin/fle-init.js",
+    "fle-dev": "bin/fle-dev.js",
+    "fle-lib": "bin/fle-lib.js",
+    "fle-build": "bin/fle-build.js",
+    "fle-update": "bin/fle-update.js"
   },
   "scripts": {
     "start": "bin/fle.js"
