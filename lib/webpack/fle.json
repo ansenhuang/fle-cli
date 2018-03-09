@@ -4,8 +4,8 @@
   "eslint": true,
   "notify": true,
   "inlineManifest": true,
+  "vendorChunks": null,
   "publicPath": "/",
-  "remUnit": 50,
 
   "port": 5000,
   "proxy": {},

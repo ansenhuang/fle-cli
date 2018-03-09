@@ -76,6 +76,7 @@ $ fle update
 
   "eslint": true, // 是否开启eslint代码检测
   "notify": true, // 【dev】当编译出错时是否开启系统通知
+  "vendorChunks": null, // 【build】[Array|String] 手动抽离公共模块，不设置则自动抽离node_modules模块
   "inlineManifest": true, // 【build】是否将manifest文件写入html
   "publicPath": "/", // 【build】编译后文件引用前缀
   "remUnit": 50, // 1rem=50px

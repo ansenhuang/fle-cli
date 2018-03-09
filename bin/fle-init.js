@@ -91,6 +91,7 @@ inquirer.prompt([
     }
   }
 ]).then(answers => {
+  var bpConsts = constants.boilerplate[answers.boilerplate];
   var cdn = require('../lib/cdn.json');
   var originPath = path.join(__dirname, '../boilerplate', answers.boilerplate);
   var targetPath = path.resolve(projectName);
@@ -98,10 +99,12 @@ inquirer.prompt([
   fs.mkdirSync(targetPath);
 
   var tplPkg = require(path.join(originPath, 'package.json'));
-  var tplFle = require(path.join(originPath, 'fle.json'));
+  var tplFle = require(path.join(__dirname, '../lib', bpConsts.tag, 'fle.json'));
 
   tplPkg.name = answers.name;
   tplPkg.author = utils.getGitUser();
+
+  tplFle.boilerplate = answers.boilerplate;
 
   if (typeof answers.extract !== 'undefined') {
     tplFle.extract = answers.extract;
@@ -121,6 +124,14 @@ inquirer.prompt([
 
   fs.writeFileSync(path.join(targetPath, 'package.json'), JSON.stringify(tplPkg, null, 2), { encoding: 'utf8' });
   fs.writeFileSync(path.join(targetPath, 'fle.json'), JSON.stringify(tplFle, null, 2), { encoding: 'utf8' });
+
+  if (bpConsts.tag === 'webpack') {
+    fs.writeFileSync(
+      path.join(targetPath, 'index.html'),
+      fs.readFileSync(path.join(__dirname, '../lib/template/default.html')),
+      { encoding: 'utf8' }
+    );
+  }
 
   utils.copy(originPath, targetPath);
 

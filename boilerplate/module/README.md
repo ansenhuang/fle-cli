@@ -8,4 +8,4 @@ fle dev
 fle build
 ```
 
-For detailed explanation, consult the [docs for fle-cli](https://g.hz.netease.com/winman-f2e/fle-cli).
+For detailed explanation, consult the [docs for fle-cli](https://www.npmjs.com/package/fle-cli).

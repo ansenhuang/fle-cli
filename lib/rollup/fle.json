@@ -6,7 +6,6 @@
   "hot": true,
   "https": false,
   "extract": false,
-  "remUnit": 50,
   "browsers": [
     "last 2 versions",
     "ie >= 9",
