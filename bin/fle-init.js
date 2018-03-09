@@ -126,7 +126,10 @@ inquirer.prompt([
 
   // install modules
   if (answers.install && answers.install !== 'none') {
+    console.log();
+
     execSync(answers.install + ' install', {
+			cwd: process.cwd(),
       stdio: 'inherit'
     });
 
