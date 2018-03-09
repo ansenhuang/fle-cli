@@ -129,7 +129,7 @@ inquirer.prompt([
     console.log();
 
     execSync(answers.install + ' install', {
-			cwd: process.cwd(),
+			cwd: targetPath,
       stdio: 'inherit'
     });
 

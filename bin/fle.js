@@ -12,7 +12,7 @@ var constants = require('../lib/constants');
 var utils = require('../lib/utils');
 
 program
-  .version(constants.pkg.version)
+  .version(constants.pkg.version, '-v, --version')
   .usage('<command> [options]')
   .on('--help', () => {
     console.log();
