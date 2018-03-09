@@ -3,7 +3,7 @@
   "version": "3.0.8",
   "description": "A convenient global compiler.",
   "bin": {
-    "fle": "bin/fle.js"
+    "fle-beta": "bin/fle.js"
   },
   "scripts": {
     "start": "bin/fle.js"
@@ -45,6 +45,10 @@
     "file-loader": "^1.1.6",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
+    "imagemin-guetzli": "^1.0.0",
+    "imagemin-loader": "^1.1.1",
+    "imagemin-mozjpeg": "^7.0.0",
+    "imagemin-pngquant": "^5.0.1",
     "inline-manifest-webpack-plugin": "^3.0.1",
     "inquirer": "^5.1.0",
     "node-notifier": "^5.2.1",
