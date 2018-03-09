@@ -43,26 +43,26 @@ if (aliases[subcmd]) {
 }
 
 // 每天检查更新
-if (subcmd !== 'update') {
-  var date = utils.formatDate();
+// if (subcmd !== 'update') {
+//   var date = utils.formatDate();
 
-  if (!fs.existsSync(constants.homeFle) || require(constants.homeFle).date !== date) {
-    if (utils.checkUpdate()) {
-      inquirer.prompt([
-        {
-          type: 'confirm',
-          name: 'update',
-          message: 'A new version was found, do you want to update',
-          default: true
-        }
-      ]).then(answers => {
-        if (answers.update) {
-          utils.update(true);
-        }
-      });
-    }
-  }
-}
+//   if (!fs.existsSync(constants.homeFle) || require(constants.homeFle).date !== date) {
+//     if (utils.checkUpdate()) {
+//       inquirer.prompt([
+//         {
+//           type: 'confirm',
+//           name: 'update',
+//           message: 'A new version was found, do you want to update',
+//           default: true
+//         }
+//       ]).then(answers => {
+//         if (answers.update) {
+//           utils.update(true);
+//         }
+//       });
+//     }
+//   }
+// }
 
 if (!subcmd || subcmd === 'help') {
   program.help();

@@ -91,6 +91,7 @@ inquirer.prompt([
     }
   }
 ]).then(answers => {
+  var cdn = require('../lib/cdn.json');
   var originPath = path.join(__dirname, '../boilerplate', answers.boilerplate);
   var targetPath = path.resolve(projectName);
 
@@ -111,7 +112,11 @@ inquirer.prompt([
   }
 
   if (typeof answers.rem !== 'undefined') {
-    // tplFle.px2rem = answers.rem;
+    tplFle.css.push(cdn.css.reset);
+
+    if (answers.rem) {
+      tplFle.prejs.push(cdn.js.fsize);
+    }
   }
 
   fs.writeFileSync(path.join(targetPath, 'package.json'), JSON.stringify(tplPkg, null, 2), { encoding: 'utf8' });
