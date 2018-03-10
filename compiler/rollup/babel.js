@@ -1,6 +1,9 @@
 var config = require('./config');
 
 var babelConfig = {
+  "ignore": [
+    "**/*.min.js"
+  ],
   "presets": [
     [
       require.resolve("babel-preset-env"),

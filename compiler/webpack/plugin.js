@@ -53,6 +53,7 @@ exports.scope = () => {
 //代码压缩插件
 exports.uglify = () => {
   return new webpack.optimize.UglifyJsPlugin({
+    exclude:/\.min\.js$/,
     parallel: true,
     sourceMap: false,
     compress: {
