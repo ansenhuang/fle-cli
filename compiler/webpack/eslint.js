@@ -12,7 +12,11 @@ var eslintConfig = {
   "globals":{
     "console": true
   },
-  "extends": ["standard"],
+  "extends": [
+    "standard",
+    config.react && "plugin:react/recommended",
+    config.vue && "plugin:vue/essential"
+  ].filter(p => p),
   "plugins": [],
   "rules": {
     "no-var": 1,
@@ -24,11 +28,5 @@ var eslintConfig = {
     }]
   }
 };
-
-if (config.fle.boilerplate === 'react') {
-  eslintConfig.extends.push("plugin:react/recommended");
-} else if (config.fle.boilerplate === 'vue') {
-  eslintConfig.extends.push("plugin:vue/essential");
-}
 
 module.exports = eslintConfig;

@@ -8,13 +8,7 @@ var html = require('./html');
 var resolve = require('./utils').resolve;
 
 //添加入口
-var entries = {};
-
-// 如果手动定义了vendor
-var useVendor = config.fle.vendorChunks && config.fle.vendorChunks.length;
-if (useVendor) {
-  entries['vendor'] = config.fle.vendorChunks;
-}
+var entries = Object.assign({}, config.commonsChunk);
 
 html.pages.forEach(page => {
   entries[page.id] = page.entry;
@@ -58,9 +52,9 @@ var webpackConfig = {
     !config.dev && plugin.extractCSS(),
     !config.dev && plugin.scope(),
     !config.dev && plugin.commonsVendor(),
-    !config.dev && plugin.commonsAsync(),
-    (!config.dev && !useVendor) && plugin.commonsManifest(),
-    (!config.dev && !useVendor && config.fle.inlineManifest) && plugin.inlineManifest(),
+    // !config.dev && plugin.commonsAsync(),
+    !config.dev && plugin.commonsManifest(),
+    (!config.dev && config.fle.inlineManifest) && plugin.inlineManifest(),
     !config.dev && plugin.uglify(),
     !config.dev && plugin.analyzer()
   ].filter(r => r).concat(html.htmlPlugins),
@@ -69,7 +63,7 @@ var webpackConfig = {
       config.fle.eslint && loader.eslint(),
       loader.css(),
       loader.cssModules(),
-      loader.vue(),
+      config.vue && loader.vue(),
       loader.babel(),
       loader.text(),
       loader.images(),
@@ -77,7 +71,7 @@ var webpackConfig = {
       loader.medias()
     ].filter(r => r)
   },
-  externals: config.fle.externals,
+  externals: Object.assign({}, config.cdnExternals, config.fle.externals),
   target: 'web',
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue

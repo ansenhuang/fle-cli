@@ -2,15 +2,6 @@ var path = require('path');
 var webpack = require('webpack');
 var notifier = require('node-notifier');
 
-// plugins
-var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var VconsolePlugin = require('vconsole-webpack-plugin');
-var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-var InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
-// var CompressionWebpackPlugin = require('compression-webpack-plugin');
-
 var config = require('./config');
 var resolve = require('./utils').resolve;
 
@@ -49,13 +40,6 @@ exports.noErrors = () => {
   return new webpack.NoEmitOnErrorsPlugin();
 }
 
-// 开启vconsole
-exports.vconsole = () => {
-  return new VconsolePlugin({
-    enable: true
-  });
-}
-
 // hash
 exports.hash = () => {
   return new webpack.HashedModuleIdsPlugin();
@@ -88,12 +72,12 @@ exports.merge = () => {
 }
 
 exports.commonsVendor = (opt = {}) => {
+  var commons = Object.keys(config.commonsChunk);
+
   return new webpack.optimize.CommonsChunkPlugin({
-    name: 'vendor',
-    filename: opt.filename ? opt.filename : 'common/vendor.[chunkhash:8].js',
-    minChunks: (config.fle.vendorChunks && config.fle.vendorChunks.length) ?
-      Infinity
-      :
+    names: commons.length ? commons : ['common/vendor'],
+    filename: opt.filename ? opt.filename : '[name].[chunkhash:8].js',
+    minChunks: commons.length ? Infinity :
       (module) => {
         // any required modules inside node_modules are extracted to vendor
         return (
@@ -131,19 +115,32 @@ exports.commonsAsync = () => {
 
 // 将manifest内联到html中，避免多发一次请求
 exports.inlineManifest = () => {
+  var InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
+
   return new InlineManifestWebpackPlugin({
     name: 'webpackManifest'
   });
 }
 
+// 开启vconsole
+exports.vconsole = () => {
+  var VconsolePlugin = require('vconsole-webpack-plugin');
+
+  return new VconsolePlugin({
+    enable: true
+  });
+}
+
 // 优化控制台输出
 exports.friendlyErrors = () => {
+  var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+
   return new FriendlyErrorsPlugin({
     compilationSuccessInfo: {
       messages: [`Listening at http://${config.fle.host}:${config.fle.port}/`]
     },
     onErrors: (severity, errors) => {
-      if (!config.notify) return;
+      if (!config.fle.notify) return;
       if (severity !== 'error') return;
 
       var error = errors[0];
@@ -153,7 +150,7 @@ exports.friendlyErrors = () => {
         title: path.basename(resolve('.')),
         message: severity + ': ' + error.name,
         subtitle: filename || '',
-        icon: path.join(__dirname, '../images/logo.png')
+        icon: path.join(__dirname, '../../share/images/logo.png')
       });
     }
   });
@@ -161,6 +158,8 @@ exports.friendlyErrors = () => {
 
 // 分离css文件
 exports.extractCSS = (opt = {}) => {
+  var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
   return new ExtractTextPlugin({
     allChunks: true,
     filename: opt.filename ? opt.filename : 'css/[name].[contenthash:8].css'
@@ -169,6 +168,8 @@ exports.extractCSS = (opt = {}) => {
 
 // 优化css打包，避免重复打包
 exports.optimizeCSS = () => {
+  var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
   return new OptimizeCssAssetsPlugin({
     assetNameRegExp: /(\.module)?\.css$/g,
     cssProcessorOptions: {
@@ -182,6 +183,8 @@ exports.optimizeCSS = () => {
 
 // 模块依赖分析
 exports.analyzer = (opt = {}) => {
+  var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
   return new BundleAnalyzerPlugin({
     openAnalyzer: true,
     analyzerMode: 'static', // server, static

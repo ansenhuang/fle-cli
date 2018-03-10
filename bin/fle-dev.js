@@ -25,10 +25,11 @@ var opts = program.opts();
 var env = Object.assign({
 	NODE_ENV: 'development',
 	PROJECT_ROOT_PATH: process.cwd(),
+	FLE_FRAMEWORK: typeOpts.framework,
 	FLE_VCONSOLE: opts.log
 }, process.env);
 
-if (typeOpts.tag === 'rollup') {
+if (typeOpts.compiler === 'rollup') {
 	// fix rollup watch
 	require('../lib/rollup-watch-fix');
 
@@ -36,7 +37,7 @@ if (typeOpts.tag === 'rollup') {
 		path.join(rootPath, 'node_modules/.bin/rollup'),
 		[
 			'-c',
-			path.join(rootPath, 'lib/rollup/rollup.config.js'),
+			path.join(rootPath, 'compiler/rollup/rollup.config.js'),
 			'-w',
 		],
 		{
@@ -45,14 +46,14 @@ if (typeOpts.tag === 'rollup') {
 			env: env
 		}
 	);
-} else if (typeOpts.tag === 'webpack') {
+} else if (typeOpts.compiler === 'webpack') {
 	spawn(
 		path.join(rootPath, 'node_modules/.bin/webpack-dev-server'),
 		[
 			'--inline',
 			'--progress',
 			'--config',
-			path.join(rootPath, 'lib/webpack/webpack.config.js')
+			path.join(rootPath, 'compiler/webpack/webpack.config.js')
 		],
 		{
 			cwd: rootPath,

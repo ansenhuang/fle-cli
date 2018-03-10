@@ -62,7 +62,7 @@ var webpackConfig = {
       config.fle.eslint && loader.eslint(),
       loader.css(),
       loader.cssModules(),
-      loader.vue(),
+      config.vue && loader.vue(),
       loader.babel(),
       loader.text(),
       loader.images(),

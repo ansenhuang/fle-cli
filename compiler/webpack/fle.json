@@ -1,10 +1,9 @@
 {
-  "boilerplate": "react",
+  "boilerplate": "app",
 
   "eslint": true,
   "notify": true,
-  "inlineManifest": true,
-  "vendorChunks": null,
+  "commonsChunk": null,
   "publicPath": "/",
 
   "port": 5000,
@@ -22,6 +21,5 @@
     "ie >= 9",
     "ios >= 7",
     "android >= 4"
-  ],
-  "externals": {}
+  ]
 }

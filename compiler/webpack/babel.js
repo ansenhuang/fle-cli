@@ -13,18 +13,14 @@ var babelConfig = {
         }
       }
     ],
+    config.react && require.resolve("babel-preset-react"),
     require.resolve("babel-preset-stage-2")
-  ],
+  ].filter(p => p),
   "plugins": [
+    config.vue && require.resolve("babel-plugin-transform-vue-jsx"),
     require.resolve("babel-plugin-transform-decorators-legacy"),
     require.resolve("babel-plugin-transform-runtime")
-  ]
+  ].filter(p => p)
 };
-
-if (config.fle.boilerplate === 'react') {
-  babelConfig.presets.push(require.resolve("babel-preset-react"));
-} else if (config.fle.boilerplate === 'vue') {
-  babelConfig.plugins.push(require.resolve("babel-plugin-transform-vue-jsx"));
-}
 
 module.exports = babelConfig;

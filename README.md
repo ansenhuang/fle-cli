@@ -11,6 +11,9 @@ $ npm install -g fle-cli
 ## Usage
 
 ``` bash
+# for help
+$ fle
+
 # generate the project
 $ fle init <project-name>
 
@@ -22,9 +25,6 @@ $ fle lib
 
 # build pages or demo in production
 $ fle build
-
-# check the lastest and update
-$ fle update
 ```
 
 **alias**
@@ -33,7 +33,8 @@ $ fle update
 * d -> dev
 * l -> lib
 * b -> build
-* u -> update
+
+说明：每天第一次启动时会检查是否有更新的版本，若有则提示
 
 ## Project
 
@@ -41,7 +42,7 @@ $ fle update
 
 * fle.json fle的项目配置文件
 * src 源码
-  * common 公共文件
+  * common 公共文件，不会当成页面来打包
   * index 示例页面文件，新建页面参考此结构
     * app.json 页面配置
     * index.js 页面入口，也可以在app.json的entry定义
@@ -51,7 +52,7 @@ $ fle update
 * index.html 页面模版，可参考此内容来新建模版，也可以使用系统模版，以`/`开头，如：/default.html
 * dist 页面编译后生成的文件
 * lib 组建编译后生成的文件
-* report 页面依赖分析（文件名为构建时间戳）
+* .cache 编译缓存文件
 
 **rollup**
 
@@ -76,7 +77,7 @@ $ fle update
 
   "eslint": true, // 是否开启eslint代码检测
   "notify": true, // 【dev】当编译出错时是否开启系统通知
-  "vendorChunks": null, // 【build】[Array|String] 手动抽离公共模块，不设置则自动抽离node_modules模块
+  "commonsChunk": null, // 【build】手动抽离公共模块，不设置则自动抽离node_modules模块，手动设置的好处是可以精准的抽离公共依赖
   "inlineManifest": true, // 【build】是否将manifest文件写入html
   "publicPath": "/", // 【build】编译后文件引用前缀
   "remUnit": 50, // 1rem=50px
@@ -118,6 +119,41 @@ $ fle update
 }
 ```
 
+说明：
+
+commonsChunk可以是字符串、数组或对象，例如：
+
+```
+ // 打包成common/vendor
+"react"
+
+// 打包成common/vendor
+["react", "react-dom"]
+
+// 打包成common/react, common/router
+{
+  "react": ["react", "react-dom"],
+  "router": ["react-router", "redux"]
+}
+```
+
+prejs和js可以设置externals，例如：
+
+```
+// 一般用法
+"js": ["https://cdn.com/xxx.js"]
+
+// 设置externals，会合并到externals字段
+// 以下配置会忽略源码中对react的引用，转而使用window.React，因为我们通过cdn引入react代码，无需再打包编译
+"js": [
+  {
+    "src": "https://cdn.com/react.js",
+    "name": "react",
+    "value": "window.React"
+  }
+]
+```
+
 **app.json**
 
 ```
@@ -127,9 +163,6 @@ $ fle update
   "description": "示例页面", // 页面描述
   "icon": "https://easyread.nosdn.127.net/web/trunk/1519626068077/logo.png", // 页面icon
   "template": "index.html", // 页面模版，也可以自行扩展，或者/开头来使用系统配置好的模版，如：/default.html
-  "css": [], // css外链引用，若长度不为零则覆盖fle.json中的css全局配置
-  "prejs": [], // 同上
-  "js": [], // 同上
   "entry": "index.js", // 设置页面入口
   "module": "module.js", // 设置组件入口
   "compiled": true // 是否要编译本页面，若为false则不编译

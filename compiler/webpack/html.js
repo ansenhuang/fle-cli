@@ -5,8 +5,10 @@ var config = require('./config');
 var utils = require('./utils');
 
 var pages = utils.getPages(utils.resolve('src'));
-var templatePath = path.join(__dirname, '../template');
-var imagesPath = path.join(__dirname, '../images');
+var templatePath = path.join(__dirname, '../../share/template');
+var imagesPath = path.join(__dirname, '../../share/images');
+
+var commons = Object.keys(config.commonsChunk);
 
 //定义HTML文件入口
 //遍历定义好的app进行构造
@@ -15,9 +17,9 @@ var defaults = {
   keywords: '',
   description: '',
   icon: '',
-  css: config.fle.css || [],
-  prejs: config.fle.prejs || [],
-  js: config.fle.js || [],
+  css: config.cdnCss,
+  prejs: config.cdnPrejs,
+  js: config.cdnJs,
 
   filename: 'html/404.html',
   template: path.join(templatePath, 'default.html'),
@@ -48,7 +50,19 @@ var htmlConfigs = pages.map(page => {
   }
 
   page.filename = `html/${page.id}.html`;
-  page.chunks = config.dev ? [page.id] : [!config.fle.inlineManifest && 'manifest', 'vendor', page.id].filter(c => c);
+  page.chunks = [page.id];
+
+  if (!config.dev) {
+    if (commons.length) {
+      page.chunks = commons.concat(page.chunks);
+    } else {
+      page.chunks.unshift('common/vendor');
+    }
+
+    if (!config.fle.inlineManifest) {
+      page.chunks.unshift('manifest');
+    }
+  }
 
   return Object.assign({}, defaults, page);
 });

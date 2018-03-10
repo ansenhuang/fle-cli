@@ -9,7 +9,7 @@ var inquirer = require('inquirer');
 var chalk = require('chalk');
 var execSync = require('child_process').execSync;
 var utils = require('../lib/utils');
-var constants = require('../lib/constants');
+var consts = require('../lib/consts');
 
 program
   .usage('<project-name>')
@@ -43,19 +43,19 @@ inquirer.prompt([
     type: 'list',
     name: 'boilerplate',
     message: 'Choose boilerplate',
-    choices: Object.keys(constants.boilerplate).map(k => {
-      var o = constants.boilerplate[k];
+    choices: Object.keys(consts.boilerplates).map(k => {
+      var o = consts.boilerplates[k];
       return {
-        name: `${k}: ${o.message} [${o.tag}]`,
+        name: '          '.replace(new RegExp(` {${k.length}}`), k) + `->  [${o.compiler}] ${o.message}`,
         value: k
       }
     }),
-    default: 'lib'
+    default: 'app'
   },
   {
     type: 'confirm',
     name: 'extract',
-    message: 'Do you need to extract css in module',
+    message: 'Do you want to extract css from library?',
     default: false,
     when (answers) {
       return answers.boilerplate === 'lib'
@@ -64,7 +64,7 @@ inquirer.prompt([
   {
     type: 'confirm',
     name: 'iife',
-    message: 'Do you want to export iife module',
+    message: 'Do you want to format library with IIFE?',
     default: false,
     when (answers) {
       return answers.boilerplate === 'lib'
@@ -73,7 +73,7 @@ inquirer.prompt([
   {
     type: 'confirm',
     name: 'rem',
-    message: 'Do you want to use rem layout',
+    message: 'Do you want to use rem layout for h5?',
     default: false,
     when (answers) {
       return answers.boilerplate !== 'lib'
@@ -82,24 +82,21 @@ inquirer.prompt([
   {
     type: 'list',
     name: 'install',
-    message: 'Which tools would you like to install',
+    message: 'Install node_modules',
     choices: ['yarn', 'npm', 'none'],
     default: 'yarn',
     when (answers) {
       var pkg = require(path.join(__dirname, '../boilerplate', answers.boilerplate, 'package.json'));
-      return pkg.dependencies && Object.keys(pkg.dependencies).length
+      return pkg.dependencies && Object.keys(pkg.dependencies).length;
     }
   }
 ]).then(answers => {
-  var bpConsts = constants.boilerplate[answers.boilerplate];
-  var cdn = require('../lib/cdn.json');
+  var bpConsts = consts.boilerplates[answers.boilerplate];
+  var cdn = require('../share/cdn.json');
   var originPath = path.join(__dirname, '../boilerplate', answers.boilerplate);
   var targetPath = path.resolve(projectName);
-
-  fs.mkdirSync(targetPath);
-
   var tplPkg = require(path.join(originPath, 'package.json'));
-  var tplFle = require(path.join(__dirname, '../lib', bpConsts.tag, 'fle.json'));
+  var tplFle = require(path.join(__dirname, '../compiler', bpConsts.compiler, 'fle.json'));
 
   tplPkg.name = answers.name;
   tplPkg.author = utils.getGitUser();
@@ -122,13 +119,14 @@ inquirer.prompt([
     }
   }
 
+  fs.mkdirSync(targetPath);
   fs.writeFileSync(path.join(targetPath, 'package.json'), JSON.stringify(tplPkg, null, 2), { encoding: 'utf8' });
   fs.writeFileSync(path.join(targetPath, 'fle.json'), JSON.stringify(tplFle, null, 2), { encoding: 'utf8' });
 
-  if (bpConsts.tag === 'webpack') {
+  if (bpConsts.compiler === 'webpack') {
     fs.writeFileSync(
       path.join(targetPath, 'index.html'),
-      fs.readFileSync(path.join(__dirname, '../lib/template/default.html')),
+      fs.readFileSync(path.join(__dirname, '../share/template/default.html')),
       { encoding: 'utf8' }
     );
   }
@@ -149,7 +147,7 @@ inquirer.prompt([
   }
 
   console.log();
-  console.log('To start project you can:');
+  console.log('To start project:');
   console.log();
   console.log(chalk.cyan(`  $ cd ${projectName}`));
   if (answers.install === 'none') {

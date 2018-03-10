@@ -6,23 +6,27 @@ var fs = require('fs');
 var path = require('path');
 var program = require('commander');
 var chalk = require('chalk');
-var inquirer = require('inquirer');
+var updateNotifier = require('update-notifier');
 var spawn = require('child_process').spawn;
-var constants = require('../lib/constants');
-var utils = require('../lib/utils');
+var consts = require('../lib/consts');
+
+// 检查更新
+updateNotifier({
+  pkg: consts.pkg,
+  updateCheckInterval: 86400000 // 每天检查一次
+}).notify();
 
 program
-  .version(constants.pkg.version, '-v, --version')
+  .version(consts.pkg.version, '-v, --version')
   .usage('<command> [options]')
   .on('--help', () => {
     console.log();
     console.log('  Commands:');
     console.log();
-    console.log('    init           generate the project');
+    console.log('    init           generate a project');
     console.log('    dev            open server in development');
-    console.log('    lib            build library or module in production');
     console.log('    build          build pages or demo in production');
-    console.log('    update         check the lastest and update');
+    console.log('    lib            build library or component in production');
     console.log();
   })
   .parse(process.argv);
@@ -33,36 +37,13 @@ var args = process.argv.slice(3);
 var aliases = {
   "i": "init",
   "d": "dev",
-  "l": "lib",
   "b": "build",
-  "u": "update"
+  "l": "lib"
 }
 
 if (aliases[subcmd]) {
   subcmd = aliases[subcmd];
 }
-
-// 每天检查更新
-// if (subcmd !== 'update') {
-//   var date = utils.formatDate();
-
-//   if (!fs.existsSync(constants.homeFle) || require(constants.homeFle).date !== date) {
-//     if (utils.checkUpdate()) {
-//       inquirer.prompt([
-//         {
-//           type: 'confirm',
-//           name: 'update',
-//           message: 'A new version was found, do you want to update',
-//           default: true
-//         }
-//       ]).then(answers => {
-//         if (answers.update) {
-//           utils.update(true);
-//         }
-//       });
-//     }
-//   }
-// }
 
 if (!subcmd || subcmd === 'help') {
   program.help();
@@ -79,5 +60,5 @@ if (!subcmd || subcmd === 'help') {
     }
 
     spawn(file, args, { stdio: 'inherit' });
-  })
+  });
 }

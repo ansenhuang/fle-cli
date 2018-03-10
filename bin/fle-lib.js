@@ -24,9 +24,10 @@ var rootPath = path.join(__dirname, '..');
 var env = Object.assign({
 	NODE_ENV: 'production',
 	PROJECT_ROOT_PATH: process.cwd(),
+	FLE_FRAMEWORK: typeOpts.framework
 }, process.env);
 
-if (typeOpts.tag === 'rollup') {
+if (typeOpts.compiler === 'rollup') {
 	// 清空先前编译的文件
 	spawn(
 		path.join(rootPath, 'node_modules/.bin/rimraf'),
@@ -44,7 +45,7 @@ if (typeOpts.tag === 'rollup') {
 		path.join(rootPath, 'node_modules/.bin/rollup'),
 		[
 			'-c',
-			path.join(rootPath, 'lib/rollup/rollup.lib.config.js'),
+			path.join(rootPath, 'compiler/rollup/rollup.lib.config.js'),
 		],
 		{
 			cwd: rootPath,
@@ -52,7 +53,7 @@ if (typeOpts.tag === 'rollup') {
 			env: env
 		}
 	);
-} else if (typeOpts.tag === 'webpack') {
+} else if (typeOpts.compiler === 'webpack') {
 	// 清空先前编译的文件
 	spawn(
 		path.join(rootPath, 'node_modules/.bin/rimraf'),
@@ -72,7 +73,7 @@ if (typeOpts.tag === 'rollup') {
 			'--progress',
 			'--hide-modules',
 			'--config',
-			path.join(rootPath, 'lib/webpack/webpack.lib.config.js')
+			path.join(rootPath, 'compiler/webpack/webpack.lib.config.js')
 		],
 		{
 			cwd: rootPath,
