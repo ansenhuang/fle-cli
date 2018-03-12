@@ -1,7 +1,7 @@
 var path = require('path');
 var config = require('./config');
 var getCSSConfig = require('./postcss');
-var resolve = require('./utils').resolve;
+var resolve = require('../utils').resolve;
 
 // plugins
 var progress = require('rollup-plugin-progress');

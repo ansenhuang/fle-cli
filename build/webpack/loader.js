@@ -2,7 +2,7 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var config = require('./config');
-var resolve = require('./utils').resolve;
+var resolve = require('../utils').resolve;
 
 var styleLoader = {
   loader: 'style-loader',

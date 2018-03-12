@@ -7,6 +7,7 @@ var path = require('path');
 var program = require('commander');
 var chalk = require('chalk');
 var spawn = require('child_process').spawn;
+var homeFlePath = require('../lib/consts').homeFlePath;
 var checkProject = require('../lib/utils').checkProject;
 
 // 检查是否为fle项目
@@ -19,36 +20,35 @@ program
 	})
 	.parse(process.argv);
 
-var rootPath = path.join(__dirname, '..');
 // var opts = program.opts();
 var env = Object.assign({
 	NODE_ENV: 'production',
 	PROJECT_ROOT_PATH: process.cwd(),
 	FLE_FRAMEWORK: typeOpts.framework
 }, process.env);
+var rimrafPath = path.join(__dirname, '../node_modules/.bin/rimraf');
 
 if (typeOpts.compiler === 'rollup') {
 	// 清空先前编译的文件
 	spawn(
-		path.join(rootPath, 'node_modules/.bin/rimraf'),
+		rimrafPath,
 		[
 			path.resolve('public/dist')
 		],
 		{
-			cwd: rootPath,
 			stdio: 'inherit'
 		}
 	);
 
 	// demo
 	spawn(
-		path.join(rootPath, 'node_modules/.bin/rollup'),
+		path.join(homeFlePath, 'node_modules/.bin/rollup'),
 		[
 			'-c',
-			path.join(rootPath, 'compiler/rollup/rollup.config.js'),
+			path.join(homeFlePath, 'build/rollup/rollup.config.js'),
 		],
 		{
-			cwd: rootPath,
+			cwd: homeFlePath,
 			stdio: 'inherit',
 			env: env
 		}
@@ -56,27 +56,26 @@ if (typeOpts.compiler === 'rollup') {
 } else if (typeOpts.compiler === 'webpack') {
 	// 清空先前编译的文件
 	spawn(
-		path.join(rootPath, 'node_modules/.bin/rimraf'),
+		rimrafPath,
 		[
 			path.resolve('dist')
 		],
 		{
-			cwd: rootPath,
 			stdio: 'inherit'
 		}
 	);
 
 	// build
 	spawn(
-		path.join(rootPath, 'node_modules/.bin/webpack'),
+		path.join(homeFlePath, 'node_modules/.bin/webpack'),
 		[
 			'--progress',
 			'--hide-modules',
 			'--config',
-			path.join(rootPath, 'compiler/webpack/webpack.config.js')
+			path.join(homeFlePath, 'build/webpack/webpack.build.config.js')
 		],
 		{
-			cwd: rootPath,
+			cwd: homeFlePath,
 			stdio: 'inherit',
 			env: env
 		}

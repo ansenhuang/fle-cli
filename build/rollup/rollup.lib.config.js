@@ -1,6 +1,6 @@
 var config = require('./config');
 var plugin = require('./plugin');
-var resolve = require('./utils').resolve;
+var resolve = require('../utils').resolve;
 
 module.exports = {
   input: resolve('src/index.js'),

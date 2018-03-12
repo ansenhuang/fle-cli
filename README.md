@@ -6,6 +6,9 @@ A convenient global compiler.
 
 ``` bash
 $ npm install -g fle-cli
+
+# yarn
+$ yarn global add fle-cli
 ```
 
 ## Usage
@@ -20,11 +23,11 @@ $ fle init <project-name>
 # open server in development
 $ fle dev
 
-# build library or module in production
-$ fle lib
-
 # build pages or demo in production
 $ fle build
+
+# build library or module in production
+$ fle lib
 ```
 
 **alias**

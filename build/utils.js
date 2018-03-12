@@ -2,11 +2,11 @@ var fs = require('fs');
 var path = require('path');
 var projectRootPath = process.env.PROJECT_ROOT_PATH;
 
-function resolve (p) {
+exports.resolve = function (p) {
   return path.join(projectRootPath, p);
 }
 
-function getPages (dir, prefix = '', pages = []) {
+exports.getPages = function (dir, prefix = '', pages = []) {
   fs.readdirSync(dir).forEach((dirname) => {
     // common目录除外
     if (dirname === 'common') return;
@@ -31,13 +31,10 @@ function getPages (dir, prefix = '', pages = []) {
           }));
         }
       } else {
-        getPages(childDirPath, id + '/', pages);
+        exports.getPages(childDirPath, id + '/', pages);
       }
     }
   });
 
   return pages;
 }
-
-exports.getPages = getPages;
-exports.resolve = resolve;

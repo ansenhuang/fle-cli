@@ -4,34 +4,20 @@ var merge = require('webpack-merge');
 var config = require('./config');
 var loader = require('./loader');
 var plugin = require('./plugin');
-var html = require('./html');
-var resolve = require('./utils').resolve;
-
-//添加入口
-var entries = {};
-html.pages.forEach(page => {
-  if (page.module) {
-    entries[page.id] = page.module;
-  }
-});
+var resolve = require('../utils').resolve;
 
 //基本配置
 var webpackConfig = {
-  entry: entries,
+  // entry: {},
+  cache: true,
   devtool: false,
-  output: {
-    path: resolve('lib'),
-    libraryTarget: 'commonjs2',
-    library: '[name]',
-    filename: '[name].js',
-    chunkFilename: '[name].chunk.js'
-  },
+  // output: {},
   resolve: {
     modules: [
       resolve('node_modules'),
       path.join(__dirname, '../../node_modules')
     ],
-    extensions: ['.js', '.jsx', '.vue'],
+    extensions: ['.js'],
     alias: {
       '@': resolve('src')
     }
@@ -42,21 +28,6 @@ var webpackConfig = {
       resolve('node_modules')
     ]
   },
-  //配置插件
-  plugins: [
-    plugin.define(),
-    plugin.loader(),
-    plugin.merge(),
-    plugin.optimizeCSS(),
-    plugin.extractCSS({
-      filename: '[name].css'
-    }),
-    plugin.scope(),
-    plugin.uglify(),
-    plugin.analyzer({
-      filename: 'report.html'
-    })
-  ].filter(r => r),
   module: {
     rules: [
       config.fle.eslint && loader.eslint(),
@@ -70,7 +41,12 @@ var webpackConfig = {
       loader.medias()
     ].filter(r => r)
   },
-  externals: config.fle.libExternals,
+  //配置插件
+  plugins: [
+    plugin.define(),
+    plugin.loader()
+  ],
+  externals: {},
   target: 'web',
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
@@ -86,8 +62,7 @@ var webpackConfig = {
   }
 };
 
-module.exports = merge(
-  webpackConfig,
-  // 项目工程若有自定义配置，则合并
-  fs.existsSync(resolve('webpack.lib.config.js')) ? require(resolve('webpack.lib.config.js')) : {}
-);
+module.exports = !fs.existsSync(resolve('webpack.config.js')) ?
+  webpackConfig
+  :
+  merge(webpackConfig, require(resolve('webpack.config.js')));

@@ -8,8 +8,8 @@ var program = require('commander');
 var inquirer = require('inquirer');
 var chalk = require('chalk');
 var execSync = require('child_process').execSync;
-var utils = require('../lib/utils');
 var consts = require('../lib/consts');
+var utils = require('../lib/utils');
 
 program
   .usage('<project-name>')
@@ -78,25 +78,14 @@ inquirer.prompt([
     when (answers) {
       return answers.boilerplate !== 'lib'
     }
-  },
-  {
-    type: 'list',
-    name: 'install',
-    message: 'Install node_modules',
-    choices: ['yarn', 'npm', 'none'],
-    default: 'yarn',
-    when (answers) {
-      var pkg = require(path.join(__dirname, '../boilerplate', answers.boilerplate, 'package.json'));
-      return pkg.dependencies && Object.keys(pkg.dependencies).length;
-    }
   }
 ]).then(answers => {
   var bpConsts = consts.boilerplates[answers.boilerplate];
-  var cdn = require('../share/cdn.json');
+  var cdn = require('../lib/json/cdn.json');
   var originPath = path.join(__dirname, '../boilerplate', answers.boilerplate);
   var targetPath = path.resolve(projectName);
   var tplPkg = require(path.join(originPath, 'package.json'));
-  var tplFle = require(path.join(__dirname, '../compiler', bpConsts.compiler, 'fle.json'));
+  var tplFle = require(path.join(__dirname, '../lib/json', `fle-${bpConsts.compiler}.json`));
 
   tplPkg.name = answers.name;
   tplPkg.author = utils.getGitUser();
@@ -123,36 +112,25 @@ inquirer.prompt([
   fs.writeFileSync(path.join(targetPath, 'package.json'), JSON.stringify(tplPkg, null, 2), { encoding: 'utf8' });
   fs.writeFileSync(path.join(targetPath, 'fle.json'), JSON.stringify(tplFle, null, 2), { encoding: 'utf8' });
 
-  if (bpConsts.compiler === 'webpack') {
-    fs.writeFileSync(
-      path.join(targetPath, 'index.html'),
-      fs.readFileSync(path.join(__dirname, '../share/template/default.html')),
-      { encoding: 'utf8' }
-    );
-  }
-
   utils.copy(originPath, targetPath);
 
   // install modules
-  if (answers.install && answers.install !== 'none') {
+  if (tplPkg.dependencies && Object.keys(tplPkg.dependencies).length) {
     console.log();
+    console.log('===========================================');
 
-    execSync(answers.install + ' install', {
-			cwd: targetPath,
+    execSync(utils.useYarn() ? 'yarn install' : 'npm install', {
+      cwd: targetPath,
       stdio: 'inherit'
     });
 
-    console.log();
-    console.log(chalk.green('Install successfully!'));
+    console.log('===========================================');
   }
 
   console.log();
   console.log('To start project:');
   console.log();
   console.log(chalk.cyan(`  $ cd ${projectName}`));
-  if (answers.install === 'none') {
-    console.log(chalk.cyan('  $ npm install'));
-  }
   console.log(chalk.cyan('  $ fle dev'));
   console.log();
 });

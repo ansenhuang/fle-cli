@@ -1,0 +1,6 @@
+{
+  "boilerplate": "lib",
+  "iife": false,
+  "extract": false,
+  "port": 5000
+}

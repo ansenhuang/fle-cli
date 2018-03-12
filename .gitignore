@@ -3,4 +3,5 @@ node_modules
 *yarn*
 *.log
 *.cache*
+/.installed
 package-lock.json

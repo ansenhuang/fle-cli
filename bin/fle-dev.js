@@ -7,6 +7,7 @@ var path = require('path');
 var program = require('commander');
 var chalk = require('chalk');
 var spawn = require('child_process').spawn;
+var homeFlePath = require('../lib/consts').homeFlePath;
 var checkProject = require('../lib/utils').checkProject;
 
 // 检查是否为fle项目
@@ -20,7 +21,6 @@ program
 	})
 	.parse(process.argv);
 
-var rootPath = path.join(__dirname, '..');
 var opts = program.opts();
 var env = Object.assign({
 	NODE_ENV: 'development',
@@ -30,33 +30,30 @@ var env = Object.assign({
 }, process.env);
 
 if (typeOpts.compiler === 'rollup') {
-	// fix rollup watch
-	require('../lib/rollup-watch-fix');
-
 	spawn(
-		path.join(rootPath, 'node_modules/.bin/rollup'),
+		path.join(homeFlePath, 'node_modules/.bin/rollup'),
 		[
 			'-c',
-			path.join(rootPath, 'compiler/rollup/rollup.config.js'),
+			path.join(homeFlePath, 'build/rollup/rollup.config.js'),
 			'-w',
 		],
 		{
-			cwd: rootPath,
+			cwd: homeFlePath,
 			stdio: 'inherit',
 			env: env
 		}
 	);
 } else if (typeOpts.compiler === 'webpack') {
 	spawn(
-		path.join(rootPath, 'node_modules/.bin/webpack-dev-server'),
+		path.join(homeFlePath, 'node_modules/.bin/webpack-dev-server'),
 		[
 			'--inline',
 			'--progress',
 			'--config',
-			path.join(rootPath, 'compiler/webpack/webpack.config.js')
+			path.join(homeFlePath, 'build/webpack/webpack.dev.config.js')
 		],
 		{
-			cwd: rootPath,
+			cwd: homeFlePath,
 			stdio: 'inherit',
 			env: env
 		}

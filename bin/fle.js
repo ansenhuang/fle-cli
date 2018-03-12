@@ -9,12 +9,19 @@ var chalk = require('chalk');
 var updateNotifier = require('update-notifier');
 var spawn = require('child_process').spawn;
 var consts = require('../lib/consts');
+var utils = require('../lib/utils');
 
 // 检查更新
 updateNotifier({
   pkg: consts.pkg,
   updateCheckInterval: 86400000 // 每天检查一次
 }).notify();
+
+// 第一次启动需要安装编译需要的依赖
+if (!fs.existsSync(path.join(__dirname, '../.installed'))) {
+  require('../lib/install');
+  require('../lib/rollup-watch-fix');
+}
 
 program
   .version(consts.pkg.version, '-v, --version')

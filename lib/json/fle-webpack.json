@@ -1,0 +1,10 @@
+{
+  "boilerplate": "app",
+  "commonsChunk": null,
+  "publicPath": "/",
+  "port": 5000,
+  "proxy": {},
+  "css": [],
+  "prejs": [],
+  "js": []
+}

@@ -1,4 +1,4 @@
-var resolve = require('./utils').resolve;
+var resolve = require('../utils').resolve;
 
 var __DEV__ = (process.env.NODE_ENV || 'development') === 'development';
 var __LOG__ = process.env.FLE_VCONSOLE === 'true';
