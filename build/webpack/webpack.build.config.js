@@ -27,7 +27,7 @@ utils.getPages(utils.resolve('src')).forEach(page => {
   }
 
   page.filename = 'html/' + page.id + '.html';
-  page.chunks = commons.concat([page.id]);
+  page.chunks = ['common/_base'].concat(commons, [page.id]);
 
   htmls.push(plugin.html(page));
 });
@@ -46,8 +46,7 @@ var webpackConfig = {
     plugin.optimizeCSS(),
     plugin.extractCSS(),
     plugin.scope(),
-    plugin.commonsChunk(),
-    plugin.commonsShare(),
+    plugin.commonsChunk({ commons: commons }),
     plugin.commonsAsync(),
     plugin.commonsManifest(),
     (config.fle.inlineManifest) && plugin.inlineManifest(),

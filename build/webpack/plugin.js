@@ -83,27 +83,14 @@ exports.merge = () => {
 // 抽离第三方依赖
 exports.commonsChunk = (opt = {}) => {
   return new webpack.optimize.CommonsChunkPlugin({
-    names: opt.commons,
+    names: ['common/_base'].concat(opt.commons),
     filename: opt.filename ? opt.filename : '[name].[chunkhash:8].js',
-    minChunks: Infinity
-  });
-}
-
-// 抽离公共代码
-exports.commonsShare = (opt = {}) => {
-  return new webpack.optimize.CommonsChunkPlugin({
-    name: 'common/share',
-    filename: opt.filename ? opt.filename : '[name].[chunkhash:8].js'
-  });
-}
-
-exports.commonsManifest = (opt = {}) => {
-  // extract webpack runtime and module manifest to its own file in order to
-  // prevent vendor hash from being updated whenever app bundle is updated
-  return new webpack.optimize.CommonsChunkPlugin({
-    name: 'manifest',
-    filename: opt.filename ? opt.filename : 'common/manifest.[chunkhash:8].js',
-    minChunks: Infinity
+    // minChunks: (module) => {
+    //   if(module.resource && !(/\.js$/.test(module.resource))) {
+    //     return false;
+    //   }
+    //   return module.context && module.context.includes('node_modules');
+    // }
   });
 }
 
@@ -116,6 +103,16 @@ exports.commonsAsync = () => {
     async: 'vendor-async',
     children: true,
     minChunks: 3
+  });
+}
+
+exports.commonsManifest = (opt = {}) => {
+  // extract webpack runtime and module manifest to its own file in order to
+  // prevent vendor hash from being updated whenever app bundle is updated
+  return new webpack.optimize.CommonsChunkPlugin({
+    name: 'manifest',
+    filename: opt.filename ? opt.filename : 'common/manifest.[chunkhash:8].js',
+    minChunks: Infinity
   });
 }
 
