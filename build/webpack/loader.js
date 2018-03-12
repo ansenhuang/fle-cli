@@ -99,7 +99,7 @@ exports.eslint = () => {
     include: resolve('src'),
     options: {
       fix: true,
-      cache: resolve('.cache/eslint'),
+      // cache: resolve('.cache/eslint'),
       // failOnError: !config.dev, // 生产环境发现代码不合法，则中断编译
       formatter: require('eslint-friendly-formatter'),
       baseConfig: {
