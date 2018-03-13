@@ -14,7 +14,8 @@ var NosUpload = require('./upload');
 function NosPlugin ({
   nosConfig,
   include, // regexp
-  exclude // regexp
+  exclude, // regexp
+  saveFile
 }) {
   this.nosUpload = new NosUpload(nosConfig);
   this.include = include;
@@ -50,7 +51,7 @@ NosPlugin.prototype.apply = function (compiler) {
         })
       );
 
-      delete assets[key];
+      !saveFile && delete assets[key];
     });
 
     Promise.all(promises).then(() => {
