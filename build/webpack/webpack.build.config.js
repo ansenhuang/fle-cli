@@ -51,6 +51,7 @@ var webpackConfig = {
     plugin.commonsManifest(),
     (config.fle.inlineManifest) && plugin.inlineManifest(),
     plugin.uglify(),
+    config.upload && plugin.upload(),
     plugin.analyzer()
   ].filter(r => r).concat(htmls),
   externals: config.fle.externals

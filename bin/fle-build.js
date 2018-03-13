@@ -15,16 +15,18 @@ var typeOpts = checkProject();
 
 program
 	.usage('[options]')
+	.option('-u, --upload', 'upload files to cdn (just for webpack)')
 	.on('--help', () => {
 		console.log();
 	})
 	.parse(process.argv);
 
-// var opts = program.opts();
+var opts = program.opts();
 var env = Object.assign({
 	NODE_ENV: 'production',
 	PROJECT_ROOT_PATH: process.cwd(),
-	FLE_FRAMEWORK: typeOpts.framework
+	FLE_FRAMEWORK: typeOpts.framework,
+	FLE_UPLOAD: opts.upload
 }, process.env);
 var rimrafPath = path.join(__dirname, '../node_modules/.bin/rimraf');
 

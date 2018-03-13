@@ -13,6 +13,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+// my
+var NosUploadPlugin = require('./plugins/NosUpload');
+
 // 这里将 Node 中使用的变量也传入到 Web 环境中，以方便使用
 exports.define = () => {
   return new webpack.DefinePlugin({
@@ -226,4 +229,26 @@ var htmlDefaults = {
 
 exports.html = (opt = {}) => {
   return new HtmlWebpackPlugin(Object.assign({}, htmlDefaults, opt));
+}
+
+// upload nos
+exports.upload = (opt = {}) => {
+  if (!config.fle.nosConfig) return false;
+
+  var keys = [
+    'endPoint',
+    'accessId',
+    'secretKey',
+    'domain',
+    'bucket',
+    // 'business'
+  ];
+  if (keys.every(k => config.fle.nosConfig[k])) {
+    return new NosUploadPlugin({
+      nosConfig: config.fle.nosConfig,
+      exclude: /(\.html$)|(common\/manifest)/
+    });
+  } else {
+    return false;
+  }
 }

@@ -1,6 +1,7 @@
 var __DEV__ = (process.env.NODE_ENV || 'development') === 'development';
 var __LOG__ = process.env.FLE_VCONSOLE === 'true';
 var __DLL__ = process.env.FLE_DLL_REFERENCE === 'true';
+var __UPLOAD__ = process.env.FLE_UPLOAD === 'true';
 var __REACT__ = process.env.FLE_FRAMEWORK.indexOf('react') !== -1;
 var __VUE__ = process.env.FLE_FRAMEWORK.indexOf('vue') !== -1;
 
@@ -52,6 +53,7 @@ module.exports = {
   dev: __DEV__,
   vconsole: __LOG__,
   dll: __DLL__,
+  upload: __UPLOAD__,
   react: __REACT__,
   vue: __VUE__,
   fle: Object.assign({
