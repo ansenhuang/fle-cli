@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var config = require('./config');
 var getCSSConfig = require('./postcss');
@@ -72,9 +73,12 @@ exports.commonjs = function () {
 
 exports.eslint = function () {
   return eslint({
-    fix: false, // 因为这里不会自动将文件中不合法的代码fix
-    throwOnError: !config.dev, // 生产环境发现代码不合法，则中断编译
     include: [resolve('src/**/*.js'), resolve('public/demo/**/*.js')],
+    fix: false, // 因为这里不会自动将文件中不合法的代码fix
+    // cache: config.dev ? resolve('.cache/eslint') : false,
+    throwOnError: !config.dev, // 生产环境发现代码不合法，则中断编译
+    useEslintrc: false,
+    configFile: fs.existsSync(resolve('.eslintrc')) ? resolve('.eslintrc') : null,
     formatter: require('eslint-friendly-formatter'),
     baseConfig: {
       extends: [path.join(__dirname, './eslint.js')]
@@ -84,9 +88,11 @@ exports.eslint = function () {
 
 exports.babel = function () {
   return babel(Object.assign({
+    include: [resolve('src/**/*.js'), resolve('public/demo/**/*.js')],
     // runtimeHelpers: true,
     externalHelpers: false,
-    include: [resolve('src/**/*.js'), resolve('public/demo/**/*.js')]
+    babelrc: false,
+    extends: fs.existsSync(resolve('.babelrc')) ? resolve('.babelrc') : null
   }, require('./babel.js')));
 };
 

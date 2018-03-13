@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -99,8 +100,10 @@ exports.eslint = () => {
     include: resolve('src'),
     options: {
       fix: true,
-      // cache: resolve('.cache/eslint'),
+      cache: config.dev ? resolve('.cache/eslint') : false,
       // failOnError: !config.dev, // 生产环境发现代码不合法，则中断编译
+      useEslintrc: false,
+      configFile: fs.existsSync(resolve('.eslintrc')) ? resolve('.eslintrc') : null,
       formatter: require('eslint-friendly-formatter'),
       baseConfig: {
         extends: [path.join(__dirname, './eslint.js')]
@@ -117,7 +120,9 @@ exports.babel = () => {
     use: {
       loader: 'babel-loader',
       options: Object.assign({
-        cacheDirectory: resolve('.cache/babel')
+        cacheDirectory: resolve('.cache/babel'),
+        babelrc: false,
+        extends: fs.existsSync(resolve('.babelrc')) ? resolve('.babelrc') : null
       }, require(path.join(__dirname, './babel.js')))
     }
   };
