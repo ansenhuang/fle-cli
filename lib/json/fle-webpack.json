@@ -2,6 +2,7 @@
   "boilerplate": "app",
   "commonsChunk": null,
   "publicPath": "/",
+  "nosConfig": {},
   "port": 5000,
   "proxy": {},
   "css": [],

@@ -25,8 +25,17 @@ $ fle init <project-name>
 # open server in development
 $ fle dev
 
+# 开启手机debug调试
+# fle dev --log
+
+# 重新构建dll模块，依赖有更新时使用
+# fle dev --dll
+
 # build pages or demo in production
 $ fle build
+
+# 编译并将文件上传至cdn
+# fle build --upload
 
 # build library or module in production
 $ fle lib
@@ -43,6 +52,7 @@ $ fle lib
 
 * 每天第一次启动时会检查是否有更新的版本，若有则提示
 * fle dev启动时会自动抽离dll文件，若要重新构建dll，可以加参数：--dll
+* 开启上传功能需要在fle.json配置nosConfig参数，否则无法上传，[cdn参数配置](https://g.hz.netease.com/huangancheng/documents/blob/master/fle/nosConfig.md)【仅限网易员工访问】
 
 ## Project
 
@@ -88,6 +98,7 @@ $ fle lib
   "commonsChunk": null, // 【build】手动抽离公共模块，不设置则自动抽离node_modules模块，手动设置的好处是可以精准的抽离公共依赖
   "inlineManifest": true, // 【build】是否将manifest文件写入html
   "publicPath": "/", // 【build】编译后文件引用前缀
+  "nosConfig": {}, // 上传cdn配置
   "remUnit": 50, // 1rem=50px
 
   "port": 5000, // 【dev】端口
