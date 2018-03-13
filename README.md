@@ -30,9 +30,6 @@ $ fle build
 
 # build library or module in production
 $ fle lib
-
-# eslint source code in production
-$ fle lib
 ```
 
 **alias**
