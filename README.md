@@ -11,6 +11,8 @@ $ npm install -g fle-cli
 $ yarn global add fle-cli
 ```
 
+注意：使用sudo权限进行全局安装，需要更改目录权限，如：sudo chmod -R 777 [path]，否则无法写入文件。
+
 ## Usage
 
 ``` bash
@@ -28,6 +30,9 @@ $ fle build
 
 # build library or module in production
 $ fle lib
+
+# eslint source code in production
+$ fle lib
 ```
 
 **alias**
@@ -37,7 +42,10 @@ $ fle lib
 * l -> lib
 * b -> build
 
-说明：每天第一次启动时会检查是否有更新的版本，若有则提示
+说明：
+
+* 每天第一次启动时会检查是否有更新的版本，若有则提示
+* fle dev启动时会自动抽离dll文件，若要重新构建dll，可以加参数：--dll
 
 ## Project
 

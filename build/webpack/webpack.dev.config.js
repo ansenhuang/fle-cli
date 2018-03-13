@@ -1,7 +1,7 @@
 var path = require('path');
 var merge = require('webpack-merge');
 var config = require('./config');
-var loader = require('./loader');
+// var loader = require('./loader');
 var plugin = require('./plugin');
 var utils = require('../utils');
 
@@ -46,6 +46,7 @@ var webpackConfig = {
     chunkFilename: 'js/[name].chunk.js'
   },
   plugins: [
+    config.dll && plugin.dllReference(),
     config.fle.hot && plugin.hmr(),
     config.vconsole && plugin.vconsole(),
     plugin.namedModules(),
@@ -56,7 +57,7 @@ var webpackConfig = {
   devServer: {
     host: config.fle.host,
     port: config.fle.port,
-    contentBase: false,
+    contentBase: utils.resolve('.cache/dll'),
     proxy: config.fle.proxy,
     compress: true,
     hot: config.fle.hot,

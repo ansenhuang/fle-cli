@@ -33,6 +33,20 @@ exports.loader = () => {
   });
 }
 
+exports.dll = () => {
+  return new webpack.DllPlugin({
+    name: 'vendor_[hash]',
+    path: resolve('.cache/dll/dll-manifest.json')
+  });
+}
+
+// 映射dll
+exports.dllReference = () => {
+  return new webpack.DllReferencePlugin({
+    manifest: resolve('.cache/dll/dll-manifest.json')
+  });
+}
+
 // 启用HMR
 exports.hmr = () => {
   return new webpack.HotModuleReplacementPlugin();

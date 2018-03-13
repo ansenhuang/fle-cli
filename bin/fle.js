@@ -34,6 +34,7 @@ program
     console.log('    dev            open server in development');
     console.log('    build          build pages or demo in production');
     console.log('    lib            build library or component in production');
+    console.log('    lint           eslint source code in production');
     console.log();
   })
   .parse(process.argv);

@@ -1,7 +1,7 @@
 var path = require('path');
 var merge = require('webpack-merge');
 var config = require('./config');
-var loader = require('./loader');
+// var loader = require('./loader');
 var plugin = require('./plugin');
 var utils = require('../utils');
 

@@ -26,26 +26,15 @@ var env = Object.assign({
 	PROJECT_ROOT_PATH: process.cwd(),
 	FLE_FRAMEWORK: typeOpts.framework
 }, process.env);
-var rimrafPath = path.join(__dirname, '../node_modules/.bin/rimraf');
 
 if (typeOpts.compiler === 'rollup') {
-	// 清空先前编译的文件
 	spawn(
-		rimrafPath,
-		[
-			path.resolve('public/dist')
-		],
-		{
-			stdio: 'inherit'
-		}
-	);
-
-	// demo
-	spawn(
-		path.join(homeFlePath, 'node_modules/.bin/rollup'),
+		path.join(homeFlePath, 'node_modules/.bin/eslint'),
 		[
 			'-c',
-			path.join(homeFlePath, 'build/rollup/rollup.config.js'),
+			path.join(homeFlePath, 'build/rollup/eslint.js'),
+			path.resolve('src'),
+			// path.resolve('public/demo')
 		],
 		{
 			cwd: homeFlePath,
@@ -54,25 +43,12 @@ if (typeOpts.compiler === 'rollup') {
 		}
 	);
 } else if (typeOpts.compiler === 'webpack') {
-	// 清空先前编译的文件
 	spawn(
-		rimrafPath,
+		path.join(homeFlePath, 'node_modules/.bin/eslint'),
 		[
-			path.resolve('dist')
-		],
-		{
-			stdio: 'inherit'
-		}
-	);
-
-	// build
-	spawn(
-		path.join(homeFlePath, 'node_modules/.bin/webpack'),
-		[
-			'--progress',
-			'--hide-modules',
-			'--config',
-			path.join(homeFlePath, 'build/webpack/webpack.build.config.js')
+			'-c',
+			path.join(homeFlePath, 'build/webpack/eslint.js'),
+			path.resolve('src')
 		],
 		{
 			cwd: homeFlePath,

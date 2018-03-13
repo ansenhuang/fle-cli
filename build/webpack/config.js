@@ -1,5 +1,6 @@
 var __DEV__ = (process.env.NODE_ENV || 'development') === 'development';
 var __LOG__ = process.env.FLE_VCONSOLE === 'true';
+var __DLL__ = process.env.FLE_DLL_REFERENCE === 'true';
 var __REACT__ = process.env.FLE_FRAMEWORK.indexOf('react') !== -1;
 var __VUE__ = process.env.FLE_FRAMEWORK.indexOf('vue') !== -1;
 
@@ -40,12 +41,17 @@ if (Array.isArray(fle.js)) {
   });
 }
 
+if (__DEV__ && __DLL__) {
+  fle.js = (fle.js || []).concat(['/dll-vendor.js']);
+}
+
 fle.commonsChunk = commonsChunk;
 fle.externals = Object.assign(externals, fle.externals);
 
 module.exports = {
   dev: __DEV__,
   vconsole: __LOG__,
+  dll: __DLL__,
   react: __REACT__,
   vue: __VUE__,
   fle: Object.assign({

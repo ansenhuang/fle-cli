@@ -2,10 +2,10 @@
 
 'use strict';
 
-var fs = require('fs');
+// var fs = require('fs');
 var path = require('path');
 var program = require('commander');
-var chalk = require('chalk');
+// var chalk = require('chalk');
 var spawn = require('child_process').spawn;
 var homeFlePath = require('../lib/consts').homeFlePath;
 var checkProject = require('../lib/utils').checkProject;
