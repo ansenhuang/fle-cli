@@ -20,6 +20,7 @@ function NosPlugin ({
   this.nosUpload = new NosUpload(nosConfig);
   this.include = include;
   this.exclude = exclude;
+  this.saveFile = saveFile;
 }
 
 NosPlugin.prototype.apply = function (compiler) {
@@ -51,7 +52,7 @@ NosPlugin.prototype.apply = function (compiler) {
         })
       );
 
-      !saveFile && delete assets[key];
+      !this.saveFile && delete assets[key];
     });
 
     Promise.all(promises).then(() => {
