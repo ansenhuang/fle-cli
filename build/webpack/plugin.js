@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 var notifier = require('node-notifier');
@@ -33,20 +34,6 @@ exports.loader = () => {
     options: {
       context: '/'
     }
-  });
-}
-
-exports.dll = (opt = {}) => {
-  return new webpack.DllPlugin({
-    name: '[name].[hash:8]',
-    path: path.join(opt.manifestPath, '[name].manifest.json')
-  });
-}
-
-// 映射dll
-exports.dllReference = (opt = {}) => {
-  return new webpack.DllReferencePlugin({
-    manifest: opt.manifest
   });
 }
 
@@ -97,6 +84,20 @@ exports.merge = () => {
   return new webpack.optimize.AggressiveMergingPlugin();
 }
 
+exports.dll = (opt = {}) => {
+  return new webpack.DllPlugin({
+    name: config.dev ? '[name]' : '[name]_[hash:8]',
+    path: path.join(opt.manifestPath, '[name].manifest.json')
+  });
+}
+
+// 映射dll
+exports.dllReference = (opt = {}) => {
+  return new webpack.DllReferencePlugin({
+    manifest: opt.manifest
+  });
+}
+
 exports.commonsAsync = () => {
   // This instance extracts shared chunks from code splitted chunks and bundles them
   // in a separate chunk, similar to the vendor chunk
@@ -113,10 +114,10 @@ exports.commonsAsync = () => {
 exports.commonsChunk = (opt = {}) => {
   return new webpack.optimize.CommonsChunkPlugin({
     name: 'common',
-    filename: opt.filename ? opt.filename : 'js/[name].[chunkhash:8].js',
-    // minChunks: (module) => {
-    //   return module.context && module.context.includes('node_modules');
-    // }
+    filename: opt.filename || 'js/[name].[chunkhash:8].js',
+    minChunks: (module) => {
+      return module.context && module.context.includes('node_modules');
+    }
   });
 }
 
@@ -125,7 +126,7 @@ exports.commonsManifest = (opt = {}) => {
   // prevent vendor hash from being updated whenever app bundle is updated
   return new webpack.optimize.CommonsChunkPlugin({
     name: 'manifest',
-    filename: opt.filename ? opt.filename : 'js/[name].[chunkhash:8].js',
+    filename: opt.filename || 'js/[name].[chunkhash:8].js',
     minChunks: Infinity
   });
 }
@@ -171,7 +172,7 @@ exports.friendlyErrors = () => {
 exports.extractCSS = (opt = {}) => {
   return new ExtractTextPlugin({
     allChunks: true,
-    filename: opt.filename ? opt.filename : 'css/[name].[contenthash:8].css'
+    filename: opt.filename || 'css/[name].[contenthash:8].css'
   });
 }
 
@@ -193,7 +194,7 @@ exports.analyzer = (opt = {}) => {
   return new BundleAnalyzerPlugin({
     openAnalyzer: true,
     analyzerMode: 'static', // server, static
-    reportFilename: opt.filename ? opt.filename : 'report.html'
+    reportFilename: opt.filename || 'report.html'
   });
 }
 
@@ -232,7 +233,29 @@ exports.html = (opt = {}) => {
 exports.upload = (opt = {}) => {
   return new NosUploadPlugin({
     nosConfig: config.fle.nosConfig,
-    distPath: resolve('dist'),
-    exclude: /(\.html$)|(manifest)/
+    distPath: opt.distPath || resolve('dist'),
+    exclude: /(\.html$)|(manifest)/,
+    uploadDone: (values) => {
+      var fle = require(resolve('fle.json'));
+
+      if (opt.dll) {
+        fle.dllUpload = fle.dllUpload || {};
+        values.forEach(v => {
+          if (v.success) {
+            var key = v.filename.split('_')[0];
+            fle.dllUpload[key] = v.url;
+          }
+        });
+      } else {
+        fle.buildUpload = fle.buildUpload || {};
+        values.forEach(v => {
+          if (v.success) {
+            fle.buildUpload[v.filename] = v.url;
+          }
+        });
+      }
+
+      fs.writeFileSync(resolve('fle.json'), JSON.stringify(fle, null, 2), { encoding: 'utf8' });
+    }
   });
 }

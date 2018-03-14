@@ -80,7 +80,7 @@ var webpackConfig = {
   devServer: {
     host: config.fle.host,
     port: config.fle.port,
-    contentBase: resolve('.cache/devDll'),
+    contentBase: utils.resolve('.cache/devDll'),
     proxy: config.fle.proxy,
     compress: true,
     hot: config.fle.hot,

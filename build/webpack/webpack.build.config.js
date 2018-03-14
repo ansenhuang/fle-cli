@@ -26,7 +26,7 @@ if (config.fle.vendors && typeof config.fle.vendors === 'object') {
       }));
 
       if (!config.upload) {
-        dlljs.push(config.fle.publicPath + 'dll/' + require(filePath).name + '.js');
+        dlljs.push(config.fle.publicPath + 'dll/' + require(filePath).name + '.min.js');
       } else {
         if (config.fle.dllUpload && config.fle.dllUpload[k]) {
           dlljs.push(config.fle.dllUpload[k]);
@@ -88,7 +88,9 @@ var webpackConfig = {
       exclude: /\.min\.js$/
     }),
     config.upload && plugin.upload(),
-    plugin.analyzer()
+    plugin.analyzer({
+      filename: '../.cache/report.build.html'
+    })
   ].filter(r => r).concat(manifests, htmls),
   externals: config.fle.externals
 };

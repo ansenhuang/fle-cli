@@ -21,36 +21,46 @@ var dllPath = resolve(config.dev ? '.cache/devDll' : 'dist/dll');
 
 //基本配置
 var webpackConfig = {
-  name: 'vendor',
-  entry: vendors,
+  // name: 'vendor',
+  // entry: vendors,
   devtool: false,
   output: {
     path: dllPath,
-    filename: '[name].[hash:8].js',
-    library: '[name].[hash:8]'
+    filename: config.dev ? '[name].js' : '[name]_[hash:8].min.js',
+    library: config.dev ? '[name]' : '[name]_[hash:8]'
   },
   plugins: [
     plugin.merge(),
     plugin.hash(),
     plugin.optimizeCSS(),
     plugin.extractCSS({
-      filename: 'css/[name].css'
+      filename: config.dev ? 'css/[name].css' : 'css/[name]_[contenthash:8].css'
     }),
     plugin.scope(),
     plugin.dll({
       manifestPath: dllPath
     }),
     !config.dev && plugin.uglify(),
-    (!config.dev && config.upload) && plugin.upload(),
-    plugin.analyzer({
-      filename: 'report.html'
-    })
+    (!config.dev && config.upload) && plugin.upload({
+      distPath: dllPath,
+      dll: true
+    }),
+    // plugin.analyzer({
+    //   filename: 'report.html'
+    // })
   ].filter(p => p),
   externals: config.fle.externals
 };
 
-module.exports = merge(
+var mergeWebpackConfig = merge(
   baseWebpackConfig,
   webpackConfig,
   fs.existsSync(userWebpackPath) ? require(userWebpackPath) : {}
 );
+
+// 返回一个数组
+module.exports = Object.keys(vendors).map(k => Object.assign({
+  entry: {
+    [k]: vendors[k]
+  }
+}, mergeWebpackConfig));

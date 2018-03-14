@@ -54,21 +54,23 @@ NosPlugin.prototype.apply = function (compiler) {
     Promise.all(promises).then((values) => {
       callback && callback();
 
+      console.log();
       console.log('============== Upload Info ================');
-      Object.keys(values).forEach(res => {
-        if (res.code === 200) {
-          console.log('  ' + chalk.green(res.filename));
+      values.forEach(res => {
+        if (res.success) {
+          console.log(chalk.green.bold(res.url));
         } else {
-          console.log('  ' + chalk.red(res.message || 'Upload failed!'));
+          console.log(chalk.red.bold(res.message || 'Upload failed!'));
         }
       });
       console.log('===========================================');
+      console.log();
 
       this.uploadDone && this.uploadDone(values);
     }).catch(err => {
       console.log(err);
     });
-  })
+  });
 }
 
 module.exports = NosPlugin

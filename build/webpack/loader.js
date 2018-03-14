@@ -162,7 +162,7 @@ exports.images = (opt = {}) => {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name:  opt.filename ? opt.filename : 'images/[name].[hash:8].[ext]'
+          name: opt.filename || 'images/[name].[hash:8].[ext]'
         }
       },
       // 生产模式启用图片压缩
@@ -202,7 +202,7 @@ exports.fonts = (opt = {}) => {
     loader: 'url-loader',
     options: {
       limit: 10000,
-      name: opt.filename ? opt.filename : 'fonts/[name].[hash:8].[ext]'
+      name: opt.filename || 'fonts/[name].[hash:8].[ext]'
     }
   };
 }
@@ -214,7 +214,7 @@ exports.medias = (opt = {}) => {
     loader: 'url-loader',
     options: {
       limit: 10000,
-      name: opt.filename ? opt.filename : 'medias/[name].[hash:8].[ext]'
+      name: opt.filename || 'medias/[name].[hash:8].[ext]'
     }
   };
 }

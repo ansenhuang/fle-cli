@@ -50,19 +50,22 @@ NosUpload.prototype.uploadFile = function ({
       this.nosClient.put_file(config, res => {
         if (res.statusCode === 200) {
           resolve({
-            code: 200,
-            filename: this.domain + config.key
+            success: true,
+            filename: filename,
+            url: this.domain + config.key
           });
         } else {
           reject({
-            code: 1002,
+            success: false,
+            filename: filename,
             message: filename + ' upload failed.'
           })
         }
       });
     } else {
       reject({
-        code: 1001,
+        success: false,
+        filename: filename,
         message: filename + ' is not a file.'
       })
     }
