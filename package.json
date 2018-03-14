@@ -6,7 +6,9 @@
     "fle": "bin/fle.js"
   },
   "scripts": {
-    "start": "bin/fle.js"
+    "pub-patch": "npm version patch && npm publish && git push",
+    "pub-minor": "npm version minor && npm publish && git push",
+    "pub-major": "npm version major && npm publish && git push"
   },
   "keywords": [
     "fle",
