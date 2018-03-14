@@ -1,6 +1,7 @@
 {
   "boilerplate": "app",
   "publicPath": "/",
+  "vendors": {},
   "nosConfig": {},
   "port": 5000,
   "proxy": {},

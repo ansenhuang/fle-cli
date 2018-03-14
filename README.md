@@ -34,10 +34,14 @@ $ fle build
 # 编译并将文件上传至cdn
 # fle build --upload
 
-# build vendors in production
+# build vendors with dll
 $ fle dll
+
+# 编译开发环境的第三方库
+# $ fle dll --dev
+
 # 编译并将文件上传至cdn
-# fle dll --upload
+# fle dll --build --upload
 
 # build library or module in production
 $ fle lib
@@ -143,7 +147,7 @@ $ fle lib
 
 说明：
 
-vendors配置，分离多个第三方模块，避免集中在一个导致体积太大。
+vendors配置，分离多个第三方模块，避免集中在一个文件导致体积太大。
 
 ```
 {
