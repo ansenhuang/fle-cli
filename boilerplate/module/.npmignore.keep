@@ -4,6 +4,7 @@
 node_modules/
 /dist
 /report
+/dll
 *yarn*
 *.log*
 package-lock.json

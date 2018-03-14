@@ -1,6 +1,4 @@
-var fs = require('fs');
 var path = require('path');
-var merge = require('webpack-merge');
 var config = require('./config');
 var loader = require('./loader');
 var plugin = require('./plugin');
@@ -62,7 +60,4 @@ var webpackConfig = {
   }
 };
 
-module.exports = !fs.existsSync(resolve('webpack.config.js')) ?
-  webpackConfig
-  :
-  merge(webpackConfig, require(resolve('webpack.config.js')));
+module.exports = webpackConfig;

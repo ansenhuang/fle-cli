@@ -1,6 +1,5 @@
 {
   "boilerplate": "app",
-  "commonsChunk": null,
   "publicPath": "/",
   "nosConfig": {},
   "port": 5000,

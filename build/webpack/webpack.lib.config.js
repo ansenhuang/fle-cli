@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var merge = require('webpack-merge');
 var config = require('./config');
@@ -5,9 +6,13 @@ var config = require('./config');
 var plugin = require('./plugin');
 var utils = require('../utils');
 
-var entry = {};
+var baseWebpackConfig = require('./webpack.base.config');
+var userWebpackPath = utils.resolve('webpack.lib.config.js');
 
-utils.getPages(utils.resolve('src')).forEach(page => {
+var entry = {};
+var pages = utils.getPages(utils.resolve('src'));
+
+pages.forEach(page => {
   if (page.module) {
     entry[page.moduleName || page.id] = page.module;
   }
@@ -25,6 +30,7 @@ var webpackConfig = {
   },
   plugins: [
     plugin.merge(),
+    plugin.hash(),
     plugin.optimizeCSS(),
     plugin.extractCSS({
       filename: 'css/[name].css'
@@ -38,4 +44,8 @@ var webpackConfig = {
   externals: config.fle.libExternals
 };
 
-module.exports = merge(webpackConfig, require('./webpack.base.config'));
+module.exports = merge(
+  baseWebpackConfig,
+  webpackConfig,
+  fs.existsSync(userWebpackPath) ? require(userWebpackPath) : {}
+);

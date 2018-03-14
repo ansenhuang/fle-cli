@@ -38,7 +38,7 @@
     "imagemin-pngquant": "^5.0.1",
     "inline-manifest-webpack-plugin": "^3.0.1",
     "node-notifier": "^5.2.1",
-    "nos-node-sdk": "^0.0.2",    
+    "nos-node-sdk": "^0.0.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "postcss-advanced-variables": "^2.3.0",
     "postcss-calc": "^6.0.1",
@@ -73,7 +73,7 @@
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
-    "webpack": "^3.6.0",
+    "webpack": "^3.11.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.2"

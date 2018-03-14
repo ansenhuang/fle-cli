@@ -36,17 +36,17 @@ exports.loader = () => {
   });
 }
 
-exports.dll = () => {
+exports.dll = (opt = {}) => {
   return new webpack.DllPlugin({
-    name: 'vendor_[hash]',
-    path: resolve('.cache/dll/dll-manifest.json')
+    name: '[name].[hash:8]',
+    path: path.join(opt.manifestPath, '[name].manifest.json')
   });
 }
 
 // 映射dll
-exports.dllReference = () => {
+exports.dllReference = (opt = {}) => {
   return new webpack.DllReferencePlugin({
-    manifest: resolve('.cache/dll/dll-manifest.json')
+    manifest: opt.manifest
   });
 }
 
@@ -76,9 +76,9 @@ exports.scope = () => {
 }
 
 //代码压缩插件
-exports.uglify = () => {
+exports.uglify = (opt = {}) => {
   return new webpack.optimize.UglifyJsPlugin({
-    exclude:/\.min\.js$/,
+    exclude: opt.exclude,
     parallel: true,
     sourceMap: false,
     compress: {
@@ -97,20 +97,6 @@ exports.merge = () => {
   return new webpack.optimize.AggressiveMergingPlugin();
 }
 
-// 抽离第三方依赖
-exports.commonsChunk = (opt = {}) => {
-  return new webpack.optimize.CommonsChunkPlugin({
-    names: ['common/_base'].concat(opt.commons),
-    filename: opt.filename ? opt.filename : '[name].[chunkhash:8].js',
-    // minChunks: (module) => {
-    //   if(module.resource && !(/\.js$/.test(module.resource))) {
-    //     return false;
-    //   }
-    //   return module.context && module.context.includes('node_modules');
-    // }
-  });
-}
-
 exports.commonsAsync = () => {
   // This instance extracts shared chunks from code splitted chunks and bundles them
   // in a separate chunk, similar to the vendor chunk
@@ -123,12 +109,23 @@ exports.commonsAsync = () => {
   });
 }
 
+// 抽离第三方依赖
+exports.commonsChunk = (opt = {}) => {
+  return new webpack.optimize.CommonsChunkPlugin({
+    name: 'common',
+    filename: opt.filename ? opt.filename : 'js/[name].[chunkhash:8].js',
+    // minChunks: (module) => {
+    //   return module.context && module.context.includes('node_modules');
+    // }
+  });
+}
+
 exports.commonsManifest = (opt = {}) => {
   // extract webpack runtime and module manifest to its own file in order to
   // prevent vendor hash from being updated whenever app bundle is updated
   return new webpack.optimize.CommonsChunkPlugin({
     name: 'manifest',
-    filename: opt.filename ? opt.filename : 'common/manifest.[chunkhash:8].js',
+    filename: opt.filename ? opt.filename : 'js/[name].[chunkhash:8].js',
     minChunks: Infinity
   });
 }
@@ -196,7 +193,7 @@ exports.analyzer = (opt = {}) => {
   return new BundleAnalyzerPlugin({
     openAnalyzer: true,
     analyzerMode: 'static', // server, static
-    reportFilename: opt.filename ? opt.filename : resolve('.cache/report.html')
+    reportFilename: opt.filename ? opt.filename : 'report.html'
   });
 }
 
@@ -205,9 +202,9 @@ var htmlDefaults = {
   keywords: '',
   description: '',
   icon: '',
-  css: config.fle.css,
-  prejs: config.fle.prejs,
-  js: config.fle.js,
+  css: [],
+  prejs: [],
+  js: [],
   filename: 'html/404.html',
   template: path.join(__dirname, '../.share/template/default.html'),
   inject: true,
@@ -233,22 +230,9 @@ exports.html = (opt = {}) => {
 
 // upload nos
 exports.upload = (opt = {}) => {
-  if (!config.fle.nosConfig) return false;
-
-  var keys = [
-    'endPoint',
-    'accessId',
-    'secretKey',
-    'domain',
-    'bucket',
-    // 'business'
-  ];
-  if (keys.every(k => config.fle.nosConfig[k])) {
-    return new NosUploadPlugin({
-      nosConfig: config.fle.nosConfig,
-      exclude: /(\.html$)|(common\/manifest)/
-    });
-  } else {
-    return false;
-  }
+  return new NosUploadPlugin({
+    nosConfig: config.fle.nosConfig,
+    distPath: resolve('dist'),
+    exclude: /(\.html$)|(manifest)/
+  });
 }

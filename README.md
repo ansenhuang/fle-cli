@@ -28,14 +28,16 @@ $ fle dev
 # 开启手机debug调试
 # fle dev --log
 
-# 重新构建dll模块，依赖有更新时使用
-# fle dev --dll
-
 # build pages or demo in production
 $ fle build
 
 # 编译并将文件上传至cdn
 # fle build --upload
+
+# build vendors in production
+$ fle dll
+# 编译并将文件上传至cdn
+# fle dll --upload
 
 # build library or module in production
 $ fle lib
@@ -51,7 +53,8 @@ $ fle lib
 说明：
 
 * 每天第一次启动时会检查是否有更新的版本，若有则提示
-* fle dev启动时会自动抽离dll文件，若要重新构建dll，可以加参数：--dll
+* dll启动时会分离出第三方依赖（需要在fle.json中的vendors配置），若开启上传则会在js中自动添加外链引用
+* dev和build启动时会自动检查是否有dll分离出来的第三方依赖，若有则开启dll模式
 * 开启上传功能需要在fle.json配置nosConfig参数，否则无法上传，[cdn参数配置](https://g.hz.netease.com/huangancheng/documents/blob/master/fle/nosConfig.md)【仅限网易员工访问】
 
 ## Project
@@ -95,7 +98,7 @@ $ fle lib
 
   "eslint": true, // 是否开启eslint代码检测
   "notify": true, // 【dev】当编译出错时是否开启系统通知
-  "commonsChunk": null, // 【build】手动抽离公共模块，不设置则自动抽离node_modules模块，手动设置的好处是可以精准的抽离公共依赖
+  "vendors": null, // 【build】抽离第三方模块，格式：{ name: array, ... }
   "inlineManifest": true, // 【build】是否将manifest文件写入html
   "publicPath": "/", // 【build】编译后文件引用前缀
   "nosConfig": {}, // 上传cdn配置
@@ -140,16 +143,9 @@ $ fle lib
 
 说明：
 
-commonsChunk可以是字符串、数组或对象，例如：
+vendors配置，分离多个第三方模块，避免集中在一个导致体积太大。
 
 ```
- // 打包成common/vendor
-"react"
-
-// 打包成common/vendor
-["react", "react-dom"]
-
-// 打包成common/react, common/router
 {
   "react": ["react", "react-dom"],
   "router": ["react-router", "redux"]
@@ -184,6 +180,7 @@ prejs和js可以设置externals，例如：
   "template": "index.html", // 页面模版，也可以自行扩展，或者/开头来使用系统配置好的模版，如：/default.html
   "entry": "index.js", // 设置页面入口
   "module": "module.js", // 设置组件入口
+  "moduleName": "name", // 分离出的组件名称，若不设置则取该目录的名称
   "compiled": true // 是否要编译本页面，若为false则不编译
 }
 ```
@@ -194,10 +191,12 @@ prejs和js可以设置externals，例如：
 
 需要自定义额外配置，可在项目根目录新建以下文件，系统会自动合并到默认配置并覆盖
 
-* webpack.config.js 页面配置
-* webpack.lib.config.js 组建配置
 * .babelrc babel配置
 * .eslintrc eslint配置
+* webpack.dev.config.js 开发模式配置
+* webpack.build.config.js 生产模式配置
+* webpack.dll.config.js dll配置
+* webpack.lib.config.js 组件配置
 
 ## Others
 

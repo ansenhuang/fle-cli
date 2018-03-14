@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var merge = require('webpack-merge');
 var config = require('./config');
@@ -5,17 +6,36 @@ var config = require('./config');
 var plugin = require('./plugin');
 var utils = require('../utils');
 
-var tplPath = path.join(__dirname, '../.share/template');
+var baseWebpackConfig = require('./webpack.base.config');
+var userWebpackPath = utils.resolve('webpack.dev.config.js');
 
 var entry = {};
 var htmls = [];
+var manifests = [];
+var dlljs = [];
 var pages = utils.getPages(utils.resolve('src'));
+var sharePath = path.join(__dirname, '../.share');
+
+// dll
+if (config.fle.vendors && typeof config.fle.vendors === 'object') {
+  Object.keys(config.fle.vendors).forEach(k => {
+    var filePath = utils.resolve(`.cache/devDll/${k}.manifest.json`);
+    if (fs.existsSync(filePath)) {
+      manifests.push(plugin.dllReference({
+        manifest: filePath
+      }));
+      dlljs.push('/' + k + '.js');
+    } else {
+      console.log(`The vendors of [${k}] has no dll manifest, Please run "fle dll --dev" firstly!`);
+    }
+  });
+}
 
 htmls.push(plugin.html({
   title: '页面导航',
   filename: 'index.html',
-  template: path.join(tplPath, 'dev-index.html'),
-  favicon: path.join(__dirname, '../.share/images/favicon.ico'),
+  template: path.join(sharePath, 'template/dev-index.html'),
+  favicon: path.join(sharePath, 'images/favicon.ico'),
   pages: pages
 }));
 
@@ -24,7 +44,7 @@ pages.forEach(page => {
 
   if (page.template) {
     if (page.template[0] === '/') {
-      page.template = path.join(tplPath, page.template.substr(1));
+      page.template = path.join(sharePath, 'template', page.template.substr(1));
     } else {
       page.template = utils.resolve(page.template);
     }
@@ -32,6 +52,10 @@ pages.forEach(page => {
 
   page.filename = 'html/' + page.id + '.html';
   page.chunks = [page.id];
+
+  page.css = [].concat(config.fle.css, page.css).filter(c => c);
+  page.prejs = [].concat(config.fle.prejs, page.prejs).filter(c => c);
+  page.js = [].concat(config.fle.js, page.js, dlljs).filter(c => c);
 
   htmls.push(plugin.html(page));
 });
@@ -46,18 +70,17 @@ var webpackConfig = {
     chunkFilename: 'js/[name].chunk.js'
   },
   plugins: [
-    config.dll && plugin.dllReference(),
     config.fle.hot && plugin.hmr(),
     config.vconsole && plugin.vconsole(),
     plugin.namedModules(),
     plugin.noErrors(),
     plugin.friendlyErrors()
-  ].filter(r => r).concat(htmls),
+  ].filter(r => r).concat(manifests, htmls),
   externals: config.fle.externals,
   devServer: {
     host: config.fle.host,
     port: config.fle.port,
-    contentBase: utils.resolve('.cache/dll'),
+    contentBase: resolve('.cache/devDll'),
     proxy: config.fle.proxy,
     compress: true,
     hot: config.fle.hot,
@@ -76,4 +99,8 @@ var webpackConfig = {
   }
 };
 
-module.exports = merge(webpackConfig, require('./webpack.base.config'));
+module.exports = merge(
+  baseWebpackConfig,
+  webpackConfig,
+  fs.existsSync(userWebpackPath) ? require(userWebpackPath) : {}
+);

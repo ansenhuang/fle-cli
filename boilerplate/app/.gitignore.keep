@@ -4,6 +4,7 @@
 node_modules/
 /lib
 /dist
+/dll
 /report
 *yarn*
 *.log*

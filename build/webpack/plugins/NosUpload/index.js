@@ -1,68 +1,73 @@
-var fs = require('fs');
 var path = require('path');
+var chalk = require('chalk');
 var NosUpload = require('./upload');
 
-// nosConfig
-// {
-//   endPoint,
-//   accessId,
-//   secretKey,
-//   domain,
-//   bucket,
-//   business
-// }
 function NosPlugin ({
   nosConfig,
   include, // regexp
   exclude, // regexp
-  saveFile
+  distPath = '.',
+  uploadDone
 }) {
-  this.nosUpload = new NosUpload(nosConfig);
-  this.include = include;
-  this.exclude = exclude;
-  this.saveFile = saveFile;
+  var keys = [
+    'endPoint',
+    'accessId',
+    'secretKey',
+    'domain',
+    'bucket',
+    // 'business'
+  ];
+
+  if (nosConfig && keys.every(k => nosConfig[k])) {
+    this.nosUpload = new NosUpload(nosConfig);
+    this.include = include;
+    this.exclude = exclude;
+    this.distPath = distPath;
+    this.uploadDone = uploadDone;
+  }
 }
 
 NosPlugin.prototype.apply = function (compiler) {
+  if (!this.nosUpload) return;
+
   compiler.plugin('before-run', (compiler, callback) => {
     compiler.options.output.publicPath = this.nosUpload.domain + this.nosUpload.prefix + '/';
     callback && callback();
   });
 
-  compiler.plugin('emit', (compilation, callback) => {
+  compiler.plugin('after-emit', (compilation, callback) => {
     var assets = compilation.assets;
     var promises = [];
-    var tmpPath = path.join(process.env.HOME, '.fle/.tmp_upload');
-
-    if (!fs.existsSync(tmpPath)) {
-      fs.mkdirSync(tmpPath);
-    }
 
     Object.keys(assets).forEach(key => {
-      var ext = path.extname(key);
-
       if (this.exclude && this.exclude.test(key)) return;
       if (this.include && !this.include.test(key)) return;
 
       promises.push(
-        this.nosUpload.uploadContent({
-          content: assets[key].source(),
-          filename: key,
-          tmpPath: tmpPath
+        this.nosUpload.uploadFile({
+          filepath: path.join(this.distPath, key),
+          filename: key
         })
       );
-
-      !this.saveFile && delete assets[key];
     });
 
-    Promise.all(promises).then(() => {
+    Promise.all(promises).then((values) => {
       callback && callback();
 
-      fs.readdirSync(tmpPath).forEach(file => {
-        fs.unlinkSync(path.join(tmpPath, file));
+      console.log('============== Upload Info ================');
+      Object.keys(values).forEach(res => {
+        if (res.code === 200) {
+          console.log('  ' + chalk.green(res.filename));
+        } else {
+          console.log('  ' + chalk.red(res.message || 'Upload failed!'));
+        }
       });
-      // fs.rmdirSync(tmpPath);
-    }).catch(err => {});
+      console.log('===========================================');
+
+      this.uploadDone && this.uploadDone(values);
+    }).catch(err => {
+      console.log(err);
+    });
   })
 }
 

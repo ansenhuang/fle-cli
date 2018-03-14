@@ -15,7 +15,9 @@ var typeOpts = checkProject();
 
 program
 	.usage('[options]')
-	.option('-u, --upload', 'upload files to cdn (just for webpack)')
+	.option('-d, --dev', 'build vendors for development (just for webpack)')
+	.option('-b, --build', 'build vendors for production (just for webpack)')
+	.option('-u, --upload', 'upload files to cdn (just for webpack in production)')
 	.on('--help', () => {
 		console.log();
 	})
@@ -23,58 +25,21 @@ program
 
 var opts = program.opts();
 var env = Object.assign({
-	NODE_ENV: 'production',
+	NODE_ENV: opts.build ? 'production' : 'development',
 	PROJECT_ROOT_PATH: process.cwd(),
 	FLE_FRAMEWORK: typeOpts.framework,
 	FLE_UPLOAD: opts.upload
 }, process.env);
-var rimrafPath = path.join(__dirname, '../node_modules/.bin/rimraf');
 
-if (typeOpts.compiler === 'rollup') {
-	// 清空先前编译的文件
-	spawn(
-		rimrafPath,
-		[
-			path.resolve('public/dist')
-		],
-		{
-			stdio: 'inherit'
-		}
-	);
-
-	// demo
-	spawn(
-		path.join(homeFlePath, 'node_modules/.bin/rollup'),
-		[
-			'-c',
-			path.join(homeFlePath, 'build/rollup/rollup.config.js'),
-		],
-		{
-			cwd: homeFlePath,
-			stdio: 'inherit',
-			env: env
-		}
-	);
-} else if (typeOpts.compiler === 'webpack') {
-	// 清空先前编译的文件
-	// spawn(
-	// 	rimrafPath,
-	// 	[
-	// 		path.resolve('dist')
-	// 	],
-	// 	{
-	// 		stdio: 'inherit'
-	// 	}
-	// );
-
-	// build
+if (typeOpts.compiler === 'webpack') {
+	// dll
 	spawn(
 		path.join(homeFlePath, 'node_modules/.bin/webpack'),
 		[
 			'--progress',
 			'--hide-modules',
 			'--config',
-			path.join(homeFlePath, 'build/webpack/webpack.build.config.js')
+			path.join(homeFlePath, 'build/webpack/webpack.dll.config.js')
 		],
 		{
 			cwd: homeFlePath,

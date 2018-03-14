@@ -33,6 +33,7 @@ program
     console.log('    init           generate a project');
     console.log('    dev            open server in development');
     console.log('    build          build pages or demo in production');
+    console.log('    dll            build vendors in production');
     console.log('    lib            build library or component in production');
     console.log();
   })
