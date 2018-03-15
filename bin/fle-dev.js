@@ -6,7 +6,7 @@
 var path = require('path');
 var program = require('commander');
 // var chalk = require('chalk');
-var { spawn, spawnSync } = require('child_process');
+var spawn = require('cross-spawn');
 var homeFlePath = require('../lib/consts').homeFlePath;
 var checkProject = require('../lib/utils').checkProject;
 

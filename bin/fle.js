@@ -7,7 +7,8 @@ var path = require('path');
 var program = require('commander');
 var chalk = require('chalk');
 var updateNotifier = require('update-notifier');
-var spawn = require('child_process').spawn;
+// var spawn = require('child_process').spawn;
+var spawn = require('cross-spawn');
 var consts = require('../lib/consts');
 var utils = require('../lib/utils');
 
