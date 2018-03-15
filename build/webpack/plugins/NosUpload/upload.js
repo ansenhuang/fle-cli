@@ -29,7 +29,7 @@ function NosUpload ({
 
   this.domain = /\/$/.test(domain) ? domain : domain + '/';
   this.bucket = bucket;
-  this.prefix = path.join('fle', fleHash, business || +new Date());
+  this.prefix = ['fle', fleHash, business || +new Date()].join('/') + '/';
 }
 
 NosUpload.prototype.uploadFile = function ({
@@ -43,7 +43,7 @@ NosUpload.prototype.uploadFile = function ({
       var config = {
         filepath: filepath,
         bucket: this.bucket,
-        key: path.join(this.prefix, filename),
+        key: this.prefix + filename,
         cacheControl: 'public, max-age=31104000'
       };
 

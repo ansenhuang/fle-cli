@@ -31,7 +31,7 @@ NosPlugin.prototype.apply = function (compiler) {
   if (!this.nosUpload) return;
 
   compiler.plugin('before-run', (compiler, callback) => {
-    compiler.options.output.publicPath = this.nosUpload.domain + this.nosUpload.prefix + '/';
+    compiler.options.output.publicPath = this.nosUpload.domain + this.nosUpload.prefix;
     callback && callback();
   });
 
