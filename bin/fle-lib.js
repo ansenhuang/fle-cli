@@ -6,12 +6,11 @@
 var path = require('path');
 var program = require('commander');
 // var chalk = require('chalk');
-var spawn = require('cross-spawn');
 var homeFlePath = require('../lib/consts').homeFlePath;
-var checkProject = require('../lib/utils').checkProject;
+var utils = require('../lib/utils');
 
 // 检查是否为fle项目
-var typeOpts = checkProject();
+var typeOpts = utils.checkProject();
 
 program
 	.usage('[options]')
@@ -30,7 +29,7 @@ var rimrafPath = path.join(__dirname, '../node_modules/.bin/rimraf');
 
 if (typeOpts.compiler === 'rollup') {
 	// 清空先前编译的文件
-	spawn(
+	utils.spawn(
 		rimrafPath,
 		[
 			path.resolve('lib')
@@ -41,7 +40,7 @@ if (typeOpts.compiler === 'rollup') {
 	);
 
 	// lib
-	spawn(
+	utils.spawn(
 		path.join(homeFlePath, 'node_modules/.bin/rollup'),
 		[
 			'-c',
@@ -55,7 +54,7 @@ if (typeOpts.compiler === 'rollup') {
 	);
 } else if (typeOpts.compiler === 'webpack') {
 	// 清空先前编译的文件
-	spawn(
+	utils.spawn(
 		rimrafPath,
 		[
 			path.resolve('lib')
@@ -66,7 +65,7 @@ if (typeOpts.compiler === 'rollup') {
 	);
 
 	// build
-	spawn(
+	utils.spawn(
 		path.join(homeFlePath, 'node_modules/.bin/webpack'),
 		[
 			'--progress',

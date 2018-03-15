@@ -6,12 +6,11 @@
 var path = require('path');
 var program = require('commander');
 // var chalk = require('chalk');
-var spawn = require('cross-spawn');
 var homeFlePath = require('../lib/consts').homeFlePath;
-var checkProject = require('../lib/utils').checkProject;
+var utils = require('../lib/utils');
 
 // 检查是否为fle项目
-var typeOpts = checkProject();
+var typeOpts = utils.checkProject();
 
 program
 	.usage('[options]')
@@ -30,7 +29,7 @@ var env = Object.assign({
 }, process.env);
 
 if (typeOpts.compiler === 'rollup') {
-	spawn(
+	utils.spawn(
 		path.join(homeFlePath, 'node_modules/.bin/rollup'),
 		[
 			'-c',
@@ -45,7 +44,7 @@ if (typeOpts.compiler === 'rollup') {
 	);
 } else if (typeOpts.compiler === 'webpack') {
 	// server
-	spawn(
+	utils.spawn(
 		path.join(homeFlePath, 'node_modules/.bin/webpack-dev-server'),
 		[
 			'--inline',

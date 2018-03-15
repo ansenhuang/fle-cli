@@ -7,8 +7,6 @@ var path = require('path');
 var program = require('commander');
 var chalk = require('chalk');
 var updateNotifier = require('update-notifier');
-// var spawn = require('child_process').spawn;
-var spawn = require('cross-spawn');
 var consts = require('../lib/consts');
 var utils = require('../lib/utils');
 
@@ -16,7 +14,9 @@ var utils = require('../lib/utils');
 updateNotifier({
   pkg: consts.pkg,
   updateCheckInterval: 86400000 // 每天检查一次
-}).notify();
+}).notify({
+  isGlobal: true
+});
 
 // 第一次启动需要安装编译需要的依赖
 if (!fs.existsSync(path.join(__dirname, '../.installed'))) {
@@ -68,6 +68,6 @@ if (!subcmd || subcmd === 'help') {
       process.exit(1);
     }
 
-    spawn(file, args, { stdio: 'inherit' });
+    utils.spawn(file, args, { stdio: 'inherit' });
   });
 }
