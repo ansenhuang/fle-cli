@@ -24,6 +24,11 @@ function NosPlugin ({
     this.exclude = exclude;
     this.distPath = distPath;
     this.uploadDone = uploadDone;
+  } else {
+    console.log('===========================================');
+    console.log('There is no upload config or config is illegal!');
+    console.log('===========================================');
+    console.log();
   }
 }
 
