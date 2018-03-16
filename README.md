@@ -11,7 +11,7 @@ $ npm install -g fle-cli
 $ yarn global add fle-cli
 ```
 
-注意：使用sudo权限进行全局安装，需要更改目录权限，如：sudo chmod -R 777 [path]，否则无法写入文件。
+注意：不要使用sudo权限进行全局安装，否则否则无法写入文件，需要更改目录权限，如：sudo chmod -R 777 [path]。
 
 ## Usage
 
@@ -59,7 +59,7 @@ $ fle lib
 * 每天第一次启动时会检查是否有更新的版本，若有则提示
 * dll启动时会分离出第三方依赖（需要在fle.json中的vendors配置），若开启上传则会在js中自动添加外链引用
 * dev和build启动时会自动检查是否有dll分离出来的第三方依赖，若有则开启dll模式
-* 开启上传功能需要在fle.json配置nosConfig参数，否则无法上传，[cdn参数配置](https://g.hz.netease.com/huangancheng/documents/blob/master/fle/nosConfig.md)【仅限网易员工访问】
+* 开启上传功能需要配置密钥等信息，否则无法上传，[cdn参数配置](https://g.hz.netease.com/huangancheng/documents/blob/master/fle/nosConfig.md)【仅限网易员工访问】
 
 ## Project
 
@@ -100,12 +100,12 @@ $ fle lib
 
   /* 以下为webpack项目配置 */
 
+  "business": "test", // 业务名称，用于上传cdn的标识，若不设置则动态上传，每次的url都不一样，不利于缓存命中，固定的业务线请务必设置
   "eslint": true, // 是否开启eslint代码检测
   "notify": true, // 【dev】当编译出错时是否开启系统通知
   "vendors": null, // 【build】抽离第三方模块，格式：{ name: array, ... }
   "inlineManifest": true, // 【build】是否将manifest文件写入html
   "publicPath": "/", // 【build】编译后文件引用前缀
-  "nosConfig": {}, // 上传cdn配置
   "remUnit": 50, // 1rem=50px
 
   "port": 5000, // 【dev】端口

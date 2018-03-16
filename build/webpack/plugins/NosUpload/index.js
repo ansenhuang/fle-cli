@@ -1,6 +1,6 @@
 var path = require('path');
 var chalk = require('chalk');
-var NosUpload = require('./upload');
+var NosUpload = require('./nos-upload');
 
 function NosPlugin ({
   nosConfig,

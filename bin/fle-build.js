@@ -25,7 +25,8 @@ var env = Object.assign({
 	NODE_ENV: 'production',
 	PROJECT_ROOT_PATH: process.cwd(),
 	FLE_FRAMEWORK: typeOpts.framework,
-	FLE_UPLOAD: opts.upload
+	FLE_UPLOAD: opts.upload,
+	FLE_UPLOAD_CONFIG: opts.upload ? JSON.stringify(require(path.join(homeFlePath, '.cdn.json'))) : ''
 }, process.env);
 var rimrafPath = path.join(__dirname, '../node_modules/.bin/rimraf');
 

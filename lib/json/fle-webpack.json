@@ -1,5 +1,6 @@
 {
   "boilerplate": "app",
+  "business": "",
   "publicPath": "/",
   "vendors": {},
   "nosConfig": {},

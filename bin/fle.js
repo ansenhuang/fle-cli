@@ -36,6 +36,7 @@ program
     console.log('    build          build pages or demo in production');
     console.log('    dll            build vendors in production');
     console.log('    lib            build library or component in production');
+    console.log('    upload         upload a batch of resources to cdn');
     console.log();
   })
   .parse(process.argv);
@@ -47,7 +48,8 @@ var aliases = {
   "i": "init",
   "d": "dev",
   "b": "build",
-  "l": "lib"
+  "l": "lib",
+  "u": "upload"
 }
 
 if (aliases[subcmd]) {

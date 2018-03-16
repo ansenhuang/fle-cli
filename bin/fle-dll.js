@@ -27,7 +27,8 @@ var env = Object.assign({
 	NODE_ENV: opts.build ? 'production' : 'development',
 	PROJECT_ROOT_PATH: process.cwd(),
 	FLE_FRAMEWORK: typeOpts.framework,
-	FLE_UPLOAD: opts.upload
+	FLE_UPLOAD: opts.upload,
+	FLE_UPLOAD_CONFIG: opts.upload ? JSON.stringify(require(path.join(homeFlePath, '.cdn.json'))) : ''
 }, process.env);
 
 if (typeOpts.compiler === 'webpack') {
