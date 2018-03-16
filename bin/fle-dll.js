@@ -2,7 +2,7 @@
 
 'use strict';
 
-// var fs = require('fs');
+var fs = require('fs');
 var path = require('path');
 var program = require('commander');
 // var chalk = require('chalk');
@@ -23,12 +23,13 @@ program
 	.parse(process.argv);
 
 var opts = program.opts();
+var cdnFile = path.join(homeFlePath, '.cdn.json');
 var env = Object.assign({
 	NODE_ENV: opts.build ? 'production' : 'development',
 	PROJECT_ROOT_PATH: process.cwd(),
 	FLE_FRAMEWORK: typeOpts.framework,
 	FLE_UPLOAD: opts.upload,
-	FLE_UPLOAD_CONFIG: opts.upload ? JSON.stringify(require(path.join(homeFlePath, '.cdn.json'))) : ''
+	FLE_UPLOAD_CONFIG: (opts.upload && fs.existsSync(cdnFile)) ? JSON.stringify(require(cdnFile)) : ''
 }, process.env);
 
 if (typeOpts.compiler === 'webpack') {
