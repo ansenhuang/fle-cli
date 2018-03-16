@@ -1,8 +1,19 @@
 var __DEV__ = (process.env.NODE_ENV || 'development') === 'development';
 var __LOG__ = process.env.FLE_VCONSOLE === 'true';
 var __UPLOAD__ = process.env.FLE_UPLOAD === 'true';
+var __UPLOAD_CONFIG__ = process.env.FLE_UPLOAD_CONFIG;
 var __REACT__ = process.env.FLE_FRAMEWORK.indexOf('react') !== -1;
 var __VUE__ = process.env.FLE_FRAMEWORK.indexOf('vue') !== -1;
+
+var uploadConfig = null;
+
+if (__UPLOAD_CONFIG__) {
+  try {
+    uploadConfig = JSON.parse(__UPLOAD_CONFIG__);
+  } catch (err) {
+    uploadConfig = null;
+  }
+}
 
 var resolve = require('../utils').resolve;
 var fle = require(resolve('fle.json'));
@@ -35,12 +46,14 @@ module.exports = {
   upload: __UPLOAD__,
   react: __REACT__,
   vue: __VUE__,
+  uploadConfig: uploadConfig,
   fle: Object.assign({
     // global
     eslint: true,
     notify: true,
     inlineManifest: true,
-    vendors: null,
+    // vendors: {},
+    // business: '',
     publicPath: '/',
 
     // css

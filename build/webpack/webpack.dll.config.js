@@ -15,6 +15,13 @@ if (!vendors || Object.keys(vendors).length === 0) {
   process.exit(1);
 }
 
+if (config.dev && config.upload) {
+  console.log('===========================================');
+  console.log('You can\'t upload files in development!');
+  console.log('===========================================');
+  console.log();
+}
+
 var baseWebpackConfig = require('./webpack.base.config');
 var userWebpackPath = resolve('webpack.dll.config.js');
 var dllPath = resolve(config.dev ? '.cache/devDll' : 'dist/dll');

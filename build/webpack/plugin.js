@@ -232,7 +232,7 @@ exports.html = (opt = {}) => {
 // upload nos
 exports.upload = (opt = {}) => {
   return new NosUploadPlugin({
-    nosConfig: config.fle.nosConfig,
+    nosConfig: config.uploadConfig,
     distPath: opt.distPath || resolve('dist'),
     exclude: /(\.html$)|(manifest)/,
     uploadDone: (values) => {
