@@ -1,11 +1,12 @@
 var path = require('path');
 var chalk = require('chalk');
-var NosUpload = require('./nos-upload');
+var NosUpload = require('@winman-f2e/nos-upload');
 
 function NosPlugin ({
   nosConfig,
   include, // regexp
   exclude, // regexp
+  prefix,
   distPath = '.',
   uploadDone
 }) {
@@ -14,11 +15,12 @@ function NosPlugin ({
     'accessId',
     'secretKey',
     'domain',
-    'bucket',
-    // 'business'
+    'bucket'
   ];
 
   if (nosConfig && keys.every(k => nosConfig[k])) {
+    nosConfig.prefix = prefix;
+
     this.nosUpload = new NosUpload(nosConfig);
     this.include = include;
     this.exclude = exclude;
@@ -42,22 +44,21 @@ NosPlugin.prototype.apply = function (compiler) {
 
   compiler.plugin('after-emit', (compilation, callback) => {
     var assets = compilation.assets;
-    var promises = [];
+    var files = [];
 
     Object.keys(assets).forEach(key => {
       if (this.exclude && this.exclude.test(key)) return;
       if (this.include && !this.include.test(key)) return;
 
-      promises.push(
-        this.nosUpload.uploadFile({
-          filepath: path.join(this.distPath, key),
-          filename: key
-        })
-      );
+      files.push({
+        filepath: path.join(this.distPath, key),
+        filename: key
+      });
     });
 
-    Promise.all(promises).then((values) => {
+    this.nosUpload.uploadMultiFile(files).then(values => {
       callback && callback();
+      this.uploadDone && this.uploadDone(values);
 
       console.log();
       console.log('============== Upload Info ================');
@@ -70,10 +71,6 @@ NosPlugin.prototype.apply = function (compiler) {
       });
       console.log('===========================================');
       console.log();
-
-      this.uploadDone && this.uploadDone(values);
-    }).catch(err => {
-      console.log(err);
     });
   });
 }

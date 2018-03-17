@@ -234,6 +234,7 @@ exports.upload = (opt = {}) => {
   return new NosUploadPlugin({
     nosConfig: config.uploadConfig,
     distPath: opt.distPath || resolve('dist'),
+    prefix: 'fle/a0df1d4009c7a2ec5fee/' + (config.fle.business || +new Date()) + '/',
     exclude: /(\.html$)|(manifest)/,
     uploadDone: (values) => {
       var fle = require(resolve('fle.json'));
