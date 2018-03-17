@@ -12,7 +12,7 @@ var consts = require('../lib/consts');
 var NosUpload = require(path.join(consts.homeFlePath, 'node_modules/@winman-f2e/nos-upload'));
 
 program
-  .usage('<dir|file|glob>')
+  .usage('<file|glob>')
 	.option('-i, --init', 'configure your accessId and secretKey only once before upload')
 	.option('-m, --min', 'optimize images of [jpg|jpeg|png] with imagemin')
   .on('--help', () => {

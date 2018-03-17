@@ -45,6 +45,15 @@ $ fle dll
 
 # build library or module in production
 $ fle lib
+
+# init config before upoload files
+$ fle upload --init
+
+# now you can upload files
+$ fle upload <file|glob>
+
+# optimize images
+$ fle upload --min <images>
 ```
 
 **alias**
@@ -53,12 +62,14 @@ $ fle lib
 * d -> dev
 * l -> lib
 * b -> build
+* u -> upload
 
 说明：
 
 * 每天第一次启动时会检查是否有更新的版本，若有则提示
 * dll启动时会分离出第三方依赖（需要在fle.json中的vendors配置），若开启上传则会在js中自动添加外链引用
 * dev和build启动时会自动检查是否有dll分离出来的第三方依赖，若有则开启dll模式
+* dev和dll可以指定要编译的目录，详细信息：$ fle build -h
 * 开启上传功能需要配置密钥等信息，否则无法上传，[cdn参数配置](https://g.hz.netease.com/huangancheng/documents/blob/master/fle/nosConfig.md)【仅限网易员工访问】
 
 ## Project
@@ -106,6 +117,7 @@ $ fle lib
   "vendors": null, // 【build】抽离第三方模块，格式：{ name: array, ... }
   "inlineManifest": true, // 【build】是否将manifest文件写入html
   "publicPath": "/", // 【build】编译后文件引用前缀
+  "splitCommon": false, // 是否要抽离公共代码
   "remUnit": 50, // 1rem=50px
 
   "port": 5000, // 【dev】端口
