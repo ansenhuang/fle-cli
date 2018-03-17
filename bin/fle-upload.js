@@ -9,11 +9,12 @@ var inquirer = require('inquirer');
 var chalk = require('chalk');
 var consts = require('../lib/consts');
 // var utils = require('../lib/utils');
-var NosUpload = require('../lib/nos-upload');
+var NosUpload = require(path.join(consts.homeFlePath, 'node_modules/@winman-f2e/nos-upload'));
 
 program
   .usage('<dir|file|glob>')
 	.option('-i, --init', 'configure your accessId and secretKey only once before upload')
+	.option('-m, --min', 'optimize images of [jpg|jpeg|png] with imagemin')
   .on('--help', () => {
     console.log();
   })
@@ -113,32 +114,69 @@ if (opts.init) {
     }
   ]).then(answers => {
     var nosConfig = require(cdnFile);
+    nosConfig.prefix = 'fle/a0df1d4009c7a2ec5fee/' + (+new Date()) + '/';
     var nosUpload = new NosUpload(nosConfig);
-    var promises = [];
+    var files = [];
+    var imagemins = [];
 
-    answers.files.forEach(file => {
-      promises.push(
-        nosUpload.uploadFile({
+    if (opts.min) {
+      answers.files.map(file => {
+        var info = {
           filepath: path.resolve(file),
           filename: file
-        })
-      );
-    });
+        };
 
-    Promise.all(promises).then((values) => {
-      console.log();
-      console.log('============== Upload Info ================');
-      values.forEach(res => {
-        if (res.success) {
-          console.log(chalk.green.bold(res.url));
+        if (/\.(png|jpe?g)(\?.*)?$/.test(file)) {
+          imagemins.push(info);
         } else {
-          console.log(chalk.red.bold(res.message || 'Upload failed!'));
+          files.push(info);
         }
       });
-      console.log('===========================================');
-      console.log();
-    }).catch(err => {
-      console.log(err);
-    });
+    } else {
+      answers.files.map(file => {
+        files.push({
+          filepath: path.resolve(file),
+          filename: file
+        });
+      });
+    }
+
+    if (files.length) {
+      nosUpload.uploadMultiFile(files).then(values => {
+        console.log();
+        console.log('============== Upload Info ================');
+        values.forEach(res => {
+          if (res.success) {
+            console.log(chalk.green.bold(res.url));
+          } else {
+            console.log(chalk.red.bold(res.message || 'Upload failed!'));
+          }
+        });
+        console.log('===========================================');
+        console.log();
+      }).catch(err => {
+        console.log(err)
+      });
+    }
+
+    if (imagemins.length) {
+      nosUpload.uploadMultiImage(imagemins).then(values => {
+        console.log();
+        console.log('============= Image Min Info ==============');
+        values.forEach(res => {
+          if (res.success) {
+            console.log(chalk.green.bold(res.url));
+          } else {
+            console.log(chalk.red.bold(res.message || 'Upload failed!'));
+          }
+        });
+        console.log('===========================================');
+        console.log();
+      }).catch(err => {
+        console.log(err)
+      });
+    }
+  }).catch(err => {
+    console.log(err);
   });
 }
