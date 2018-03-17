@@ -13,9 +13,17 @@ var utils = require('../lib/utils');
 var typeOpts = utils.checkProject();
 
 program
-	.usage('[options]')
+	.usage('[options] <pages>')
 	.option('-l, --log', 'show vconsole for debug on mobile')
 	.on('--help', () => {
+		console.log();
+    console.log('  Description:');
+    console.log();
+		console.log('    It will compile all pages from src by default');
+		console.log('    And you can specify pages that should be compiled');
+		console.log('    For example: $ fle build index home');
+		console.log('    So [src/index] and [src/home] will be compiled');
+		console.log('    Have fun with it!');
 		console.log();
 	})
 	.parse(process.argv);
@@ -25,7 +33,8 @@ var env = Object.assign({
 	NODE_ENV: 'development',
 	PROJECT_ROOT_PATH: process.cwd(),
 	FLE_FRAMEWORK: typeOpts.framework,
-	FLE_VCONSOLE: opts.log
+	FLE_VCONSOLE: opts.log,
+	FLE_COMPILE_PAGES: program.args.join(',')
 }, process.env);
 
 if (typeOpts.compiler === 'rollup') {

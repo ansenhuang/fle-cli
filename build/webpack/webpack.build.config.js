@@ -16,6 +16,16 @@ var dlljs = [];
 var pages = utils.getPages(utils.resolve('src'));
 var sharePath = path.join(__dirname, '../.share');
 
+if (config.compilePages.length) {
+  config.fle.splitCommon = false; // 单独打包不抽离common
+  pages = pages.filter(page => config.compilePages.indexOf(page.id) !== -1);
+}
+
+if (!pages.length) {
+  console.log('There are no page to compile!');
+  process.exit(1);
+}
+
 // dll
 if (config.fle.vendors && typeof config.fle.vendors === 'object') {
   Object.keys(config.fle.vendors).forEach(k => {
@@ -40,9 +50,12 @@ if (config.fle.vendors && typeof config.fle.vendors === 'object') {
   });
 }
 
-var commons = ['common'];
+var commons = [];
 if (!config.fle.inlineManifest) {
-  commons.unshift('manifest');
+  commons.push('manifest');
+}
+if (config.fle.splitCommon) {
+  commons.push('common');
 }
 
 pages.forEach(page => {
@@ -80,9 +93,9 @@ var webpackConfig = {
     plugin.optimizeCSS(),
     plugin.extractCSS(),
     plugin.scope(),
-    plugin.commonsChunk(),
+    config.fle.splitCommon && plugin.commonsChunk(),
     plugin.commonsManifest(),
-    (config.fle.inlineManifest) && plugin.inlineManifest(),
+    config.fle.inlineManifest && plugin.inlineManifest(),
     plugin.commonsAsync(),
     plugin.uglify({
       exclude: /\.min\.js$/

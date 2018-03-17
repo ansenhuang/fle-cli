@@ -115,9 +115,9 @@ exports.commonsChunk = (opt = {}) => {
   return new webpack.optimize.CommonsChunkPlugin({
     name: 'common',
     filename: opt.filename || 'js/[name].[chunkhash:8].js',
-    minChunks: (module) => {
-      return module.context && module.context.includes('node_modules');
-    }
+    // minChunks: (module) => {
+    //   return module.context && module.context.includes('node_modules');
+    // }
   });
 }
 

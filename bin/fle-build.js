@@ -13,9 +13,17 @@ var utils = require('../lib/utils');
 var typeOpts = utils.checkProject();
 
 program
-	.usage('[options]')
+	.usage('[options] <pages>')
 	.option('-u, --upload', 'upload files to cdn (just for webpack)')
 	.on('--help', () => {
+		console.log();
+    console.log('  Description:');
+    console.log();
+		console.log('    It will compile all pages from src by default');
+		console.log('    And you can specify pages that should be compiled');
+		console.log('    For example: $ fle build index home');
+		console.log('    So [src/index] and [src/home] will be compiled');
+		console.log('    Have fun with it!');
 		console.log();
 	})
 	.parse(process.argv);
@@ -27,7 +35,8 @@ var env = Object.assign({
 	PROJECT_ROOT_PATH: process.cwd(),
 	FLE_FRAMEWORK: typeOpts.framework,
 	FLE_UPLOAD: opts.upload,
-	FLE_UPLOAD_CONFIG: (opts.upload && fs.existsSync(cdnFile)) ? JSON.stringify(require(cdnFile)) : ''
+	FLE_UPLOAD_CONFIG: (opts.upload && fs.existsSync(cdnFile)) ? JSON.stringify(require(cdnFile)) : '',
+	FLE_COMPILE_PAGES: program.args.join(',')
 }, process.env);
 var rimrafPath = path.join(__dirname, '../node_modules/.bin/rimraf');
 

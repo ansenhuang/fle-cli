@@ -16,6 +16,16 @@ var dlljs = [];
 var pages = utils.getPages(utils.resolve('src'));
 var sharePath = path.join(__dirname, '../.share');
 
+if (config.compilePages.length) {
+  config.fle.splitCommon = false; // 单独打包不抽离common
+  pages = pages.filter(page => config.compilePages.indexOf(page.id) !== -1);
+}
+
+if (!pages.length) {
+  console.log('There are no page to compile!');
+  process.exit(1);
+}
+
 // dll
 if (config.fle.vendors && typeof config.fle.vendors === 'object') {
   Object.keys(config.fle.vendors).forEach(k => {
