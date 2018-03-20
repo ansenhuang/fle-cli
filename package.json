@@ -22,6 +22,7 @@
     "chalk": "^2.3.2",
     "commander": "^2.14.1",
     "cross-spawn": "^6.0.5",
+    "glob": "^7.1.2",
     "inquirer": "^5.1.0",
     "rimraf": "^2.6.2",
     "update-notifier": "^2.3.0"

@@ -7,6 +7,7 @@ var path = require('path');
 var program = require('commander');
 var inquirer = require('inquirer');
 var chalk = require('chalk');
+var glob = require('glob');
 var consts = require('../lib/consts');
 // var utils = require('../lib/utils');
 var NosUpload = require(path.join(consts.homeFlePath, 'node_modules/@winman-f2e/nos-upload'));
@@ -83,18 +84,19 @@ if (opts.init) {
   }
 
   var choices = [];
+  var index = 1;
 
-  program.args.forEach((file, index) => {
-    var stat = fs.statSync(path.resolve(file));
+  program.args.forEach((file) => {
+    var globFiles = glob.sync(file, { nodir: true });
 
-    if (stat.isFile()) {
+    globFiles.forEach(f => {
       choices.push({
-        name: file,
-        value: file,
-        short: index + 1,
+        name: f,
+        value: f,
+        short: index++,
         checked: true
       });
-    }
+    });
   });
 
   if (choices.length === 0) {
