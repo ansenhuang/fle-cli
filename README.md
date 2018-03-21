@@ -11,8 +11,6 @@ $ npm install -g fle-cli
 $ yarn global add fle-cli
 ```
 
-注意：不要使用sudo权限进行全局安装，否则否则无法写入文件，需要更改目录权限，如：sudo chmod -R 777 [path]。
-
 ## Usage
 
 ``` bash
