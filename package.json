@@ -1,6 +1,6 @@
 {
   "name": "fle-cli",
-  "version": "3.7.4",
+  "version": "3.7.5",
   "description": "A convenient global compiler.",
   "bin": {
     "fle": "bin/fle.js"
