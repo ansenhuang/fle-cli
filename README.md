@@ -70,7 +70,7 @@ $ fle upload --min <images>
 * dll启动时会分离出第三方依赖（需要在fle.json中的vendors配置），若开启上传则会在js中自动添加外链引用
 * dev和build启动时会自动检查是否有dll分离出来的第三方依赖，若有则开启dll模式
 * dev和dll可以指定要编译的目录，详细信息：$ fle build -h
-* 开启上传功能需要配置密钥等信息，否则无法上传，[cdn参数配置](https://g.hz.netease.com/huangancheng/documents/blob/master/fle/nosConfig.md)【仅限网易员工访问】
+* 开启上传功能需要配置密钥等信息，否则无法上传，[cdn参数配置](https://g.hz.netease.com/huangancheng/documents/blob/master/fle/nosConfig.md)【需要访问仅限】，或者也可以在[【这里申请】](https://www.163yun.com/help/documents/15677635979624448)。
 
 ## Project
 
@@ -216,11 +216,12 @@ prejs和js可以设置externals，例如：
 
 ## Others
 
-js别名：
+js：
 
-* @ 表示src目录的绝对路径，如：@/common/module，即 src/common/module.js 或 src/common/module/index.js
+* 别名：@，表示src目录的绝对路径，如：@/common/module，即 src/common/module.js 或 src/common/module/index.js
 
-css单位：
+css：
 
-* px 正常输出px
-* rpx 转换为rem，默认1rem=50px，根据配置来定
+* px：正常输出px
+* rpx：转换为rem，默认1rem=50px，根据配置来定
+* 以`.module.css`为后缀的样式文件会自动启动css-modules功能，解决类名嵌套和冲突的情况

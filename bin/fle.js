@@ -19,7 +19,8 @@ updateNotifier({
 });
 
 // 第一次启动需要安装编译需要的依赖
-if (!fs.existsSync(path.join(__dirname, '../.installed'))) {
+var buildPkgPath = path.join(consts.homeFlePath, 'package.json');
+if (!fs.existsSync(buildPkgPath) || require(buildPkgPath)['fle-version'] !== consts.pkg.version) {
   require('../lib/install');
   require('../lib/rollup-watch-fix');
 }
@@ -70,6 +71,8 @@ if (!subcmd || subcmd === 'help') {
       process.exit(1);
     }
 
-    utils.spawn(file, args, { stdio: 'inherit' });
+    utils.spawn('node', [file].concat(args), { stdio: 'inherit' });
+    // 以下方式会出现：spawn EACCES，暂时没有找到有效的解决方案
+    // utils.spawn(file, args, { stdio: 'inherit' });
   });
 }
