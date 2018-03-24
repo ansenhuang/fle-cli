@@ -3,6 +3,6 @@ import { render } from 'react-dom'
 import Root from './Root'
 
 render(
-  <Root id="root" />,
+  <Root id="page" />,
   document.getElementById('root')
 )

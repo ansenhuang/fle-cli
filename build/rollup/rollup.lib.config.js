@@ -41,6 +41,7 @@ module.exports = {
     plugin.json(),
     plugin.nodeResolve(),
     plugin.commonjs(),
+    plugin.babel(),
     config.fle.iife && plugin.babel(),
     config.fle.iife && plugin.uglify(),
     plugin.filesize()
