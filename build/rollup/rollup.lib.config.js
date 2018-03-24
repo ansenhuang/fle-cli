@@ -42,8 +42,7 @@ module.exports = {
     plugin.nodeResolve(),
     plugin.commonjs(),
     plugin.babel(),
-    config.fle.iife && plugin.babel(),
-    config.fle.iife && plugin.uglify(),
+    plugin.uglify(),
     plugin.filesize()
   ].filter(p => p)
 };
