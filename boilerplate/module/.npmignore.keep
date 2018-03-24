@@ -3,8 +3,5 @@
 .vscode/
 node_modules/
 /dist
-/report
-/dll
-*yarn*
 *.log*
-package-lock.json
+/fle.json

@@ -4,8 +4,4 @@
 node_modules/
 /lib
 /dist
-/report
-/dll
-*yarn*
 *.log*
-package-lock.json

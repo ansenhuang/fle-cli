@@ -23,17 +23,27 @@ $ fle init <project-name>
 # open server in development
 $ fle dev
 
-# 开启手机debug调试
-# fle dev --log
-
 # build pages or demo in production
 $ fle build
 
-# 编译并将文件上传至cdn
-# fle build --upload
-
 # build vendors with dll
 $ fle dll
+
+# build library or module in production
+$ fle lib
+
+# now you can upload files
+$ fle upload <file|glob>
+```
+
+参数：
+
+```
+# 开启手机debug调试
+# fle dev --log
+
+# 编译并将文件上传至cdn
+# fle build --upload
 
 # 编译开发环境的第三方库
 # $ fle dll --dev
@@ -41,14 +51,8 @@ $ fle dll
 # 编译并将文件上传至cdn
 # fle dll --build --upload
 
-# build library or module in production
-$ fle lib
-
 # init config before upoload files
 $ fle upload --init
-
-# now you can upload files
-$ fle upload <file|glob>
 
 # optimize images
 $ fle upload --min <images>
@@ -140,7 +144,7 @@ $ fle upload --min <images>
   /* 以下为rollup项目配置 */
 
   "iife": false, // 是否要导出自执行模块，否则导出es6和commonjs模块
-  "eslint": true, // 是否开启eslint代码检测  
+  "eslint": true, // 是否开启eslint代码检测
   "port": 5000, // 【dev】端口
   "hot": true, // 【dev】是否开启热更新
   "https": false, // 【dev】是否开启https
@@ -223,3 +227,7 @@ css：
 * px：正常输出px
 * rpx：转换为rem，默认1rem=50px，根据配置来定
 * 以`.module.css`为后缀的样式文件会自动启动css-modules功能，解决类名嵌套和冲突的情况
+
+## Issues
+
+* `.ico`类型的图片无法上传，会导致报错
