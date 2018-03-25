@@ -35,7 +35,7 @@ module.exports = function ({
       require('postcss-modules')({
         generateScopedName: '[local]___[hash:base64:8]',
         // .module.css 启用css-modules
-        globalModulePaths: [/\/node_modules\//, /[^(\.module)]\.css$/],
+        globalModulePaths: [/\/node_modules\//, /^(?!.*\.module\.)/],
         getJSON (id, exportTokens) {
           cssExportMap[id] = exportTokens;
         }
