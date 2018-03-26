@@ -24,7 +24,12 @@ var eslintConfig = {
     "no-debugger": config.dev ? 1 : 2,
     "no-console": [config.dev ? 1 : 2, {
       "allow": ["info", "warn", "error"]
-    }]
+    }],
+    "prefer-promise-reject-errors": [
+      "error", {
+        "allowEmptyReject": true
+      }
+    ]
   }
 };
 
