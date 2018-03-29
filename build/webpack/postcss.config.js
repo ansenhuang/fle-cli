@@ -16,7 +16,7 @@ module.exports = {
       selectors: false
     }),
     require('postcss-plugin-px2rem')({
-      remUnit: {
+      rootValue: {
         rpx: config.fle.remUnit || 50
       }
     }),
