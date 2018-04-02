@@ -65,6 +65,7 @@ module.exports = {
     host: 'localhost',
     port: 5000,
     proxy: {},
+    historyApiFallback: true,
     hot: true,
     open: false,
     https: false,

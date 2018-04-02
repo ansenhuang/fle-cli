@@ -9,7 +9,7 @@
   <ul id="DEV_ENTRY">
     <% for (var i = 0; i < htmlWebpackPlugin.options.pages.length; i++) { %>
       <li>
-        <a href="/html/<%= htmlWebpackPlugin.options.pages[i].id %>.html">
+        <a href="/<%= htmlWebpackPlugin.options.pages[i].filename %>">
           [<%= htmlWebpackPlugin.options.pages[i].id %>]
           <%= htmlWebpackPlugin.options.pages[i].title %>
         </a>

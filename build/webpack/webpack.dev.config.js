@@ -10,7 +10,7 @@ var baseWebpackConfig = require('./webpack.base.config');
 var userWebpackPath = utils.resolve('webpack.dev.config.js');
 
 var entry = {};
-var htmls = [];
+var htmlConfigs = [];
 var manifests = [];
 var dlljs = [];
 var pages = utils.getPages(utils.resolve('src'));
@@ -41,14 +41,6 @@ if (config.fle.vendors && typeof config.fle.vendors === 'object') {
   });
 }
 
-htmls.push(plugin.html({
-  title: '页面导航',
-  filename: 'index.html',
-  template: path.join(sharePath, 'template/dev-index.html'),
-  favicon: path.join(sharePath, 'images/favicon.ico'),
-  pages: pages
-}));
-
 pages.forEach(page => {
   entry[page.id] = page.entry;
 
@@ -60,15 +52,27 @@ pages.forEach(page => {
     }
   }
 
-  page.filename = 'html/' + page.id + '.html';
+  var prefix = page.publicPath ? page.publicPath.replace(/^\//, '') : 'html/';
+  page.filename = prefix + page.id + '.html';
+
   page.chunks = [page.id];
 
   page.css = [].concat(config.fle.css, page.css).filter(c => c);
   page.prejs = [].concat(config.fle.prejs, page.prejs).filter(c => c);
   page.js = [].concat(config.fle.js, page.js, dlljs).filter(c => c);
 
-  htmls.push(plugin.html(page));
+  htmlConfigs.push(page);
 });
+
+var guideHtml = plugin.html({
+  title: '页面导航',
+  filename: 'index.html',
+  template: path.join(sharePath, 'template/dev-index.html'),
+  favicon: path.join(sharePath, 'images/favicon.ico'),
+  pages: htmlConfigs
+})
+
+var htmls = [guideHtml].concat(htmlConfigs.map(config => plugin.html(config)));
 
 //基本配置
 var webpackConfig = {
@@ -94,7 +98,7 @@ var webpackConfig = {
     proxy: config.fle.proxy,
     compress: true,
     hot: config.fle.hot,
-    historyApiFallback: true,
+    historyApiFallback: config.fle.historyApiFallback,
     open: config.fle.open,
     https: config.fle.https,
     quiet: true,

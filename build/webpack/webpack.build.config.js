@@ -69,7 +69,9 @@ pages.forEach(page => {
     }
   }
 
-  page.filename = 'html/' + page.id + '.html';
+  var prefix = page.publicPath ? page.publicPath.replace(/^\//, '') : 'html/';
+  page.filename = prefix + page.id + '.html';
+
   page.chunks = commons.concat([page.id]);
 
   page.css = [].concat(config.fle.css, page.css).filter(c => c);
