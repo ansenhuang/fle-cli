@@ -124,6 +124,7 @@ $ fle upload --min <images>
 
   "port": 5000, // 【dev】端口
   "proxy": {}, // 【dev】接口代理配置
+  "historyApiFallback": true, // 【dev】前端history路由控制
   "hot": true, // 【dev】是否开启热更新
   "open": false, // 【dev】是否自动打开浏览器
   "https": false, // 【dev】是否开启https
@@ -196,6 +197,7 @@ prejs和js可以设置externals，例如：
   "description": "示例页面", // 页面描述
   "icon": "https://easyread.nosdn.127.net/web/trunk/1519626068077/logo.png", // 页面icon
   "template": "index.html", // 页面模版，也可以自行扩展，或者/开头来使用系统配置好的模版，如：/default.html
+  "publicPath": "html/", // 页面的路由前缀
   "entry": "index.js", // 设置页面入口
   "module": "module.js", // 设置组件入口
   "moduleName": "name", // 分离出的组件名称，若不设置则取该目录的名称
@@ -227,6 +229,11 @@ css：
 * px：正常输出px
 * rpx：转换为rem，默认1rem=50px，根据配置来定
 * 以`.module.css`为后缀的样式文件会自动启动css-modules功能，解决类名嵌套和冲突的情况
+
+单页面应用：
+
+* app.json中的publicPath可以定义html文件的路由前缀，默认是：`html/`
+* 可以通过fle.json中的historyApiFallback将前端url与对应的资源匹配，详见：[https://webpack.js.org/configuration/dev-server/#devserver-historyapifallback](https://webpack.js.org/configuration/dev-server/#devserver-historyapifallback)
 
 ## Issues
 

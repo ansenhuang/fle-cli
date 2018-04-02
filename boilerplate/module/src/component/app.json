@@ -4,5 +4,8 @@
   "description": "",
   "icon": "",
   "template": "index.html",
+  "publicPath": "html/",
+  "entry": "index.js",
+  "module": "module.js",
   "compiled": true
 }

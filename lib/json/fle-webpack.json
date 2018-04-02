@@ -1,12 +1,31 @@
 {
   "boilerplate": "app",
+
   "business": "",
-  "publicPath": "/",
+  "eslint": true,
+  "notify": true,
   "vendors": {},
-  "nosConfig": {},
+  "inlineManifest": true,
+  "publicPath": "/",
+  "splitCommon": false,
+  "remUnit": 50,
+
   "port": 5000,
   "proxy": {},
+  "historyApiFallback": true,
+  "hot": true,
+  "open": false,
+  "https": false,
+
   "css": [],
   "prejs": [],
-  "js": []
+  "js": [],
+
+  "browsers": [
+    "last 2 versions",
+    "ie >= 9",
+    "ios >= 7",
+    "android >= 4"
+  ],
+  "externals": {}
 }
