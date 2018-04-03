@@ -1,6 +1,6 @@
 {
   "name": "fle-boilerplate-react",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "A React project created by fle-cli.",
   "keywords": ["fle", "webpack", "react"],
   "author": "huangancheng",

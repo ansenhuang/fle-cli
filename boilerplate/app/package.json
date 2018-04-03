@@ -1,6 +1,6 @@
 {
   "name": "fle-boilerplate-app",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "A app project created by fle-cli.",
   "keywords": ["fle", "webpack", "javascript"],
   "author": "huangancheng",

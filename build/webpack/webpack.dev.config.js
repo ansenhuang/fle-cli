@@ -61,6 +61,8 @@ pages.forEach(page => {
   page.prejs = [].concat(config.fle.prejs, page.prejs).filter(c => c);
   page.js = [].concat(config.fle.js, page.js, dlljs).filter(c => c);
 
+  page.uaId = ''; // 开发模式不进行pv统计
+
   htmlConfigs.push(page);
 });
 

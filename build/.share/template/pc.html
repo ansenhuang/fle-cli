@@ -12,6 +12,29 @@
   <% for (var i = 0; i < htmlWebpackPlugin.options.css.length; i++) { %>
     <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.css[i] %>">
   <% } %>
+  <% if (htmlWebpackPlugin.options.uaId) { %>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '<%= htmlWebpackPlugin.options.uaId %>'],['_setLocalGifPath', '/<%= htmlWebpackPlugin.options.uaId %>/__utm.gif'],['_setLocalServerMode']);
+      _gaq.push(['_addOrganic','baidu','word']);_gaq.push(['_addOrganic','soso','w']);_gaq.push(['_addOrganic','youdao','q']);
+      _gaq.push(['_addOrganic','sogou','query']);_gaq.push(['_addOrganic','so.360.cn','q']);
+      _gaq.push(['trackPageLoadTime']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '/ga.js';
+        ga.onload = ga.onreadystatechange = function () {
+          if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
+            _gaq.push(['_trackPageview', location.pathname]);
+          }
+        };
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  <% } %>
   <% for (var j = 0; j < htmlWebpackPlugin.options.prejs.length; j++) { %>
     <script type="text/javascript" src="<%= htmlWebpackPlugin.options.prejs[j] %>"></script>
   <% } %>

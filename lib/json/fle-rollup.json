@@ -1,12 +1,12 @@
 {
-  "boilerplate": "lib",
   "iife": false,
   "extract": false,
+
   "eslint": true,
   "port": 5000,
   "hot": true,
   "https": false,
-  "remUnit": 50,
+
   "browsers": [
     "last 2 versions",
     "ie >= 9",

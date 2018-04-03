@@ -1,6 +1,4 @@
 {
-  "boilerplate": "app",
-
   "business": "",
   "eslint": true,
   "notify": true,
@@ -8,7 +6,6 @@
   "inlineManifest": true,
   "publicPath": "/",
   "splitCommon": false,
-  "remUnit": 50,
 
   "port": 5000,
   "proxy": {},
@@ -16,10 +13,6 @@
   "hot": true,
   "open": false,
   "https": false,
-
-  "css": [],
-  "prejs": [],
-  "js": [],
 
   "browsers": [
     "last 2 versions",

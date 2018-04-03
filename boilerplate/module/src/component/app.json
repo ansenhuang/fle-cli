@@ -3,9 +3,6 @@
   "keyswords": "",
   "description": "",
   "icon": "",
-  "template": "index.html",
-  "publicPath": "html/",
-  "entry": "index.js",
-  "module": "module.js",
+  "template": "/default.html",
   "compiled": true
 }

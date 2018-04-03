@@ -38,18 +38,21 @@ $ fle upload <file|glob>
 
 参数：
 
-```
+``` bash
+# 新建页面（webpack）
+$ fle init <project-name> --page
+
 # 开启手机debug调试
-# fle dev --log
+$ fle dev --log
 
 # 编译并将文件上传至cdn
-# fle build --upload
+$ fle build --upload
 
 # 编译开发环境的第三方库
-# $ fle dll --dev
+$ fle dll --dev
 
 # 编译并将文件上传至cdn
-# fle dll --build --upload
+$ fle dll --build --upload
 
 # init config before upoload files
 $ fle upload --init
@@ -120,7 +123,6 @@ $ fle upload --min <images>
   "inlineManifest": true, // 【build】是否将manifest文件写入html
   "publicPath": "/", // 【build】编译后文件引用前缀
   "splitCommon": false, // 是否要抽离公共代码
-  "remUnit": 50, // 1rem=50px
 
   "port": 5000, // 【dev】端口
   "proxy": {}, // 【dev】接口代理配置
@@ -128,10 +130,6 @@ $ fle upload --min <images>
   "hot": true, // 【dev】是否开启热更新
   "open": false, // 【dev】是否自动打开浏览器
   "https": false, // 【dev】是否开启https
-
-  "css": [], // css外链
-  "prejs": [], // 预加载的js外链，位于head
-  "js": [], // 加载js外链，位于body
 
   "browsers": [ // 需要兼容的浏览器配置
     "last 2 versions",
@@ -150,7 +148,7 @@ $ fle upload --min <images>
   "hot": true, // 【dev】是否开启热更新
   "https": false, // 【dev】是否开启https
   "extract": false, // 是否需要编译css文件（若js库无css样式，建议关闭，减少冗余代码）
-  "remUnit": 50,
+  "remUnit": 50, // rem布局，1rem=50px
   "browsers": [
     "last 2 versions",
     "ie >= 9",
@@ -197,6 +195,8 @@ prejs和js可以设置externals，例如：
   "description": "示例页面", // 页面描述
   "icon": "https://easyread.nosdn.127.net/web/trunk/1519626068077/logo.png", // 页面icon
   "template": "index.html", // 页面模版，也可以自行扩展，或者/开头来使用系统配置好的模版，如：/default.html
+  "remUnit": 50, // rem布局，1rem=50px
+  "uaId": 'xxx', // 页面pv的加载ID
   "publicPath": "html/", // 页面的路由前缀
   "entry": "index.js", // 设置页面入口
   "module": "module.js", // 设置组件入口
