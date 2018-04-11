@@ -37,7 +37,12 @@ module.exports = function ({
         // .module.css 启用css-modules
         globalModulePaths: [/\/node_modules\//, /^(?!.*\.module\.)/],
         getJSON (id, exportTokens) {
-          cssExportMap[id] = exportTokens;
+          const cssExportMapItem = {};
+          Object.keys(exportTokens).forEach(key => {
+            const upperKey = key.replace(/-(\w)/g, ($, $1) => $1.toUpperCase());
+            cssExportMapItem[upperKey] = exportTokens[key];
+          });
+          cssExportMap[id] = cssExportMapItem;
         }
       }),
       require('autoprefixer')({
