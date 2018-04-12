@@ -15,7 +15,7 @@ var webpackConfig = {
       resolve('node_modules'),
       path.join(__dirname, '../../node_modules')
     ],
-    extensions: ['.js'],
+    extensions: ['.js', '.vue', '.jsx', '.css'],
     alias: {
       '@': resolve('src')
     }

@@ -95,7 +95,7 @@ exports.cssModules = () => {
 exports.eslint = () => {
   return {
     enforce: 'pre',
-    test: /\.jsx?$/,
+    test: /\.(jsx?|vue)$/,
     loader: 'eslint-loader',
     include: resolve('src'),
     options: {
