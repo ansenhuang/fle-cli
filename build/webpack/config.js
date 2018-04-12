@@ -62,7 +62,7 @@ module.exports = {
     remUnit: 50,
 
     // dev
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 5000,
     proxy: {},
     historyApiFallback: true,

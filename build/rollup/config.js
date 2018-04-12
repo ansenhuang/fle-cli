@@ -14,7 +14,7 @@ module.exports = {
   fle: Object.assign({
     eslint: true,
     iife: false,
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 5000,
     hot: true,
     https: false,
