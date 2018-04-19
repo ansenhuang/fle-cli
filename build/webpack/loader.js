@@ -76,6 +76,15 @@ var moduleCSSLoaders = config.dev ?
     use: [moduleCSSLoader, postCSSLoader]
   });
 
+var babelLoader = {
+  loader: 'babel-loader',
+  options: Object.assign({
+    cacheDirectory: resolve('.cache/babel'),
+    babelrc: false,
+    extends: fs.existsSync(resolve('.babelrc')) ? resolve('.babelrc') : null
+  }, require(path.join(__dirname, './babel.js')))
+};
+
 exports.css = () => {
   return {
     test: /\.css$/,
@@ -117,14 +126,7 @@ exports.babel = () => {
   return {
     test: /\.jsx?$/,
     include: resolve('src'),
-    use: {
-      loader: 'babel-loader',
-      options: Object.assign({
-        cacheDirectory: resolve('.cache/babel'),
-        babelrc: false,
-        extends: fs.existsSync(resolve('.babelrc')) ? resolve('.babelrc') : null
-      }, require(path.join(__dirname, './babel.js')))
-    }
+    use: babelLoader
   };
 }
 
@@ -134,7 +136,8 @@ exports.vue = () => {
     loader: 'vue-loader',
     options: {
       loaders: {
-        css: vueCSSLoaders
+        css: vueCSSLoaders,
+        js: babelLoader
       },
       cssModules: {
         camelCase: 'only',
