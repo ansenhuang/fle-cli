@@ -64,7 +64,11 @@ exports.url = function (opt = {}) {
 };
 
 exports.nodeResolve = function () {
-  return nodeResolve();
+  return nodeResolve({
+    customResolveOptions: {
+      moduleDirectory: [resolve('node_modules'), path.join(__dirname, '../../node_modules')]
+    }
+  });
 };
 
 exports.commonjs = function () {
