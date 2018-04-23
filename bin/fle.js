@@ -22,6 +22,7 @@ updateNotifier({
 var buildPkgPath = path.join(consts.homeFlePath, 'package.json');
 if (!fs.existsSync(buildPkgPath) || require(buildPkgPath)['fle-version'] !== consts.pkg.version) {
   require('../lib/install');
+  require('../lib/babel-cli-fix');
   require('../lib/rollup-watch-fix');
 }
 

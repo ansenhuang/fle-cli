@@ -54,6 +54,20 @@ if (typeOpts.compiler === 'rollup') {
 			}
 		);
 	} else {
+		var babelEnvConfig = {
+			"modules": false,
+			"loose": true,
+			"useBuiltIns": false,
+			"targets": {
+				"browsers": [
+					"last 2 versions",
+					"ie >= 9",
+					"ios >= 7",
+					"android >= 4"
+				]
+			}
+		};
+
 		function fleResolve (name) {
 			return require.resolve(path.join(homeFlePath, 'node_modules', name));
 		}
@@ -68,8 +82,10 @@ if (typeOpts.compiler === 'rollup') {
 				'--copy-files',
 				'--no-comments',
 				'--ignore=**/*.min.js',
-				'--presets=' + [fleResolve('babel-preset-react'), fleResolve('babel-preset-stage-2')].join(','),
-				'--plugins=' + [fleResolve('babel-plugin-transform-vue-jsx'), fleResolve('babel-plugin-transform-decorators-legacy'), fleResolve('babel-plugin-transform-runtime')].join(',')
+				// '--presets=' + [fleResolve('babel-preset-react'), fleResolve('babel-preset-stage-2')].join(','),
+				// '--plugins=' + [fleResolve('babel-plugin-transform-vue-jsx'), fleResolve('babel-plugin-transform-decorators-legacy'), fleResolve('babel-plugin-transform-runtime')].join(',')
+				'--presets=' + JSON.stringify([[fleResolve('babel-preset-env'), babelEnvConfig], fleResolve('babel-preset-react'), fleResolve('babel-preset-stage-2')]),
+				'--plugins=' + JSON.stringify([fleResolve('babel-plugin-transform-vue-jsx'), fleResolve('babel-plugin-transform-decorators-legacy'), fleResolve('babel-plugin-transform-runtime')])
 			],
 			{
 				cwd: homeFlePath,
