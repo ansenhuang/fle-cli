@@ -68,7 +68,7 @@ if (typeOpts.compiler === 'rollup') {
 				'--copy-files',
 				'--no-comments',
 				'--ignore=**/*.min.js',
-				'--presets=' + [fleResolve('babel-preset-env'), fleResolve('babel-preset-react'), fleResolve('babel-preset-stage-2')].join(','),
+				'--presets=' + [fleResolve('babel-preset-react'), fleResolve('babel-preset-stage-2')].join(','),
 				'--plugins=' + [fleResolve('babel-plugin-transform-vue-jsx'), fleResolve('babel-plugin-transform-decorators-legacy'), fleResolve('babel-plugin-transform-runtime')].join(',')
 			],
 			{
