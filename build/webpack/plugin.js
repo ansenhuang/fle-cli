@@ -237,9 +237,9 @@ exports.upload = (opt = {}) => {
     prefix: 'fle/a0df1d4009c7a2ec5fee/' + (config.fle.business || +new Date()) + '/',
     exclude: /(\.html$)|(manifest)/,
     uploadDone: (values) => {
-      var fle = require(resolve('fle.json'));
-
       if (opt.dll) {
+        var fle = require(resolve('fle.json'));
+
         fle.dllUpload = fle.dllUpload || {};
         values.forEach(v => {
           if (v.success) {
@@ -247,16 +247,16 @@ exports.upload = (opt = {}) => {
             fle.dllUpload[key] = v.url;
           }
         });
-      } else {
-        fle.buildUpload = fle.buildUpload || {};
-        values.forEach(v => {
-          if (v.success) {
-            fle.buildUpload[v.filename] = v.url;
-          }
-        });
-      }
 
-      fs.writeFileSync(resolve('fle.json'), JSON.stringify(fle, null, 2), { encoding: 'utf8' });
+        fs.writeFileSync(resolve('fle.json'), JSON.stringify(fle, null, 2), { encoding: 'utf8' });
+      } else {
+        // fle.buildUpload = fle.buildUpload || {};
+        // values.forEach(v => {
+        //   if (v.success) {
+        //     fle.buildUpload[v.filename] = v.url;
+        //   }
+        // });
+      }
     }
   });
 }

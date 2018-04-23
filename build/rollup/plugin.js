@@ -89,8 +89,8 @@ exports.eslint = function () {
 exports.babel = function () {
   return babel(Object.assign({
     include: [resolve('src/**/*.js'), resolve('public/demo/**/*.js')],
-    // runtimeHelpers: true,
-    externalHelpers: false,
+    runtimeHelpers: true,
+    // externalHelpers: false,
     babelrc: false,
     extends: fs.existsSync(resolve('.babelrc')) ? resolve('.babelrc') : null
   }, require('./babel.js')));
