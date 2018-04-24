@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "description": "A library project created by fle-cli.",
   "main": "lib/index.js",
-  "module": "lib/index.esm.js",
   "keywords": [],
   "author": "huangancheng",
   "license": "MIT",
