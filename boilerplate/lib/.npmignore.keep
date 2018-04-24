@@ -3,5 +3,6 @@
 .vscode/
 node_modules/
 /public
+/src
 *.log*
 /fle.json
