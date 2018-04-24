@@ -20,16 +20,12 @@ var eslintConfig = {
     "operator-linebreak": 0,
     "no-var": 1,
     "no-alert": 1,
+    "prefer-promise-reject-errors": 0,
     "no-unused-vars": config.dev ? 1 : 2,
     "no-debugger": config.dev ? 1 : 2,
     "no-console": [config.dev ? 1 : 2, {
       "allow": ["info", "warn", "error"]
-    }],
-    "prefer-promise-reject-errors": [
-      "error", {
-        "allowEmptyReject": true
-      }
-    ]
+    }]
   }
 };
 

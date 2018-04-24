@@ -12,7 +12,9 @@ module.exports = {
     intro: (config.dev && config.vconsole) ? "(function(l, i, v, e) { v = l.createElement(i); v.src = '//res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/2.5.2/vconsole.min.js'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');" : ""
   },
   plugins: [
-    plugin.progress(),
+    plugin.progress({
+      clear: true
+    }),
     plugin.replace(),
     config.fle.eslint && plugin.eslint(),
     plugin.alias(),
