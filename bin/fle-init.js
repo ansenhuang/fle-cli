@@ -271,7 +271,7 @@ if (!opts.page) {
     answers.css = [cdn.css.reset];
 
     if (answers.template === '/h5.html') {
-      answers.prejs = [cdn.js.fsize];
+      answers.prejs = [cdn.js.remResize];
     } else if (answers.template === 'custom') {
       answers.template = path.join('src', projectName, 'index.html');
 
