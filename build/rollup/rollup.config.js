@@ -1,6 +1,8 @@
+var fs = require('fs');
 var config = require('./config');
 var plugin = require('./plugin');
 var resolve = require('../utils').resolve;
+var vconsoleCode = fs.readFileSync(require.resolve('vconsole'), { encoding: 'utf8' });
 
 module.exports = {
   input: resolve('public/demo/index.js'),
@@ -9,7 +11,7 @@ module.exports = {
     format: 'iife',
     name: config.pkg.name.replace(/[-\/@]/g, '_'),
     sourcemap: config.dev ? 'inline' : false,
-    intro: (config.dev && config.vconsole) ? "(function(l, i, v, e) { v = l.createElement(i); v.src = '//res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/2.5.2/vconsole.min.js'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');" : ""
+    banner: (config.dev && config.vconsole) ? vconsoleCode + 'new VConsole();' : ''
   },
   plugins: [
     plugin.progress({
