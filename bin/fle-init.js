@@ -240,9 +240,10 @@ if (!opts.page) {
         name: 'uaId',
         message: 'Choose id for pv and uv',
         choices: [
-          { name: 'yuedu', value: 'UA-25074971-1' },
-          { name: 'comic', value: 'UA1494482568873' },
           { name: 'snail', value: 'UA1493360523621' },
+          { name: 'comic-h5', value: 'UA1494482568873' },
+          { name: 'yuedu-h5', value: 'UA-48676860-1' },
+          { name: 'yuedu-web', value: 'UA-25074971-1' },
           { name: 'lofter', value: 'UA-31007899-1' }
         ],
         default: '',

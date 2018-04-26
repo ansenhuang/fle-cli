@@ -21,18 +21,13 @@
       _gaq.push(['_setAccount', '<%= htmlWebpackPlugin.options.uaId %>'],['_setLocalGifPath', '/<%= htmlWebpackPlugin.options.uaId %>/__utm.gif'],['_setLocalServerMode']);
       _gaq.push(['_addOrganic','baidu','word']);_gaq.push(['_addOrganic','soso','w']);_gaq.push(['_addOrganic','youdao','q']);
       _gaq.push(['_addOrganic','sogou','query']);_gaq.push(['_addOrganic','so.360.cn','q']);
-      _gaq.push(['trackPageLoadTime']);
+      _gaq.push(['_trackPageview']);_gaq.push(['trackPageLoadTime']);
 
       (function() {
         var ga = document.createElement('script');
         ga.type = 'text/javascript';
         ga.async = true;
         ga.src = '/ga.js';
-        ga.onload = ga.onreadystatechange = function () {
-          if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
-            _gaq.push(['_trackPageview', location.pathname]);
-          }
-        };
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(ga, s);
       })();
