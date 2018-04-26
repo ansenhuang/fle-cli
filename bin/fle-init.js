@@ -228,9 +228,9 @@ if (!opts.page) {
         choices: [
           { name: 'default', value: '/default.html' },
           { name: 'h5 [rem]', value: '/h5/default.html' },
-          { name: 'pc', value: '/pc/default.html' },
-          { name: 'h5-wenman', value: '/h5/wenman.html' },
-          { name: 'pc-wenman', value: '/pc/wenman.html' },
+          { name: 'pc [reset]', value: '/pc/default.html' },
+          { name: 'h5-wenman [rem, pv]', value: '/h5/wenman.html' },
+          { name: 'pc-wenman [reset, pv]', value: '/pc/wenman.html' },
           { name: 'custom [user-defined]', value: 'custom' }
         ],
         default: '/default.html'
@@ -270,10 +270,12 @@ if (!opts.page) {
     fs.mkdirSync(targetPath);
 
     answers.compiled = true;
-    answers.css = [cdn.css.reset];
 
     if (answers.template.indexOf('/h5/') !== -1) {
+      answers.css = [cdn.css.reset];
       answers.prejs = [cdn.js.remResize];
+    } else if (answers.template.indexOf('/pc/') !== -1) {
+      answers.css = [cdn.css.reset];
     } else if (answers.template === 'custom') {
       answers.template = path.join('src', projectName, 'index.html');
 

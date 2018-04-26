@@ -69,7 +69,7 @@ pages.forEach(page => {
 var guideHtml = plugin.html({
   title: '页面导航',
   filename: 'index.html',
-  template: path.join(sharePath, 'template/dev-index.html'),
+  template: path.join(sharePath, 'template/dev.html'),
   favicon: path.join(sharePath, 'images/favicon.ico'),
   pages: htmlConfigs
 })
