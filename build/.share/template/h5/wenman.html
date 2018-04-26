@@ -12,13 +12,9 @@
     <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.css[i] %>">
   <% } %>
   <script type="text/javascript">
-    <% var maxWidth = htmlWebpackPlugin.options.maxWidth || 750 %>
-    <% var bodySize = htmlWebpackPlugin.options.bodySize || 12 %>
-    <% var divPart = maxWidth / (htmlWebpackPlugin.options.remUnit || 50) %>
-
-    window.__MAX_WIDTH__ = <%= maxWidth %>;
-    window.__BODY_SIZE__ = <%= bodySize %>;
-    window.__DIV_PART__ = <%= divPart %>;
+    <% if (htmlWebpackPlugin.options.remUnit != 50) { %>
+      window.__DIV_PART__ = 750 / <%= htmlWebpackPlugin.options.remUnit %>;
+    <% } %>
 
     <% if (htmlWebpackPlugin.options.uaId) { %>
       var _gaq = _gaq || [];

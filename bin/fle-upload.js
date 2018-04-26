@@ -13,9 +13,9 @@ var consts = require('../lib/consts');
 var NosUpload = require(path.join(consts.homeFlePath, 'node_modules/@winman-f2e/nos-upload'));
 
 program
-  .usage('<file|glob>')
-	.option('-i, --init', 'configure your accessId and secretKey only once before upload')
-	.option('-m, --min', 'optimize images of [jpg|jpeg|png] with imagemin')
+  .usage('<file|glob> [options]')
+	.option('-i, --init', 'configure secretKey before upload and it will be saved')
+	.option('-m, --min', 'optimize images [jpg|jpeg|png] to reduce size')
   .on('--help', () => {
     console.log();
   })
@@ -27,7 +27,7 @@ var isExistConfig = fs.existsSync(cdnFile);
 
 if (opts.init) {
   if (isExistConfig) {
-    console.log(chalk.cyan('There is already exist a config and it will be update!'));
+    console.log(chalk.cyan('There is already exist a config and it will be updated!'));
   }
 
   inquirer.prompt([

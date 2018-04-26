@@ -33,7 +33,7 @@ program
     console.log();
     console.log('  Commands:');
     console.log();
-    console.log('    init           generate a project');
+    console.log('    init           generate a project or page');
     console.log('    dev            open server in development');
     console.log('    build          build pages or demo in production');
     console.log('    dll            build vendors in production');

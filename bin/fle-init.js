@@ -226,26 +226,28 @@ if (!opts.page) {
         name: 'template',
         message: 'Choose html template',
         choices: [
-          { name: 'default (no pv)', value: '/default.html' },
-          { name: 'h5 (rem, pv)', value: '/h5.html' },
-          { name: 'pc (pv)', value: '/pc.html' },
-          { name: 'custom (define by yourself)', value: 'custom' }
+          { name: 'default', value: '/default.html' },
+          { name: 'h5 [rem]', value: '/h5/default.html' },
+          { name: 'pc', value: '/pc/default.html' },
+          { name: 'h5-wenman', value: '/h5/wenman.html' },
+          { name: 'pc-wenman', value: '/pc/wenman.html' },
+          { name: 'custom [user-defined]', value: 'custom' }
         ],
         default: '/default.html'
       },
       {
         type: 'list',
         name: 'uaId',
-        message: 'Choose ID for UA',
+        message: 'Choose id for pv and uv',
         choices: [
-          { name: '云阅读', value: 'UA-25074971-1' },
-          { name: '漫画', value: 'UA1494482568873' },
-          { name: '蜗牛', value: 'UA1493360523621' },
-          { name: 'Lofter', value: 'UA-31007899-1' }
+          { name: 'yuedu', value: 'UA-25074971-1' },
+          { name: 'comic', value: 'UA1494482568873' },
+          { name: 'snail', value: 'UA1493360523621' },
+          { name: 'lofter', value: 'UA-31007899-1' }
         ],
         default: '',
         when (a) {
-          return ['/h5.html', '/pc.html'].indexOf(a.template) !== -1;
+          return a.template.indexOf('/wenman') !== -1;
         }
       },
       {
@@ -254,7 +256,7 @@ if (!opts.page) {
         message: 'Root html font-size for rem',
         default: 50,
         when (a) {
-          return a.template === '/h5.html'
+          return a.template.indexOf('/h5/') !== -1;
         }
       },
     ]).then(res => {
@@ -270,7 +272,7 @@ if (!opts.page) {
     answers.compiled = true;
     answers.css = [cdn.css.reset];
 
-    if (answers.template === '/h5.html') {
+    if (answers.template.indexOf('/h5/') !== -1) {
       answers.prejs = [cdn.js.remResize];
     } else if (answers.template === 'custom') {
       answers.template = path.join('src', projectName, 'index.html');

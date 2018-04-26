@@ -2,6 +2,7 @@
   "name": "fle-boilerplate-module",
   "version": "0.0.0",
   "description": "A module project created by fle-cli.",
+  "main": "lib/index.js",
   "keywords": ["fle", "webpack", "component"],
   "author": "huangancheng",
   "license": "MIT",
