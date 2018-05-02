@@ -15,6 +15,7 @@ var manifests = [];
 var dlljs = [];
 var pages = utils.getPages(utils.resolve('src'));
 var sharePath = path.join(__dirname, '../.share');
+var shouldBuildDll = false;
 
 if (config.compilePages.length) {
   config.fle.splitCommon = false; // 单独打包不抽离common
@@ -41,13 +42,19 @@ if (config.fle.vendors && typeof config.fle.vendors === 'object') {
         if (config.fle.dllUpload && config.fle.dllUpload[k]) {
           dlljs.push(config.fle.dllUpload[k]);
         } else {
+          shouldBuildDll = true;
           console.log(`The vendors of [${k}] has no url, Please run "fle dll --build --upload" firstly!`);
         }
       }
     } else {
+      shouldBuildDll = true;
       console.log(`The vendors of [${k}] has no dll manifest, Please run "fle dll --build" firstly!`);
     }
   });
+}
+
+if (shouldBuildDll) {
+  process.exit(1);
 }
 
 var commons = [];

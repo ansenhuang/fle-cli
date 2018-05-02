@@ -60,6 +60,16 @@ if (!opts.page) {
     answers.description = 'A project created by fle-cli.';
     answers.keywords = 'fle-cli,webpack,rollup';
 
+    if (res.boilerplate.indexOf('react') !== -1) {
+      answers.vendors = {
+        react: ['react', 'react-dom']
+      };
+    } else if (res.boilerplate.indexOf('vue') !== -1) {
+      answers.vendors = {
+        vue: ['vue']
+      };
+    }
+
     if (opts.yes) {
       initProject(answers);
     } else {
