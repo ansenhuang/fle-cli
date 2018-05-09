@@ -260,16 +260,7 @@ if (!opts.page) {
         when (a) {
           return a.template.indexOf('/wenman') !== -1;
         }
-      },
-      {
-        type: 'input',
-        name: 'remUnit',
-        message: 'Root html font-size for rem',
-        default: 50,
-        when (a) {
-          return a.template.indexOf('/h5/') !== -1;
-        }
-      },
+      }
     ]).then(res => {
       initPage(res);
     });

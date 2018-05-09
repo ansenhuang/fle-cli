@@ -67,6 +67,8 @@ pages.forEach(page => {
   page.prejs = [].concat(config.fle.prejs, page.prejs).filter(c => c);
   page.js = [].concat(config.fle.js, page.js, dlljs).filter(c => c);
 
+  page.remUnit = config.fle.remUnit;
+
   htmlConfigs.push(page);
 });
 

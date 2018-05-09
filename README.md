@@ -139,6 +139,7 @@ fle.json
   "inlineManifest": true,      # [build] inject manifest code to html
   "publicPath": "/",           # [build] publicPath of compiled files
   "splitCommon": false,        # split code that all pages was used to a file
+  "remUnit": 50,               # root size, 1rem=50px [default]
 
   "port": 5000,                # [dev] dev server port
   "proxy": {},                 # [dev] dev server proxy
@@ -186,7 +187,6 @@ app.json
   "description": "",           # page description
   "icon": "https://xxx",       # page icon
   "template": "index.html",    # page template
-  "remUnit": 50,               # root size, 1rem=50px [default]
   "prejs": [],                 # js url，inject to head
   "js": [],                    # js url，inject to body
   "css": [],                   # css url, inject to head
