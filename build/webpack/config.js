@@ -77,10 +77,10 @@ module.exports = {
 
     // others
     browsers: [
-      'last 2 versions',
+      'last 4 versions',
       'ie >= 9',
-      'ios >= 7',
-      'android >= 4'
+      'iOS >= 7',
+      'Android >= 4'
     ],
     externals: {},
     libExternals: {}

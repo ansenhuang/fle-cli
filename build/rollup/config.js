@@ -21,10 +21,10 @@ module.exports = {
     extract: false,
     remUnit: 50,
     browsers: [
-      'last 2 versions',
+      'last 4 versions',
       'ie >= 9',
-      'ios >= 7',
-      'android >= 4'
+      'iOS >= 7',
+      'Android >= 4'
     ]
   }, require(resolve('fle.json')))
 };
