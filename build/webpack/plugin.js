@@ -183,6 +183,9 @@ exports.optimizeCSS = () => {
     cssProcessorOptions: {
       discardComments: {
         removeAll: true
+      },
+      autoprefixer: {
+        browsers: config.fle.browsers
       }
     },
     canPrint: true
