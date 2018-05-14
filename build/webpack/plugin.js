@@ -179,10 +179,13 @@ exports.extractCSS = (opt = {}) => {
 // 优化css打包，避免重复打包
 exports.optimizeCSS = () => {
   return new OptimizeCssAssetsPlugin({
-    assetNameRegExp: /(\.module)?\.css$/g,
+    assetNameRegExp: /\.css$/g,
     cssProcessorOptions: {
       discardComments: {
         removeAll: true
+      },
+      autoprefixer: {
+        browsers: config.fle.browsers
       }
     },
     canPrint: true
