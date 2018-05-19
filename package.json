@@ -1,6 +1,6 @@
 {
   "name": "fle-cli",
-  "version": "4.0.0",
+  "version": "4.0.0-beta.2",
   "description": "A convenient and flexible compiler with no configuration.",
   "bin": {
     "fle": "bin/fle"
@@ -16,7 +16,7 @@
   "author": "huangancheng",
   "license": "ISC",
   "dependencies": {
-    "@fle/color": "^0.0.1",
+    "@fle/color": "^0.0.2",
     "commander": "^2.14.1",
     "cross-spawn": "^6.0.5",
     "glob": "^7.1.2",
