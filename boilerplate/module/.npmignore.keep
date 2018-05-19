@@ -1,8 +1,0 @@
-.DS_Store
-.cache/
-.vscode/
-node_modules/
-/dist
-/src
-*.log*
-/fle.json

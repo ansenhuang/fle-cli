@@ -1,4 +1,4 @@
-import module from '@'
+import module from '@/common'
 import './style.css'
 
 // run module

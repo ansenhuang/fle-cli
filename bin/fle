@@ -1,0 +1,84 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var fs = require('fs');
+var path = require('path');
+var program = require('commander');
+var spawn = require('cross-spawn');
+var updateNotifier = require('update-notifier');
+var color = require('@fle/color');
+
+var {
+  pkgName,
+  pkgVersion,
+  fleHomePath,
+  needVerifyCommands
+} = require('../lib/consts');
+var { checkProject } = require('../lib/utils');
+
+// 检查更新
+updateNotifier({
+  pkg: {
+    name: pkgName,
+    version: pkgVersion
+  },
+  updateCheckInterval: 86400000 // 每天检查一次
+}).notify({
+  isGlobal: true
+});
+
+// 第一次启动需要安装编译需要的依赖
+var buildPkgPath = path.join(fleHomePath, 'package.json');
+if (!fs.existsSync(buildPkgPath) || require(buildPkgPath)['fle-version'] !== pkgVersion) {
+  require('../lib/install');
+  require('../lib/fix/babel-cli');
+}
+
+program
+  .version(pkgVersion, '-v, --version')
+  .usage('<command> [options]')
+  .on('--help', () => {
+    console.log();
+    console.log('  Commands:');
+    console.log();
+    console.log('    init           创建项目工程或页面');
+    console.log('    dev            启动本地开发调试');
+    console.log('    build          编译生产环境代码');
+    console.log('    lib            编译js库工程');
+    console.log('    upload         上传图片或文件');
+    console.log();
+  })
+  .parse(process.argv);
+
+var subcmd = program.args[0];
+var aliases = {
+  "i": "init",
+  "d": "dev",
+  "b": "build",
+  "l": "lib",
+  "u": "upload"
+};
+
+if (aliases[subcmd]) {
+  subcmd = aliases[subcmd];
+}
+
+if (!subcmd || subcmd === 'help') {
+  program.help();
+} else {
+  if (needVerifyCommands.indexOf(subcmd) !== -1) {
+    checkProject();
+  }
+
+  var file = path.join(__dirname, `../lib/commands/${subcmd}.js`);
+
+  fs.stat(file, (err) => {
+    if (err) {
+      console.log(`\n不存在此命令：${color.cyan(subcmd)}\n`);
+      process.exit(1);
+    }
+
+    spawn('node', [file].concat(process.argv.slice(3)), { stdio: 'inherit' });
+  });
+}

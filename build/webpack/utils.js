@@ -21,13 +21,11 @@ exports.getPages = function (dir, prefix = '', pages = []) {
       if (fs.existsSync(appPath)) {
         var appConfig = require(appPath);
         var entryPath = path.join(childDirPath, appConfig.entry || 'index.js');
-        var modulePath = path.join(childDirPath, appConfig.module || 'module.js');
 
         if (appConfig.compiled && fs.existsSync(entryPath)) {
-          pages.push(Object.assign({}, appConfig, {
+          pages.push(Object.assign(appConfig, {
             id: id,
-            entry: entryPath,
-            module: fs.existsSync(modulePath) ? modulePath : false
+            entry: entryPath
           }));
         }
       } else {

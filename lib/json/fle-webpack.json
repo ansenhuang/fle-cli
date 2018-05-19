@@ -1,20 +1,13 @@
 {
   "business": "",
   "eslint": true,
-  "notify": true,
-  "vendors": {},
-  "inlineManifest": true,
   "publicPath": "/",
-  "splitCommon": false,
+  "splitCommon": true,
+  "vendors": {},
   "remUnit": 50,
-
   "port": 5000,
-  "proxy": {},
   "historyApiFallback": true,
-  "hot": true,
-  "open": false,
-  "https": false,
-
+  "proxy": {},
   "browsers": [
     "last 4 versions",
     "ie >= 9",

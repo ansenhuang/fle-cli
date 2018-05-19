@@ -3,8 +3,6 @@ var __LOG__ = process.env.FLE_VCONSOLE === 'true';
 var __UPLOAD__ = process.env.FLE_UPLOAD === 'true';
 var __UPLOAD_CONFIG__ = process.env.FLE_UPLOAD_CONFIG;
 var __COMPILE_PAGES__ = process.env.FLE_COMPILE_PAGES;
-var __REACT__ = process.env.FLE_FRAMEWORK.indexOf('react') !== -1;
-var __VUE__ = process.env.FLE_FRAMEWORK.indexOf('vue') !== -1;
 
 var uploadConfig = null;
 
@@ -16,8 +14,10 @@ if (__UPLOAD_CONFIG__) {
   }
 }
 
-var resolve = require('../utils').resolve;
+var { resolve } = require('./utils');
 var fle = require(resolve('fle.json'));
+var __REACT__ = fle.boilerplate.indexOf('react') !== -1 || (fle.boilerplate === 'lib' && fle.react);
+var __VUE__ = fle.boilerplate.indexOf('vue') !== -1 || (fle.boilerplate === 'lib' && fle.vue);
 
 if (!fle.externals) {
   fle.externals = {};

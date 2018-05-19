@@ -1,33 +1,30 @@
 {
   "name": "fle-cli",
-  "version": "3.10.11",
+  "version": "4.0.0-beta.1",
   "description": "A convenient and flexible compiler with no configuration.",
   "bin": {
-    "fle": "bin/fle.js"
+    "fle": "bin/fle"
   },
   "scripts": {
-    "patch": "npm version patch && npm publish && git push",
-    "minor": "npm version minor && npm publish && git push",
-    "major": "npm version major && npm publish && git push"
+    "publish": "node tools/publish.js"
   },
   "keywords": [
     "fle",
     "compile",
-    "rollup",
     "webpack"
   ],
   "author": "huangancheng",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^2.3.2",
+    "@fle/color": "^0.0.1",
     "commander": "^2.14.1",
     "cross-spawn": "^6.0.5",
     "glob": "^7.1.2",
-    "inquirer": "^5.1.0",
+    "inquirer": "^5.2.0",
     "rimraf": "^2.6.2",
-    "update-notifier": "^2.3.0"
+    "update-notifier": "^2.5.0"
   },
   "engines": {
-    "node": ">=5.0.0"
+    "node": ">=6.11.5"
   }
 }

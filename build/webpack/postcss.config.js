@@ -1,5 +1,5 @@
 var config = require('./config');
-var resolve = require('../utils').resolve;
+var { resolve } = require('./utils');
 
 module.exports = {
   plugins: [

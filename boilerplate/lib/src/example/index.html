@@ -5,16 +5,12 @@
   <title><%= htmlWebpackPlugin.options.title %></title>
   <meta name="keywords" content="<%= htmlWebpackPlugin.options.keywords %>">
   <meta name="description" content="<%= htmlWebpackPlugin.options.description %>">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
   <% if (htmlWebpackPlugin.options.icon) { %>
     <link rel="icon" href="<%= htmlWebpackPlugin.options.icon %>">
   <% } %>
   <% for (var i = 0; i < htmlWebpackPlugin.options.css.length; i++) { %>
     <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.css[i] %>">
-  <% } %>
-  <% if (htmlWebpackPlugin.options.remUnit != 50) { %>
-    <script type="text/javascript">
-      window.__DIV_PART__ = 750 / <%= htmlWebpackPlugin.options.remUnit %>;
-    </script>
   <% } %>
   <% for (var j = 0; j < htmlWebpackPlugin.options.prejs.length; j++) { %>
     <script type="text/javascript" src="<%= htmlWebpackPlugin.options.prejs[j] %>"></script>
@@ -25,5 +21,6 @@
   <% for (var k = 0; k < htmlWebpackPlugin.options.js.length; k++) { %>
     <script type="text/javascript" src="<%= htmlWebpackPlugin.options.js[k] %>"></script>
   <% } %>
+  <%= htmlWebpackPlugin.files.webpackManifest %>
 </body>
 </html>

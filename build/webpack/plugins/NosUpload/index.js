@@ -1,6 +1,6 @@
 var path = require('path');
-var chalk = require('chalk');
 var NosUpload = require('@winman-f2e/nos-upload');
+var color = require('@fle/color');
 
 function NosPlugin ({
   nosConfig,
@@ -27,22 +27,18 @@ function NosPlugin ({
     this.distPath = distPath;
     this.uploadDone = uploadDone;
   } else {
-    console.log('===========================================');
-    console.log('There is no upload config or config is illegal!');
-    console.log('===========================================');
-    console.log();
+    console.log('\n上传密钥不存在或无效\n');
   }
 }
 
 NosPlugin.prototype.apply = function (compiler) {
   if (!this.nosUpload) return;
 
-  compiler.plugin('before-run', (compiler, callback) => {
+  compiler.hooks.beforeRun.tap('NosUpload', (compiler) => {
     compiler.options.output.publicPath = this.nosUpload.domain + this.nosUpload.prefix;
-    callback && callback();
   });
 
-  compiler.plugin('after-emit', (compilation, callback) => {
+  compiler.hooks.afterEmit.tap('NosUpload', (compilation) => {
     var assets = compilation.assets;
     var files = [];
 
@@ -57,16 +53,15 @@ NosPlugin.prototype.apply = function (compiler) {
     });
 
     this.nosUpload.uploadMultiFile(files).then(values => {
-      callback && callback();
       this.uploadDone && this.uploadDone(values);
 
       console.log();
       console.log('============== Upload Info ================');
       values.forEach(res => {
         if (res.success) {
-          console.log(chalk.green.bold(res.url));
+          console.log(color.green(res.url));
         } else {
-          console.log(chalk.red.bold(res.message || 'Upload failed!'));
+          console.log(color.red(res.message || '上传失败'));
         }
       });
       console.log('===========================================');
