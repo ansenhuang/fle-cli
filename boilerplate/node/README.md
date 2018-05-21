@@ -1,9 +1,40 @@
-## Build Setup
+# 项目名称
+
+**【】中的内容需要自己填写，并删除本行**
+
+【项目简介】
+
+## 环境配置
+
+构建工具
 
 ``` bash
-# build src files
-fle lib -w
-fle lib
+$ npm install -g fle-cli
+
+# yarn
+$ yarn global add fle-cli
 ```
 
-For detailed explanation, consult the [docs for fle-cli](https://www.npmjs.com/package/fle-cli).
+命令说明
+
+```bash
+# 本地开发
+fle dev
+
+# 代码构建
+fle build
+```
+
+查看更多说明： [构建文档](https://www.npmjs.com/package/fle-cli)
+
+## 开始安装
+
+【安装说明】
+
+## 如何使用
+
+【使用说明】
+
+## 补充说明
+
+【备注】

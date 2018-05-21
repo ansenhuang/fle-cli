@@ -1,11 +1,85 @@
-## Build Setup
+# 项目名称
+
+**【】中的内容需要自己填写，并删除本行**
+
+【项目简介】
+
+## 如何运行
+
+> node版本 `>=6.11.5`
+
+### 环境配置
+
+#### 安装全局编译工具
 
 ``` bash
-# serve with hot reload at localhost:5000
+$ npm install -g fle-cli
+
+# yarn
+$ yarn global add fle-cli
+```
+
+【其他说明】
+
+### 开发过程
+
+#### 命令
+
+```bash
+# 本地开发
 fle dev
 
-# build for production with minification
+# 代码构建
 fle build
 ```
 
-For detailed explanation, consult the [docs for fle-cli](https://www.npmjs.com/package/fle-cli).
+查看更多说明： [构建文档](https://www.npmjs.com/package/fle-cli)
+
+#### 代理配置
+
+| 本地地址 | 代理地址 |
+|---------|--------|
+| 【`/api/*`】 | 【`http://xxx`】 |
+
+### 线上发布
+
+【发布说明】
+
+### 项目维护
+
+| 角色    |    人员   |
+|---------|----------|
+| 前端开发 | 【xxx】、【yyy】 |
+| 后端开发 | 【xxx】 |
+| 产品经理 | 【xxx】 |
+| 交互设计 | 【xxx】 |
+
+### 其他说明
+
+* 【[数据上报](http://xxx)】
+* 【[需求文档](http://xxx)】
+* 【[设计稿](http://xxx)】
+
+## 业务介绍
+
+【业务描述】
+
+### 业务入口
+
+* 【AAA】
+* 【BBB】
+* 【CCC】
+
+【补充说明】
+
+### 页面信息
+
+|页面目录|页面描述|页面链接|参数描述|
+|-------|------|-------|-------|
+|【index】  | 【首页】   | 【[https://xxx.com](https://xxx.com/)】 | 无 |
+
+## 其他事项
+
+补充说明
+
+> 【项目备注】
