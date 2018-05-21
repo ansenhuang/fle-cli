@@ -13,27 +13,27 @@ var htmls = [];
 var vendors = [];
 var pages = getPages(resolve('src'));
 var sharePath = path.join(__dirname, '../.share');
-
-if (config.compilePages.length) {
-  config.fle.splitCommon = false; // 单独打包不抽离common
-  pages = pages.filter(page => config.compilePages.indexOf(page.id) !== -1);
-}
-
-if (!pages.length) {
-  console.log('没有可以编译的页面');
-  process.exit(1);
-}
-
+var shouldSplitCommon = false;
 
 if (config.fle.vendors && typeof config.fle.vendors === 'object') {
   Object.keys(config.fle.vendors).forEach(k => {
     entry[k + '_vendor'] = config.fle.vendors[k];
     vendors.push(k + '_vendor');
   });
+} else if (config.fle.splitCommon) {
+  vendors.push('vendors');
+  shouldSplitCommon = true;
 }
 
-if (!vendors.length && config.fle.splitCommon) {
-  vendors = ['vendors'];
+if (config.compilePages.length) {
+  vendors = [];
+  shouldSplitCommon = false; // 单独打包不抽离common
+  pages = pages.filter(page => config.compilePages.indexOf(page.id) !== -1);
+}
+
+if (!pages.length) {
+  console.log('没有可以编译的页面');
+  process.exit(1);
 }
 
 pages.forEach(page => {
@@ -78,12 +78,6 @@ var webpackConfig = {
     runtimeChunk: 'single',
     splitChunks: {
       cacheGroups: {
-        vendors: {
-          test: /node_modules/,
-          name: 'vendors',
-          enforce: true,
-          chunks: 'initial'
-        },
         styles: {
           test: /\.css$/,
           name: 'styles',
@@ -107,6 +101,15 @@ var webpackConfig = {
 
 if (config.fle.inlineManifest) {
   webpackConfig.plugins.push(plugin.inlineManifest());
+}
+
+if (shouldSplitCommon) {
+  webpackConfig.optimization.splitChunks.cacheGroups.vendors = {
+    test: /node_modules/,
+    name: 'vendors',
+    enforce: true,
+    chunks: 'initial'
+  };
 }
 
 module.exports = merge(

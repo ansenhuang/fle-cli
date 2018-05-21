@@ -16,7 +16,7 @@
   "author": "huangancheng",
   "license": "ISC",
   "dependencies": {
-    "@fle/color": "^0.0.2",
+    "@fle/color": "^0.0.3",
     "commander": "^2.14.1",
     "cross-spawn": "^6.0.5",
     "glob": "^7.1.2",

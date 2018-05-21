@@ -69,7 +69,9 @@ u => upload
 ```
 
 **提示:**
-如果需要使用上传功能，需要配置密钥（只需配置一次，然后系统会自动保存为文件），你可以在这里[申请](https://www.163yun.com/help/documents/15677635979624448)。
+
+* 如果需要使用上传功能，需要配置密钥（只需配置一次，然后系统会自动保存为文件），你可以在这里[申请](https://www.163yun.com/help/documents/15677635979624448)。
+* build命令不会清空原先的dist目录文件，原因是为了避免清空了线上正在使用的文件，导致线上故障，如需清理不必要的文件，建议手动清理，但一般情况下也无需清理。
 
 ## 工程模版
 
@@ -77,7 +79,8 @@ u => upload
 app      # pure javascript project
 react    # react project
 vue      # vue project
-lib      # javascript library (ES6 or IIFE, it is nice for tree shaking)
+lib      # javascript library (build from src/common)
+node     # node project
 ```
 
 ## 目录结构
