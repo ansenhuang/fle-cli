@@ -79,11 +79,13 @@ exports.vconsole = () => {
 
 // 优化控制台输出
 exports.friendlyErrors = () => {
+  var localIP = internalIp.v4.sync();
+
   return new FriendlyErrorsPlugin({
     compilationSuccessInfo: {
       messages: [
         `Local    ->  http://${config.fle.host}:${config.fle.port}/`,
-        `Network  ->  http://${internalIp.v4.sync()}:${config.fle.port}/`
+        `Network  ->  http://${localIP}:${config.fle.port}/`
       ]
     },
     onErrors: (severity, errors) => {

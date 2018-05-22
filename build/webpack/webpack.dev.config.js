@@ -23,7 +23,7 @@ if (!pages.length) {
 }
 
 pages.forEach(page => {
-  entry[page.id] = ['babel-polyfill', page.entry];
+  entry[page.id] = page.entry;
 
   if (page.template) {
     if (page.template[0] === '/') {
@@ -43,6 +43,7 @@ pages.forEach(page => {
   page.js = [].concat(config.fle.js, page.js).filter(c => c);
 
   page.remUnit = config.fle.remUnit;
+  page.uaId = ''; // 开发模式不统计pv
 
   htmlConfigs.push(page);
 });

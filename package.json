@@ -6,7 +6,7 @@
     "fle": "bin/fle"
   },
   "scripts": {
-    "publish": "node tools/publish.js"
+    "pub": "node tools/publish.js"
   },
   "keywords": [
     "fle",
