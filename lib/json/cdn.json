@@ -1,8 +1,10 @@
 {
-  "js": {
-    "remResize": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/1526625644661/lib/index.js"
-  },
   "css": {
-    "reset": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/1526625644661/lib/style.css"
+    "reset": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/@axe/rem-resize-0.1.7/lib/index.css"
+  },
+  "js": {
+    "remResize": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/@axe/rem-resize-0.1.7/lib/index.js",
+    "fastclick": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/@axe/fastclick-0.0.1/lib/index.js"
   }
 }
+
