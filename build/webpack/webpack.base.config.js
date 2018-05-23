@@ -45,15 +45,7 @@ var webpackConfig = {
     config.vue && plugin.vue()
   ].filter(p => p),
   externals: {},
-  target: 'web',
-  node: {
-    setImmediate: false,
-    dgram: 'empty',
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-    child_process: 'empty'
-  }
+  target: 'web'
 };
 
 module.exports = webpackConfig;

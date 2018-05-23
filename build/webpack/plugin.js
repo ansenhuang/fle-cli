@@ -109,7 +109,7 @@ exports.friendlyErrors = () => {
 exports.extractCSS = (opt = {}) => {
   return new MiniCssExtractPlugin({
     filename: opt.filename || 'css/[name].[contenthash:8].css',
-    chunkFilename: opt.chunkFilename || 'css/[id].[contenthash:8].css'
+    chunkFilename: opt.chunkFilename || 'css/[name].[contenthash:8].css'
   });
 }
 

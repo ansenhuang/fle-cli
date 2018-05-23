@@ -10,25 +10,31 @@ var userWebpackPath = resolve('webpack.build.config.js');
 
 var entry = {};
 var htmls = [];
-var vendors = [];
+var vendors = ['runtime'];
 var pages = getPages(resolve('src'));
 var sharePath = path.join(__dirname, '../.share');
-var shouldSplitCommon = false;
+var shouldSplitVendor = true;
+var shouldSplitCommon = true;
 
-if (config.fle.vendors && typeof config.fle.vendors === 'object') {
-  Object.keys(config.fle.vendors).forEach(k => {
+var vendorKeys = Object.keys(config.fle.vendors || {});
+
+if (vendorKeys.length) {
+  // 如果手动抽离了npm模块，则不进行自动抽离
+  shouldSplitVendor = false;
+
+  vendorKeys.forEach(k => {
     entry[k + '_vendor'] = config.fle.vendors[k];
     vendors.push(k + '_vendor');
   });
-} else if (config.fle.splitCommon) {
+} else {
   vendors.push('vendors');
-  shouldSplitCommon = true;
 }
 
 if (config.compilePages.length) {
-  vendors = [];
   shouldSplitCommon = false; // 单独打包不抽离common
   pages = pages.filter(page => config.compilePages.indexOf(page.id) !== -1);
+} else {
+  vendors.push('commons');
 }
 
 if (!pages.length) {
@@ -50,7 +56,7 @@ pages.forEach(page => {
   var prefix = page.publicPath ? page.publicPath.replace(/^\//, '') : 'html/';
   page.filename = prefix + page.id + '.html';
 
-  page.chunks = [].concat(['runtime'], vendors, [page.id]);
+  page.chunks = [].concat(vendors, [page.id]);
 
   page.css = [].concat(config.fle.css, page.css).filter(c => c);
   page.prejs = [].concat(config.fle.prejs, page.prejs).filter(c => c);
@@ -77,13 +83,26 @@ var webpackConfig = {
     ],
     runtimeChunk: 'single',
     splitChunks: {
+      automaticNameDelimiter: '_',
       cacheGroups: {
-        styles: {
-          test: /\.css$/,
-          name: 'styles',
-          enforce: true,
-          chunks: 'all'
-        }
+        // 抽离npm模块
+        vendors: shouldSplitVendor ? {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          minSize: 30000,
+          minChunks: 1,
+          chunks: 'initial',
+          priority: 1
+        } : false,
+        // 抽离公共模块（使用次数超过3次）
+        commons: shouldSplitCommon ? {
+          test: /[\\/]src[\\/]common[\\/]/,
+          name: 'commons',
+          minSize: 30000,
+          minChunks: 3,
+          chunks: 'initial',
+          priority: -1
+        } : false
       }
     }
   },
@@ -101,15 +120,6 @@ var webpackConfig = {
 
 if (config.fle.inlineManifest) {
   webpackConfig.plugins.push(plugin.inlineManifest());
-}
-
-if (shouldSplitCommon) {
-  webpackConfig.optimization.splitChunks.cacheGroups.vendors = {
-    test: /node_modules/,
-    name: 'vendors',
-    enforce: true,
-    chunks: 'initial'
-  };
 }
 
 module.exports = merge(
