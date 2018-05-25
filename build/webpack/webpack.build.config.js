@@ -101,7 +101,8 @@ var webpackConfig = {
           minSize: 30000,
           minChunks: 3,
           chunks: 'initial',
-          priority: -1
+          priority: -1,
+          reuseExistingChunk: true
         } : false
       }
     }
