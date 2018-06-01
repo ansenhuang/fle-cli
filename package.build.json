@@ -55,7 +55,7 @@
     "style-loader": "0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
-    "vconsole-webpack-plugin": "^1.2.0",
+    "vconsole-webpack-plugin": "^1.4.0",
     "vue-loader": "^15.1.0",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.13",
