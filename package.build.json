@@ -52,6 +52,8 @@
     "postcss-nested": "^3.0.0",
     "postcss-plugin-px2rem": "^0.7.0",
     "raw-loader": "^0.5.1",
+    "stylefmt": "^6.0.0",
+    "stylefmt-loader": "^1.2.3",
     "style-loader": "0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
