@@ -53,8 +53,10 @@ pages.forEach(page => {
     }
   }
 
-  var prefix = page.publicPath ? page.publicPath.replace(/^\//, '') : 'html/';
-  page.filename = prefix + page.id + '.html';
+  if (!page.filename) {
+    var prefix = page.publicPath ? page.publicPath.replace(/^\//, '') : 'html/';
+    page.filename = prefix + page.id + '.html';
+  }
 
   page.chunks = [].concat(vendors, [page.id]);
 
