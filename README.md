@@ -108,7 +108,8 @@ node     # node project
   "business": "test",          # business unique name, it is nice for cdn cache
   "eslint": true,              # eslint switch
   "notify": true,              # [dev] system notify
-  "vendors": {},               # compile vendor from node_modules by yourself, format: [ name: ['xxx'] ]
+  "vendors": {},               # compile vendor from node_modules by yourself, format: { name: 'RegExp' }
+  "splitVendor": true,         # split code from node_modules
   "splitCommon": true,         # split code that include at least 3 times
   "inlineManifest": true,      # [build] inject manifest code to html
   "publicPath": "/",           # [build] publicPath of compiled files

@@ -13,33 +13,60 @@ var htmls = [];
 var vendors = ['runtime'];
 var pages = getPages(resolve('src'));
 var sharePath = path.join(__dirname, '../.share');
-var shouldSplitVendor = true;
-var shouldSplitCommon = true;
-
-var vendorKeys = Object.keys(config.fle.vendors || {});
-
-if (vendorKeys.length) {
-  // 如果手动抽离了npm模块，则不进行自动抽离
-  shouldSplitVendor = false;
-
-  vendorKeys.forEach(k => {
-    entry[k + '_vendor'] = config.fle.vendors[k];
-    vendors.push(k + '_vendor');
-  });
-} else {
-  vendors.push('vendors');
-}
+var cacheGroups = {};
 
 if (config.compilePages.length) {
-  shouldSplitCommon = false; // 单独打包不抽离common
   pages = pages.filter(page => config.compilePages.indexOf(page.id) !== -1);
-} else {
-  vendors.push('commons');
 }
 
 if (!pages.length) {
   console.log('没有可以编译的页面');
   process.exit(1);
+}
+
+var vendorKeys = Object.keys(config.fle.vendors || {});
+
+if (vendorKeys.length) {
+  vendorKeys.forEach(k => {
+    vendors.push(k + '_vendor');
+
+    cacheGroups[k + '_vendor'] = {
+      test: new RegExp(config.fle.vendors[k]),
+      name: k + '_vendor',
+      minSize: 30000,
+      minChunks: 1,
+      chunks: 'initial',
+      priority: 2
+    };
+  });
+}
+
+if (config.fle.splitVendor) {
+  vendors.push('vendors');
+
+  cacheGroups['vendors'] = {
+    test: /[\\/]node_modules[\\/]/,
+    name: 'vendors',
+    minSize: 30000,
+    minChunks: 1,
+    chunks: 'initial',
+    priority: 1,
+    reuseExistingChunk: true
+  };
+}
+
+if (config.fle.splitCommon) {
+  vendors.push('commons');
+
+  cacheGroups['commons'] = {
+    test: /[\\/]src[\\/]common[\\/]/,
+    name: 'commons',
+    minSize: 30000,
+    minChunks: 3,
+    chunks: 'initial',
+    priority: -1,
+    reuseExistingChunk: true
+  };
 }
 
 pages.forEach(page => {
@@ -86,27 +113,7 @@ var webpackConfig = {
     runtimeChunk: 'single',
     splitChunks: {
       automaticNameDelimiter: '_',
-      cacheGroups: {
-        // 抽离npm模块
-        vendors: shouldSplitVendor ? {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          minSize: 30000,
-          minChunks: 1,
-          chunks: 'initial',
-          priority: 1
-        } : false,
-        // 抽离公共模块（使用次数超过3次）
-        commons: shouldSplitCommon ? {
-          test: /[\\/]src[\\/]common[\\/]/,
-          name: 'commons',
-          minSize: 30000,
-          minChunks: 3,
-          chunks: 'initial',
-          priority: -1,
-          reuseExistingChunk: true
-        } : false
-      }
+      cacheGroups: cacheGroups
     }
   },
   plugins: [
