@@ -33,8 +33,9 @@ pages.forEach(page => {
     }
   }
 
-  var prefix = page.publicPath ? page.publicPath.replace(/^\//, '') : 'html/';
-  page.filename = prefix + page.id + '.html';
+  if (!page.filename) {
+    page.filename = 'html/' + page.id + '.html';
+  }
 
   page.chunks = [page.id];
 

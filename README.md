@@ -146,7 +146,12 @@ src目录下，含有`app.json`的文件夹会被当成页面来编译。
   "keyswords": "",             # page keyswords
   "description": "",           # page description
   "icon": "/favicon.ico",      # page icon
-  "template": "index.html",    # page template
+  "template": "index.html",    # page template (rootPath: projectPath)
+  "filename": "index.html",    # buile filename (rootPath: projectPath/dist)
+  "freemarker": {              # buile template for freemarker (java template)
+    "template": "index.ftl",
+    "filename": "index.ftl"
+  },
   "prejs": [],                 # js url，inject to head
   "js": [],                    # js url，inject to body
   "css": [],                   # css url, inject to head

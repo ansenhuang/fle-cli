@@ -5,6 +5,9 @@ var config = require('./config');
 var plugin = require('./plugin');
 var { resolve, getPages } = require('./utils');
 
+var lodash = require('lodash');
+lodash.templateSettings.interpolate = /<%=([\s\S]+?)%>/g; // 设置模板变量匹配变量
+
 var baseWebpackConfig = require('./webpack.base.config');
 var userWebpackPath = resolve('webpack.build.config.js');
 
@@ -72,17 +75,22 @@ if (config.fle.splitCommon) {
 pages.forEach(page => {
   entry[page.id] = page.entry;
 
-  if (page.template) {
-    if (page.template[0] === '/') {
-      page.template = path.join(sharePath, 'template', page.template.substr(1));
-    } else {
-      page.template = resolve(page.template);
+  if (!page.freemarker) {
+    if (page.template) {
+      if (page.template[0] === '/') {
+        page.template = path.join(sharePath, 'template', page.template.substr(1));
+      } else {
+        page.template = resolve(page.template);
+      }
     }
-  }
 
-  if (!page.filename) {
-    var prefix = page.publicPath ? page.publicPath.replace(/^\//, '') : 'html/';
-    page.filename = prefix + page.id + '.html';
+    if (!page.filename) {
+      page.filename = 'html/' + page.id + '.html';
+    }
+  } else {
+    page.minify = false;
+    page.template = resolve(page.freemarker.template);
+    page.filename = page.freemarker.filename;
   }
 
   page.chunks = [].concat(vendors, [page.id]);
