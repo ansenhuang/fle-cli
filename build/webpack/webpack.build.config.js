@@ -129,7 +129,7 @@ var webpackConfig = {
     plugin.hash(),
     plugin.extractCSS(),
     config.upload && plugin.upload(),
-    plugin.analyzer({
+    config.report && plugin.analyzer({
       filename: '../.cache/report.build.html'
     })
   ].filter(r => r).concat(htmls),

@@ -1,6 +1,7 @@
 var __DEV__ = (process.env.NODE_ENV || 'development') === 'development';
 var __LOG__ = process.env.FLE_VCONSOLE === 'true';
 var __UPLOAD__ = process.env.FLE_UPLOAD === 'true';
+var __REPORT__ = process.env.FLE_REPORT === 'true';
 var __UPLOAD_CONFIG__ = process.env.FLE_UPLOAD_CONFIG;
 var __COMPILE_PAGES__ = process.env.FLE_COMPILE_PAGES;
 
@@ -45,6 +46,7 @@ module.exports = {
   dev: __DEV__,
   vconsole: __LOG__,
   upload: __UPLOAD__,
+  report: __REPORT__,
   react: __REACT__,
   vue: __VUE__,
   uploadConfig: uploadConfig,
