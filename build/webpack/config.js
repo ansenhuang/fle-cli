@@ -4,6 +4,7 @@ var __UPLOAD__ = process.env.FLE_UPLOAD === 'true';
 var __REPORT__ = process.env.FLE_REPORT === 'true';
 var __UPLOAD_CONFIG__ = process.env.FLE_UPLOAD_CONFIG;
 var __COMPILE_PAGES__ = process.env.FLE_COMPILE_PAGES;
+var __PORT__ = process.env.FLE_PORT;
 
 var uploadConfig = null;
 
@@ -19,6 +20,10 @@ var { resolve } = require('./utils');
 var fle = require(resolve('fle.json'));
 var __REACT__ = fle.boilerplate.indexOf('react') !== -1 || (fle.boilerplate === 'lib' && fle.react);
 var __VUE__ = fle.boilerplate.indexOf('vue') !== -1 || (fle.boilerplate === 'lib' && fle.vue);
+
+if (__PORT__) {
+  fle.port = __PORT__;
+}
 
 if (!fle.externals) {
   fle.externals = {};
