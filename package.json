@@ -1,6 +1,6 @@
 {
   "name": "fle-cli",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "description": "A convenient and flexible compiler with no configuration.",
   "bin": {
     "fle": "bin/fle"
