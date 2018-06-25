@@ -10,8 +10,11 @@
     <% for (var i = 0; i < htmlWebpackPlugin.options.pages.length; i++) { %>
       <li>
         <a href="/<%= htmlWebpackPlugin.options.pages[i].filename %>">
-          [<%= htmlWebpackPlugin.options.pages[i].id %>]
-          <%= htmlWebpackPlugin.options.pages[i].title %>
+          <% if (htmlWebpackPlugin.options.pages[i].id !== htmlWebpackPlugin.options.pages[i].title) { %>
+            <%= htmlWebpackPlugin.options.pages[i].title %> (<%= htmlWebpackPlugin.options.pages[i].id %>)
+          <% } else { %>
+            <%= htmlWebpackPlugin.options.pages[i].id %>
+          <% } %>
         </a>
       </li>
     <% } %>
