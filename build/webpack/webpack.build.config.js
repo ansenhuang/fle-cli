@@ -75,22 +75,18 @@ if (config.fle.splitCommon) {
 pages.forEach(page => {
   entry[page.id] = page.entry;
 
-  if (!page.freemarker) {
-    if (page.template) {
-      if (page.template[0] === '/') {
-        page.template = path.join(sharePath, 'template', page.template.substr(1));
-      } else {
-        page.template = resolve(page.template);
-      }
+  if (!/\.ftl$/.test(page.template)) {
+    if (page.template[0] === '/') {
+      page.template = path.join(sharePath, 'template', page.template.substr(1));
+    } else {
+      page.template = resolve(page.template);
     }
 
-    if (!page.filename) {
-      page.filename = 'html/' + page.id + '.html';
-    }
+    page.filename = page.filename || ('html/' + page.id + '.html');
   } else {
     page.minify = false;
-    page.template = resolve(page.freemarker.template);
-    page.filename = page.freemarker.filename;
+    page.template = resolve(page.template);
+    page.filename = page.filename || ('ftl/' + page.id + '.ftl');
   }
 
   page.chunks = [].concat(vendors, [page.id]);
@@ -100,6 +96,7 @@ pages.forEach(page => {
   page.js = [].concat(config.fle.js, page.js).filter(c => c);
 
   page.remUnit = config.fle.remUnit;
+  page.dev = false;
 
   htmls.push(plugin.html(page));
 });
