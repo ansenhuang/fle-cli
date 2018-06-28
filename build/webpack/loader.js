@@ -139,9 +139,10 @@ exports.vue = () => {
 }
 
 // images
-exports.images = (opt = {}) => {
+exports.imagesMin = (opt = {}) => {
   return {
     test: /\.(png|jpe?g|gif|svg|webp)(\?.*)?$/,
+    exclude: /\.origin\./,
     use: [
       {
         loader: 'url-loader',
@@ -176,7 +177,22 @@ exports.images = (opt = {}) => {
           ]
         }
       }
-    ].filter(p => p)
+    ].filter(l => l)
+  };
+}
+
+exports.imagesOrigin = (opt = {}) => {
+  return {
+    test: /\.origin\.(png|jpe?g|gif|svg|webp)(\?.*)?$/,
+    use: [
+      {
+        loader: 'url-loader',
+        options: {
+          limit: 3000,
+          name: opt.filename || 'images/[name].[hash:8].[ext]'
+        }
+      }
+    ]
   };
 }
 
