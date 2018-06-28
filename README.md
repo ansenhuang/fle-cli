@@ -200,6 +200,7 @@ webpack.build.config.js    # build [webpack]
 webpack.lib.config.js      # component [webpack]
 ```
 
-* js import alias: `@ => src`
-* css unit: `rpx` will be transform to `rem`
-* suffix of `.ico` is not supported to upload
+* 文件引用别名： `@ => src`
+* CSS单位：`rpx`将会编译成`rem`，转换比率根据remUnit定义
+* 图片压缩：生产环境会自动优化图片体积，若不需要优化可以给图片命名为`xxx.origin.png`
+* 上传图片：暂不支持上传后缀为`.ico`的图片
