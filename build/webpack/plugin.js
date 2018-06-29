@@ -3,6 +3,7 @@ var path = require('path');
 var webpack = require('webpack');
 var notifier = require('node-notifier');
 var internalIp = require('internal-ip');
+var color = require('@fle/color');
 
 var config = require('./config');
 var { resolve } = require('./utils');
@@ -84,8 +85,8 @@ exports.friendlyErrors = () => {
   return new FriendlyErrorsPlugin({
     compilationSuccessInfo: {
       messages: [
-        `Local    ->  http://${config.fle.host}:${config.fle.port}/`,
-        `Network  ->  http://${localIP}:${config.fle.port}/`
+        'Local    ->  ' + color.cyan(`http://${config.fle.host}:${config.fle.port}/`),
+        'Network  ->  ' + color.cyan(`http://${localIP}:${config.fle.port}/`)
       ]
     },
     onErrors: (severity, errors) => {
