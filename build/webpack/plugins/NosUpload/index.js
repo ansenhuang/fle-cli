@@ -59,9 +59,9 @@ NosPlugin.prototype.apply = function (compiler) {
       console.log('============== Upload Info ================');
       values.forEach(res => {
         if (res.success) {
-          console.log(color.green(res.url));
+          console.log(color.green.bold(res.url));
         } else {
-          console.log(color.red(res.message || '上传失败'));
+          console.log(color.red.bold(res.message || '上传失败'));
         }
       });
       console.log('===========================================');
