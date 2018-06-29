@@ -75,18 +75,21 @@ if (config.fle.splitCommon) {
 pages.forEach(page => {
   entry[page.id] = page.entry;
 
-  if (!/\.ftl$/.test(page.template)) {
-    if (page.template[0] === '/') {
-      page.template = path.join(sharePath, 'template', page.template.substr(1));
-    } else {
-      page.template = resolve(page.template);
-    }
+  if (page.template[0] === '/') {
+    page.template = path.join(sharePath, 'template', page.template.substr(1));
+  } else {
+    page.template = resolve(page.template);
+  }
 
+  if (!/\.ftl$/.test(page.template)) {
     page.filename = page.filename || ('html/' + page.id + '.html');
   } else {
     page.minify = false;
-    page.template = resolve(page.template);
     page.filename = page.filename || ('ftl/' + page.id + '.ftl');
+  }
+
+  if (config.upload) {
+    page.filename = resolve('public/' + page.filename); // 改成绝对路径
   }
 
   page.chunks = [].concat(vendors, [page.id]);
@@ -101,11 +104,13 @@ pages.forEach(page => {
   htmls.push(plugin.html(page));
 });
 
+var distPath = !config.upload ? resolve('dist') : resolve('.cache/dist');
+
 var webpackConfig = {
   mode: 'production',
   entry: entry,
   output: {
-    path: resolve('dist'),
+    path: distPath,
     publicPath: config.fle.publicPath,
     filename: 'js/[name].[chunkhash:8].js',
     chunkFilename: 'js/[name].[chunkhash:8].js'
@@ -125,14 +130,17 @@ var webpackConfig = {
     plugin.merge(),
     plugin.hash(),
     plugin.extractCSS(),
-    config.upload && plugin.upload(),
+    config.upload && plugin.upload({
+      distPath: distPath
+    }),
     config.report && plugin.analyzer({
-      filename: '../.cache/report.build.html'
+      filename: resolve('.cache/report/build.html')
     })
   ].filter(r => r).concat(htmls),
   externals: config.fle.externals
 };
 
+// inlineMinifest插件要在html插件之后
 if (config.fle.inlineManifest) {
   webpackConfig.plugins.push(plugin.inlineManifest());
 }

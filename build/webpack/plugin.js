@@ -133,7 +133,7 @@ exports.optimizeCSS = () => {
 // 模块依赖分析
 exports.analyzer = (opt = {}) => {
   return new BundleAnalyzerPlugin({
-    openAnalyzer: true,
+    openAnalyzer: opt.open !== false,
     analyzerMode: 'static', // server, static
     reportFilename: opt.filename || 'report.html'
   });
@@ -180,7 +180,7 @@ exports.upload = (opt = {}) => {
     nosConfig: config.uploadConfig,
     distPath: opt.distPath || resolve('dist'),
     prefix: 'fle/a0df1d4009c7a2ec5fee/' + (config.fle.business || +new Date()) + '/',
-    exclude: /(\.html$)|(manifest)/,
+    exclude: /(\.(html|ftl|ejs)$)/,
     // uploadDone: (values) => {
     //   /* item: success, filename, url */
     // }
