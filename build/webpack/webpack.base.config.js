@@ -2,7 +2,7 @@ var path = require('path');
 var config = require('./config');
 var loader = require('./loader');
 var plugin = require('./plugin');
-var resolve = require('../utils').resolve;
+var { resolve } = require('./utils');
 
 //基本配置
 var webpackConfig = {
@@ -34,7 +34,8 @@ var webpackConfig = {
       config.vue && loader.vue(),
       loader.babel(),
       loader.text(),
-      loader.images(),
+      loader.imagesOrigin(),
+      loader.imagesMin(),
       loader.fonts(),
       loader.medias()
     ].filter(r => r)
@@ -42,22 +43,10 @@ var webpackConfig = {
   //配置插件
   plugins: [
     plugin.define(),
-    plugin.loader()
-  ],
+    config.vue && plugin.vue()
+  ].filter(p => p),
   externals: {},
-  target: 'web',
-  node: {
-    // prevent webpack from injecting useless setImmediate polyfill because Vue
-    // source contains it (although only uses it if it's native).
-    setImmediate: false,
-    // prevent webpack from injecting mocks to Node native modules
-    // that does not make sense for the client
-    dgram: 'empty',
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-    child_process: 'empty'
-  }
+  target: 'web'
 };
 
 module.exports = webpackConfig;

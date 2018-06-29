@@ -22,7 +22,7 @@ var babelConfig = {
   "plugins": [
     config.vue && require.resolve("babel-plugin-transform-vue-jsx"),
     require.resolve("babel-plugin-transform-decorators-legacy"),
-    config.fle.boilerplate !== 'module' && require.resolve("babel-plugin-transform-runtime")
+    require.resolve("babel-plugin-transform-runtime")
   ].filter(p => p)
 };
 

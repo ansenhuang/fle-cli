@@ -1,0 +1,8 @@
+{
+  "title": "示例",
+  "keyswords": "",
+  "description": "",
+  "icon": "/favicon.ico",
+  "template": "src/example/index.html",
+  "compiled": true
+}

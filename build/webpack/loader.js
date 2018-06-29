@@ -1,9 +1,9 @@
 var fs = require('fs');
 var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 var config = require('./config');
-var resolve = require('../utils').resolve;
+var { resolve } = require('./utils');
 
 var styleLoader = {
   loader: 'style-loader',
@@ -52,51 +52,42 @@ var postCSSLoader = {
   }
 };
 
-var cssLoaders = config.dev ?
-  [styleLoader, cssLoader, postCSSLoader]
-  :
-  ExtractTextPlugin.extract({
-    fallback: styleLoader,
-    use: [cssLoader, postCSSLoader]
-  });
-
-var vueCSSLoaders = config.dev ?
-  [vueStyleLoader, cssLoader, postCSSLoader]
-  :
-  ExtractTextPlugin.extract({
-    fallback: vueStyleLoader,
-    use: [cssLoader, postCSSLoader]
-  });
-
-var moduleCSSLoaders = config.dev ?
-  [styleLoader, moduleCSSLoader, postCSSLoader]
-  :
-  ExtractTextPlugin.extract({
-    fallback: styleLoader,
-    use: [moduleCSSLoader, postCSSLoader]
-  });
-
-var babelLoader = {
-  loader: 'babel-loader',
-  options: Object.assign({
-    cacheDirectory: resolve('.cache/babel'),
-    babelrc: false,
-    extends: fs.existsSync(resolve('.babelrc')) ? resolve('.babelrc') : null
-  }, require(path.join(__dirname, './babel.js')))
+var stylefmtLoader = {
+  loader: 'stylefmt-loader',
+  options: {
+    config: 'build/webpack/stylelint.config.js'
+  }
 };
+
+function getCSSLoaders (modules) {
+  return config.dev ?
+    [config.vue ? vueStyleLoader : styleLoader, modules ? moduleCSSLoader : cssLoader, postCSSLoader, stylefmtLoader]
+    :
+    [MiniCssExtractPlugin.loader, modules ? moduleCSSLoader : cssLoader, postCSSLoader, stylefmtLoader]
+}
 
 exports.css = () => {
   return {
     test: /\.css$/,
     exclude: /\.module\.css$/,
-    use: cssLoaders
+    oneOf: [
+      // this matches `<style module>`
+      {
+        resourceQuery: /module/,
+        use: getCSSLoaders(true)
+      },
+      // this matches plain `<style>` or `<style scoped>`
+      {
+        use: getCSSLoaders(false)
+      }
+    ]
   };
 }
 
 exports.cssModules = () => {
   return {
     test: /\.module\.css$/,
-    use: moduleCSSLoaders
+    use: getCSSLoaders(true)
   };
 }
 
@@ -110,7 +101,7 @@ exports.eslint = () => {
     options: {
       fix: true,
       cache: config.dev ? resolve('.cache/eslint') : false,
-      // failOnError: !config.dev, // 生产环境发现代码不合法，则中断编译
+      failOnError: !config.dev, // 生产环境发现代码不合法，则中断编译
       useEslintrc: false,
       configFile: fs.existsSync(resolve('.eslintrc')) ? resolve('.eslintrc') : null,
       formatter: require('eslint-friendly-formatter'),
@@ -126,7 +117,14 @@ exports.babel = () => {
   return {
     test: /\.jsx?$/,
     include: resolve('src'),
-    use: babelLoader
+    use: {
+      loader: 'babel-loader',
+      options: Object.assign({
+        cacheDirectory: resolve('.cache/babel'),
+        babelrc: false,
+        extends: fs.existsSync(resolve('.babelrc')) ? resolve('.babelrc') : null
+      }, require(path.join(__dirname, './babel.js')))
+    }
   };
 }
 
@@ -135,15 +133,6 @@ exports.vue = () => {
     test: /\.vue$/,
     loader: 'vue-loader',
     options: {
-      loaders: {
-        css: vueCSSLoaders,
-        js: babelLoader
-      },
-      cssModules: {
-        camelCase: 'only',
-        importLoaders: 1,
-        localIdentName: '[local]___[hash:base64:8]'
-      },
       cssSourceMap: config.dev,
       cacheBusting: true,
       transformToRequire: {
@@ -157,14 +146,15 @@ exports.vue = () => {
 }
 
 // images
-exports.images = (opt = {}) => {
+exports.imagesMin = (opt = {}) => {
   return {
     test: /\.(png|jpe?g|gif|svg|webp)(\?.*)?$/,
+    exclude: /\.origin\./,
     use: [
       {
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 3000,
           name: opt.filename || 'images/[name].[hash:8].[ext]'
         }
       },
@@ -194,7 +184,22 @@ exports.images = (opt = {}) => {
           ]
         }
       }
-    ].filter(p => p)
+    ].filter(l => l)
+  };
+}
+
+exports.imagesOrigin = (opt = {}) => {
+  return {
+    test: /\.origin\.(png|jpe?g|gif|svg|webp)(\?.*)?$/,
+    use: [
+      {
+        loader: 'url-loader',
+        options: {
+          limit: 3000,
+          name: opt.filename || 'images/[name].[hash:8].[ext]'
+        }
+      }
+    ]
   };
 }
 
@@ -204,7 +209,7 @@ exports.fonts = (opt = {}) => {
     test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
     loader: 'url-loader',
     options: {
-      limit: 10000,
+      limit: 3000,
       name: opt.filename || 'fonts/[name].[hash:8].[ext]'
     }
   };
@@ -216,7 +221,7 @@ exports.medias = (opt = {}) => {
     test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
     loader: 'url-loader',
     options: {
-      limit: 10000,
+      limit: 3000,
       name: opt.filename || 'medias/[name].[hash:8].[ext]'
     }
   };
@@ -226,6 +231,6 @@ exports.medias = (opt = {}) => {
 exports.text = () => {
   return {
     test: /\.(md|txt|tpl)$/,
-    loader: 'text-loader'
+    loader: 'raw-loader'
   };
 }

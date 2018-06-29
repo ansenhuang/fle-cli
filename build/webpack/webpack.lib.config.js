@@ -2,43 +2,46 @@ var fs = require('fs');
 var path = require('path');
 var merge = require('webpack-merge');
 var config = require('./config');
-// var loader = require('./loader');
 var plugin = require('./plugin');
-var utils = require('../utils');
+var { resolve } = require('./utils');
 
 var baseWebpackConfig = require('./webpack.base.config');
-var userWebpackPath = utils.resolve('webpack.lib.config.js');
+var userWebpackPath = resolve('webpack.lib.config.js');
 
-var entry = {};
-var pages = utils.getPages(utils.resolve('src'));
-
-pages.forEach(page => {
-  if (page.module) {
-    entry[page.moduleName || page.id] = page.module;
-  }
-});
+var compileTypeMap = {
+  'iife': 'self',
+  'commonjs': 'commonjs2',
+  'umd': 'umd2'
+};
 
 //基本配置
 var webpackConfig = {
-  entry: entry,
+  mode: 'production',
+  entry: {
+    'index': resolve('src/common/index.js')
+  },
   output: {
-    path: utils.resolve('lib'),
-    libraryTarget: 'commonjs2',
-    library: '[name]',
+    path: resolve('lib'),
+    libraryTarget: compileTypeMap[config.fle.compileType] || config.fle.compileType,
+    // library: '[name]',
     filename: '[name].js',
-    chunkFilename: '[name].chunk.js'
+    chunkFilename: '[name].js'
+  },
+  optimization: {
+    minimizer: [
+      plugin.uglify(),
+      plugin.optimizeCSS()
+    ]
   },
   plugins: [
     plugin.merge(),
     plugin.hash(),
-    plugin.optimizeCSS(),
     plugin.extractCSS({
-      filename: 'css/[name].css'
+      filename: '[name].css',
+      chunkFilename: '[id].css'
     }),
-    plugin.scope(),
-    plugin.uglify(),
     plugin.analyzer({
-      filename: 'report.html'
+      filename: resolve('.cache/report/lib.html')
     })
   ],
   externals: config.fle.libExternals

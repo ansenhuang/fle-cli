@@ -2,113 +2,148 @@ var fs = require('fs');
 var path = require('path');
 var merge = require('webpack-merge');
 var config = require('./config');
-// var loader = require('./loader');
 var plugin = require('./plugin');
-var utils = require('../utils');
+var { resolve, getPages } = require('./utils');
+
+var lodash = require('lodash');
+lodash.templateSettings.interpolate = /<%=([\s\S]+?)%>/g; // 设置模板变量匹配变量
 
 var baseWebpackConfig = require('./webpack.base.config');
-var userWebpackPath = utils.resolve('webpack.build.config.js');
+var userWebpackPath = resolve('webpack.build.config.js');
 
 var entry = {};
 var htmls = [];
-var manifests = [];
-var dlljs = [];
-var pages = utils.getPages(utils.resolve('src'));
+var vendors = ['runtime'];
+var pages = getPages(resolve('src'));
 var sharePath = path.join(__dirname, '../.share');
+var cacheGroups = {};
 
 if (config.compilePages.length) {
-  config.fle.splitCommon = false; // 单独打包不抽离common
   pages = pages.filter(page => config.compilePages.indexOf(page.id) !== -1);
 }
 
 if (!pages.length) {
-  console.log('There are no page to compile!');
+  console.log('没有可以编译的页面');
   process.exit(1);
 }
 
-// dll
-if (config.fle.vendors && typeof config.fle.vendors === 'object') {
-  Object.keys(config.fle.vendors).forEach(k => {
-    var filePath = utils.resolve(`dist/dll/${k}.manifest.json`);
-    if (fs.existsSync(filePath)) {
-      manifests.push(plugin.dllReference({
-        manifest: filePath
-      }));
+var vendorKeys = Object.keys(config.fle.vendors || {});
 
-      if (!config.upload) {
-        dlljs.push(config.fle.publicPath + 'dll/' + require(filePath).name + '.min.js');
-      } else {
-        if (config.fle.dllUpload && config.fle.dllUpload[k]) {
-          dlljs.push(config.fle.dllUpload[k]);
-        } else {
-          console.log(`The vendors of [${k}] has no url, Please run "fle dll --build --upload" firstly!`);
-        }
-      }
-    } else {
-      console.log(`The vendors of [${k}] has no dll manifest, Please run "fle dll --build" firstly!`);
-    }
+if (vendorKeys.length) {
+  vendorKeys.forEach(k => {
+    vendors.push(k + '_vendor');
+
+    cacheGroups[k + '_vendor'] = {
+      test: new RegExp(config.fle.vendors[k]),
+      name: k + '_vendor',
+      minSize: 30000,
+      minChunks: 1,
+      chunks: 'initial',
+      priority: 2
+    };
   });
 }
 
-var commons = [];
-if (!config.fle.inlineManifest) {
-  commons.push('manifest');
+if (config.fle.splitVendor) {
+  vendors.push('vendors');
+
+  cacheGroups['vendors'] = {
+    test: /[\\/]node_modules[\\/]/,
+    name: 'vendors',
+    minSize: 30000,
+    minChunks: 1,
+    chunks: 'initial',
+    priority: 1,
+    reuseExistingChunk: true
+  };
 }
+
 if (config.fle.splitCommon) {
-  commons.push('common');
+  vendors.push('commons');
+
+  cacheGroups['commons'] = {
+    test: /[\\/]src[\\/]common[\\/]/,
+    name: 'commons',
+    minSize: 30000,
+    minChunks: 3,
+    chunks: 'initial',
+    priority: -1,
+    reuseExistingChunk: true
+  };
 }
 
 pages.forEach(page => {
   entry[page.id] = page.entry;
 
-  if (page.template) {
-    if (page.template[0] === '/') {
-      page.template = path.join(sharePath, 'template', page.template.substr(1));
-    } else {
-      page.template = utils.resolve(page.template);
-    }
+  if (page.template[0] === '/') {
+    page.template = path.join(sharePath, 'template', page.template.substr(1));
+  } else {
+    page.template = resolve(page.template);
   }
 
-  var prefix = page.publicPath ? page.publicPath.replace(/^\//, '') : 'html/';
-  page.filename = prefix + page.id + '.html';
+  if (!/\.ftl$/.test(page.template)) {
+    page.filename = page.filename || ('html/' + page.id + '.html');
+  } else {
+    page.minify = false;
+    page.filename = page.filename || ('ftl/' + page.id + '.ftl');
+  }
 
-  page.chunks = commons.concat([page.id]);
+  if (config.upload) {
+    page.filename = resolve('public/' + page.filename); // 改成绝对路径
+  }
+
+  page.chunks = [].concat(vendors, [page.id]);
 
   page.css = [].concat(config.fle.css, page.css).filter(c => c);
   page.prejs = [].concat(config.fle.prejs, page.prejs).filter(c => c);
-  page.js = [].concat(config.fle.js, page.js, dlljs).filter(c => c);
+  page.js = [].concat(config.fle.js, page.js).filter(c => c);
+
+  page.remUnit = config.fle.remUnit;
+  page.dev = false;
 
   htmls.push(plugin.html(page));
 });
 
+var distPath = !config.upload ? resolve('dist') : resolve('.cache/dist');
+
 var webpackConfig = {
+  mode: 'production',
   entry: entry,
   output: {
-    path: utils.resolve('dist'),
+    path: distPath,
     publicPath: config.fle.publicPath,
     filename: 'js/[name].[chunkhash:8].js',
-    chunkFilename: 'js/[name].chunk.[chunkhash:8].js'
+    chunkFilename: 'js/[name].[chunkhash:8].js'
+  },
+  optimization: {
+    minimizer: [
+      plugin.uglify(),
+      plugin.optimizeCSS()
+    ],
+    runtimeChunk: 'single',
+    splitChunks: {
+      automaticNameDelimiter: '_',
+      cacheGroups: cacheGroups
+    }
   },
   plugins: [
     plugin.merge(),
     plugin.hash(),
-    plugin.optimizeCSS(),
     plugin.extractCSS(),
-    plugin.scope(),
-    config.fle.splitCommon && plugin.commonsChunk(),
-    plugin.commonsManifest(),
-    config.fle.inlineManifest && plugin.inlineManifest(),
-    plugin.commonsAsync(),
-    plugin.uglify({
-      exclude: /\.min\.js$/
+    config.upload && plugin.upload({
+      distPath: distPath
     }),
-    config.upload && plugin.upload(),
-    plugin.analyzer({
-      filename: '../.cache/report.build.html'
+    config.report && plugin.analyzer({
+      filename: resolve('.cache/report/build.html')
     })
-  ].filter(r => r).concat(manifests, htmls),
+  ].filter(r => r).concat(htmls),
   externals: config.fle.externals
 };
+
+// inlineMinifest插件要在html插件之后
+if (config.fle.inlineManifest) {
+  webpackConfig.plugins.push(plugin.inlineManifest());
+}
 
 module.exports = merge(
   baseWebpackConfig,

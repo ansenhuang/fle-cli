@@ -1,11 +1,9 @@
 {
-  "js": {
-    "remResize": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/1524643708985/lib/index.js"
-  },
   "css": {
-    "reset": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/1524643708985/lib/style.css"
+    "reset": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/@axe/rem-resize-0.2.5/lib/index.css"
   },
-  "img": {
-
+  "js": {
+    "remResize": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/@axe/rem-resize-0.2.5/lib/index.js",
+    "fastclick": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/@axe/fastclick-0.0.1/lib/index.js"
   }
 }

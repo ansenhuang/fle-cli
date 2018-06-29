@@ -1,13 +1,13 @@
 var config = require('./config');
 
 var eslintConfig = {
-  // "root": true,
+  "root": true,
   "parserOptions": {
-    "parser": "babel-eslint",
     "sourceType": "module"
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "es6": true
   },
   "globals":{
     "console": true
@@ -29,5 +29,11 @@ var eslintConfig = {
     }]
   }
 };
+
+if (!config.vue) {
+  eslintConfig.parser = "babel-eslint";
+} else {
+  eslintConfig.parserOptions.parser = "babel-eslint";
+}
 
 module.exports = eslintConfig;

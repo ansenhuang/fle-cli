@@ -1,0 +1,17 @@
+{
+  "name": "fle-boilerplate-node",
+  "version": "0.0.0",
+  "description": "A node project created by fle-cli.",
+  "main": "lib/index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon lib/index.js",
+    "prod": "NODE_ENV=production node lib/index.js"
+  },
+  "keywords": [],
+  "author": "huangancheng",
+  "license": "MIT",
+  "dependencies": {},
+  "engines": {
+    "node": ">=6.11.5"
+  }
+}
