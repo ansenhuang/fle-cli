@@ -1,9 +1,9 @@
 {
   "css": {
-    "reset": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/@axe/rem-resize-0.2.4/lib/index.css"
+    "reset": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/@axe/rem-resize-0.2.5/lib/index.css"
   },
   "js": {
-    "remResize": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/@axe/rem-resize-0.2.4/lib/index.js",
+    "remResize": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/@axe/rem-resize-0.2.5/lib/index.js",
     "fastclick": "https://easyread.nosdn.127.net/fle/a0df1d4009c7a2ec5fee/@axe/fastclick-0.0.1/lib/index.js"
   }
 }
