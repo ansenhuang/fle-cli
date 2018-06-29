@@ -2,6 +2,7 @@
   "business": "",
   "eslint": true,
   "publicPath": "/",
+  "splitVendor": true,
   "splitCommon": true,
   "vendors": {},
   "remUnit": 50,

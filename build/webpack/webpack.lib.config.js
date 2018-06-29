@@ -41,7 +41,7 @@ var webpackConfig = {
       chunkFilename: '[id].css'
     }),
     plugin.analyzer({
-      filename: 'report.html'
+      filename: resolve('.cache/report/lib.html')
     })
   ],
   externals: config.fle.libExternals

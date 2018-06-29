@@ -5,6 +5,9 @@ var config = require('./config');
 var plugin = require('./plugin');
 var { resolve, getPages } = require('./utils');
 
+var lodash = require('lodash');
+lodash.templateSettings.interpolate = /<%=([\s\S]+?)%>/g; // 设置模板变量匹配变量
+
 var baseWebpackConfig = require('./webpack.base.config');
 var userWebpackPath = resolve('webpack.dev.config.js');
 
@@ -25,16 +28,24 @@ if (!pages.length) {
 pages.forEach(page => {
   entry[page.id] = page.entry;
 
-  if (page.template) {
+  if (!/\.ftl$/.test(page.template)) {
     if (page.template[0] === '/') {
       page.template = path.join(sharePath, 'template', page.template.substr(1));
     } else {
       page.template = resolve(page.template);
     }
-  }
 
-  var prefix = page.publicPath ? page.publicPath.replace(/^\//, '') : 'html/';
-  page.filename = prefix + page.id + '.html';
+    page.filename = page.filename || ('html/' + page.id + '.html');
+  } else {
+    page.minify = false;
+    page.template = resolve(page.template);
+
+    if (page.filename) {
+      page.filename = page.filename.replace(/\.ftl$/, '.html');
+    } else {
+      page.filename = 'ftl/' + page.id + '.html';
+    }
+  }
 
   page.chunks = [page.id];
 
@@ -44,6 +55,7 @@ pages.forEach(page => {
 
   page.remUnit = config.fle.remUnit;
   page.uaId = ''; // 开发模式不统计pv
+  page.dev = true;
 
   htmlConfigs.push(page);
 });

@@ -108,7 +108,8 @@ node     # node project
   "business": "test",          # business unique name, it is nice for cdn cache
   "eslint": true,              # eslint switch
   "notify": true,              # [dev] system notify
-  "vendors": {},               # compile vendor from node_modules by yourself, format: [ name: ['xxx'] ]
+  "vendors": {},               # compile vendor from node_modules by yourself, format: { name: 'RegExp' }
+  "splitVendor": true,         # split code from node_modules
   "splitCommon": true,         # split code that include at least 3 times
   "inlineManifest": true,      # [build] inject manifest code to html
   "publicPath": "/",           # [build] publicPath of compiled files
@@ -145,7 +146,12 @@ src目录下，含有`app.json`的文件夹会被当成页面来编译。
   "keyswords": "",             # page keyswords
   "description": "",           # page description
   "icon": "/favicon.ico",      # page icon
-  "template": "index.html",    # page template
+  "template": "index.html",    # page template (rootPath: projectPath)
+  "filename": "index.html",    # buile filename (rootPath: projectPath/dist)
+  "freemarker": {              # buile template for freemarker (java template)
+    "template": "index.ftl",
+    "filename": "index.ftl"
+  },
   "prejs": [],                 # js url，inject to head
   "js": [],                    # js url，inject to body
   "css": [],                   # css url, inject to head
@@ -194,6 +200,7 @@ webpack.build.config.js    # build [webpack]
 webpack.lib.config.js      # component [webpack]
 ```
 
-* js import alias: `@ => src`
-* css unit: `rpx` will be transform to `rem`
-* suffix of `.ico` is not supported to upload
+* 文件引用别名： `@ => src`
+* CSS单位：`rpx`将会编译成`rem`，转换比率根据remUnit定义
+* 图片压缩：生产环境会自动优化图片体积，若不需要优化可以给图片命名为`xxx.origin.png`
+* 上传图片：暂不支持上传后缀为`.ico`的图片

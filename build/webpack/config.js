@@ -1,23 +1,21 @@
+var path = require('path');
+
 var __DEV__ = (process.env.NODE_ENV || 'development') === 'development';
 var __LOG__ = process.env.FLE_VCONSOLE === 'true';
 var __UPLOAD__ = process.env.FLE_UPLOAD === 'true';
-var __UPLOAD_CONFIG__ = process.env.FLE_UPLOAD_CONFIG;
+var __REPORT__ = process.env.FLE_REPORT === 'true';
 var __COMPILE_PAGES__ = process.env.FLE_COMPILE_PAGES;
-
-var uploadConfig = null;
-
-if (__UPLOAD_CONFIG__) {
-  try {
-    uploadConfig = JSON.parse(__UPLOAD_CONFIG__);
-  } catch (err) {
-    uploadConfig = null;
-  }
-}
+var __PORT__ = process.env.FLE_PORT;
 
 var { resolve } = require('./utils');
 var fle = require(resolve('fle.json'));
 var __REACT__ = fle.boilerplate.indexOf('react') !== -1 || (fle.boilerplate === 'lib' && fle.react);
 var __VUE__ = fle.boilerplate.indexOf('vue') !== -1 || (fle.boilerplate === 'lib' && fle.vue);
+var uploadConfig = __UPLOAD__ ? require(path.join(__dirname, '../../.cdn.json')) : null;
+
+if (__PORT__) {
+  fle.port = __PORT__;
+}
 
 if (!fle.externals) {
   fle.externals = {};
@@ -45,6 +43,7 @@ module.exports = {
   dev: __DEV__,
   vconsole: __LOG__,
   upload: __UPLOAD__,
+  report: __REPORT__,
   react: __REACT__,
   vue: __VUE__,
   uploadConfig: uploadConfig,

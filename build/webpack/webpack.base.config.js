@@ -34,7 +34,8 @@ var webpackConfig = {
       config.vue && loader.vue(),
       loader.babel(),
       loader.text(),
-      loader.images(),
+      loader.imagesOrigin(),
+      loader.imagesMin(),
       loader.fonts(),
       loader.medias()
     ].filter(r => r)
