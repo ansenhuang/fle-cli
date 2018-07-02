@@ -14,7 +14,7 @@
     "webpack"
   ],
   "author": "huangancheng",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@fle/color": "^0.0.3",
     "commander": "^2.14.1",
