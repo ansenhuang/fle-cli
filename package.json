@@ -1,7 +1,7 @@
 {
   "name": "fle-cli",
   "version": "4.2.6",
-  "description": "A convenient and flexible compiler with no configuration.",
+  "description": "A command line tool for front-end developer with zero configuration.",
   "bin": {
     "fle": "bin/fle"
   },
