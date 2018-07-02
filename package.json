@@ -6,6 +6,7 @@
     "fle": "bin/fle"
   },
   "scripts": {
+    "log": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "pub": "node tools/publish.js"
   },
   "keywords": [
