@@ -8,7 +8,7 @@ inquirer.prompt([
     message: '选择发布版本',
     choices: [
       'patch',
-      'ninor',
+      'minor',
       'major',
       'pre-release'
     ],
