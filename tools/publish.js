@@ -10,7 +10,7 @@ inquirer.prompt([
       'patch',
       'minor',
       'major',
-      'pre-release'
+      'prerelease'
     ],
     default: 'patch'
   }
