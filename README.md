@@ -11,7 +11,7 @@ Just install once and you will get all the following features.
 ## Features
 
 * Support multiple boilerplate (react, vue, ...)
-* Support javaScript library (es6, iife, commonjs, ...)
+* Support javascript library (es6, iife, commonjs, ...)
 * Support upload files in compile
 * Support phone debug in development
 * Powerful postcss plugin with css modules
@@ -20,6 +20,7 @@ Just install once and you will get all the following features.
 * optimize image in compile if necessary
 * Build-in rem layout solution for H5
 * freemarker for Java template (ftl)
+* ...
 
 ## Installation
 
@@ -53,16 +54,10 @@ $ fle dev
 $ fle build
 ```
 
-### Library
-
-```bash
-$ fle lib
-```
-
 ### Help
 
 ```bash
-$ fle [command] -h
+$ fle -h
 ```
 
 ## Docs

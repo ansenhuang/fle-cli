@@ -81,12 +81,13 @@ exports.vconsole = () => {
 // 优化控制台输出
 exports.friendlyErrors = () => {
   var localIP = internalIp.v4.sync();
+  var protocol = config.fle.https ? 'https' : 'http';
 
   return new FriendlyErrorsPlugin({
     compilationSuccessInfo: {
       messages: [
-        'Local    ->  ' + color.cyan(`http://${config.fle.host}:${config.fle.port}/`),
-        'Network  ->  ' + color.cyan(`http://${localIP}:${config.fle.port}/`)
+        'Local    ->  ' + color.cyan(`${protocol}://${config.fle.host}:${config.fle.port}/`),
+        'Network  ->  ' + color.cyan(`${protocol}://${localIP}:${config.fle.port}/`)
       ]
     },
     onErrors: (severity, errors) => {
