@@ -1,11 +1,12 @@
 {
   "name": "fle-cli",
-  "version": "4.2.6",
-  "description": "A convenient and flexible compiler with no configuration.",
+  "version": "4.3.2",
+  "description": "A command line tool for front-end developer with zero configuration.",
   "bin": {
     "fle": "bin/fle"
   },
   "scripts": {
+    "log": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "pub": "node tools/publish.js"
   },
   "keywords": [
@@ -14,7 +15,15 @@
     "webpack"
   ],
   "author": "huangancheng",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ansenhuang/fle-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ansenhuang/fle-cli/issues"
+  },
+  "homepage": "https://github.com/ansenhuang/fle-cli#readme",
   "dependencies": {
     "@fle/color": "^0.0.3",
     "commander": "^2.14.1",
