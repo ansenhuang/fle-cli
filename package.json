@@ -16,6 +16,14 @@
   ],
   "author": "huangancheng",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ansenhuang/fle-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ansenhuang/fle-cli/issues"
+  },
+  "homepage": "https://github.com/ansenhuang/fle-cli#readme",
   "dependencies": {
     "@fle/color": "^0.0.3",
     "commander": "^2.14.1",

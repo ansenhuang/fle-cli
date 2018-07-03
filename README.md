@@ -11,7 +11,7 @@ Just install once and you will get all the following features.
 ## Features
 
 * Support multiple boilerplate (react, vue, ...)
-* Support javascript library (es6, iife, commonjs, ...)
+* Support javascript library (es6, iife, commonjs, ...)
 * Support upload files in compile
 * Support phone debug in development
 * Powerful postcss plugin with css modules
