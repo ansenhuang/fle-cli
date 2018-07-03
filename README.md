@@ -66,7 +66,7 @@ For more details, please go to [https://ansenhuang.github.io/docs/fle-cli/zh-cn/
 
 ## Changelog
 
-[Changelog](CHANGELOG.md)
+[Changelog](https://github.com/ansenhuang/fle-cli/blob/master/CHANGELOG.md)
 
 ## License
 
