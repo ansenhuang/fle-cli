@@ -21,12 +21,15 @@ var vueStyleLoader = {
 };
 
 // css
+// 支持通过import导入样式变量
 var cssLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: config.dev,
-    modules: false,
-    importLoaders: 1
+    modules: true,
+    camelCase: true,
+    importLoaders: 1,
+    localIdentName: '[local]'
   }
 };
 
@@ -35,7 +38,7 @@ var moduleCSSLoader = {
   options: {
     sourceMap: config.dev,
     modules: true,
-    camelCase: 'only',
+    camelCase: true,
     importLoaders: 1,
     localIdentName: '[local]___[hash:base64:8]'
   }
