@@ -22,6 +22,7 @@ var babelConfig = {
   "plugins": [
     config.vue && require.resolve("babel-plugin-transform-vue-jsx"),
     require.resolve("babel-plugin-transform-decorators-legacy"),
+    require.resolve("babel-plugin-add-module-exports"),
     require.resolve("babel-plugin-transform-runtime")
   ].filter(p => p)
 };
