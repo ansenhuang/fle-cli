@@ -105,7 +105,8 @@ var webpackConfig = {
     disableHostCheck: true,
     overlay: true,
     watchOptions: {
-      poll: true
+      poll: true,
+      ignored: /node_modules/
     }
   }
 };

@@ -52,9 +52,12 @@ exports.uglify = () => {
       compress: {
         unused: true,
         warnings: false,
-        drop_debugger: true
+        drop_debugger: true,
+        collapse_vars: true,
+        reduce_vars: true
       },
       output: {
+        beautify: false,
         comments: false
       }
     }
