@@ -99,7 +99,7 @@ exports.eslint = () => {
       cache: config.dev ? resolve('.cache/eslint') : false,
       failOnError: !config.dev, // 生产环境发现代码不合法，则中断编译
       useEslintrc: false,
-      configFile: fs.existsSync(resolve('.eslintrc')) ? resolve('.eslintrc') : null,
+      configFile: fs.existsSync(resolve('.eslintrc')) ? resolve('.eslintrc') : undefined,
       formatter: require('eslint-friendly-formatter'),
       baseConfig: {
         extends: [path.join(__dirname, './eslint.js')]

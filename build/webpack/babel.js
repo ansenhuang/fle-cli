@@ -6,23 +6,27 @@ var babelConfig = {
   ],
   "presets": [
     [
-      require.resolve("babel-preset-env"),
+      require.resolve("@babel/preset-env"),
       {
         "modules": false,
         "loose": true,
-        "useBuiltIns": false,
+        "useBuiltIns": 'usage',
         "targets": {
           "browsers": config.fle.browsers
         }
       }
     ],
-    config.react && require.resolve("babel-preset-react"),
-    require.resolve("babel-preset-stage-2")
+    config.react && require.resolve("@babel/preset-react")
   ].filter(p => p),
   "plugins": [
-    config.vue && require.resolve("babel-plugin-transform-vue-jsx"),
-    require.resolve("babel-plugin-transform-decorators-legacy"),
-    require.resolve("babel-plugin-transform-runtime")
+    [require.resolve("@babel/plugin-proposal-decorators"), { "legacy": true }],
+    require.resolve("@babel/plugin-proposal-export-namespace-from"),
+    require.resolve("@babel/plugin-syntax-dynamic-import"),
+    [require.resolve("@babel/plugin-proposal-class-properties"), { "loose": true }],
+    require.resolve("@babel/plugin-proposal-json-strings"),
+    require.resolve("@babel/plugin-transform-runtime"),
+
+    config.vue && require.resolve("babel-plugin-transform-vue-jsx")
   ].filter(p => p)
 };
 

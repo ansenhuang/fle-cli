@@ -123,7 +123,6 @@ exports.optimizeCSS = () => {
   return new OptimizeCssAssetsPlugin({
     assetNameRegExp: /\.css$/g,
     cssProcessorOptions: {
-      safe: true,
       autoprefixer: { disable: true },
       mergeLonghand: false,
       discardComments: {

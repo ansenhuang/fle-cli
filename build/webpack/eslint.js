@@ -12,6 +12,11 @@ var eslintConfig = {
   "globals":{
     "console": true
   },
+  "settings": {
+    "react": {
+      "version": "15.6"
+    }
+  },
   "extends": [
     "standard",
     config.react && "plugin:react/recommended",
