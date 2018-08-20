@@ -118,7 +118,7 @@ exports.babel = () => {
       options: Object.assign({
         cacheDirectory: resolve('.cache/babel'),
         babelrc: false,
-        extends: fs.existsSync(resolve('.babelrc')) ? resolve('.babelrc') : null
+        extends: fs.existsSync(resolve('.babelrc')) ? resolve('.babelrc') : undefined
       }, require(path.join(__dirname, './babel.js')))
     }
   };
