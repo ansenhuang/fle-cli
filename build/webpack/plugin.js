@@ -1,4 +1,4 @@
-var fs = require('fs');
+// var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 var notifier = require('node-notifier');
@@ -161,7 +161,8 @@ var htmlDefaults = {
     removeRedundantAttributes: true,
     useShortDoctype: true,
     removeEmptyAttributes: true,
-    removeStyleLinkTypeAttributes: true,
+    removeScriptTypeAttributes: false,
+    removeStyleLinkTypeAttributes: false,
     keepClosingSlash: true,
     minifyJS: true,
     minifyCSS: true,
