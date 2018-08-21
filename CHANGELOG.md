@@ -1,3 +1,14 @@
+<a name="4.4.0"></a>
+# [4.4.0](https://github.com/ansenhuang/fle-cli/compare/v4.3.6...v4.4.0) (2018-08-21)
+
+
+### Bug Fixes
+
+* babel ([27d84e4](https://github.com/ansenhuang/fle-cli/commit/27d84e4))
+* babel ([806557c](https://github.com/ansenhuang/fle-cli/commit/806557c))
+
+
+
 <a name="4.3.6"></a>
 ## [4.3.6](https://github.com/ansenhuang/fle-cli/compare/v4.3.5...v4.3.6) (2018-08-06)
 
