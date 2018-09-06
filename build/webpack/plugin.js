@@ -17,6 +17,7 @@ var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 var UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var VueLoaderPlugin = require('vue-loader/lib/plugin');
+var WebpackDeepScopePlugin = require('webpack-deep-scope-plugin').default;
 
 // my
 var NosUploadPlugin = require('./plugins/NosUpload');
@@ -189,4 +190,8 @@ exports.upload = (opt = {}) => {
     //   /* item: success, filename, url */
     // }
   });
+}
+
+exports.deepScope = () => {
+  return new WebpackDeepScopePlugin();
 }

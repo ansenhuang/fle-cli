@@ -36,6 +36,7 @@ var webpackConfig = {
   plugins: [
     plugin.merge(),
     plugin.hash(),
+    plugin.deepScope(),
     plugin.extractCSS({
       filename: '[name].css',
       chunkFilename: '[id].css'

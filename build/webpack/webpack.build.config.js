@@ -129,6 +129,7 @@ var webpackConfig = {
   plugins: [
     plugin.merge(),
     plugin.hash(),
+    plugin.deepScope(),
     plugin.extractCSS(),
     config.upload && plugin.upload({
       distPath: distPath
