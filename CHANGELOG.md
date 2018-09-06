@@ -1,3 +1,8 @@
+<a name="4.4.2"></a>
+## [4.4.2](https://github.com/ansenhuang/fle-cli/compare/v4.4.1...v4.4.2) (2018-09-06)
+
+
+
 <a name="4.4.1"></a>
 ## [4.4.1](https://github.com/ansenhuang/fle-cli/compare/v4.4.0...v4.4.1) (2018-08-28)
 
