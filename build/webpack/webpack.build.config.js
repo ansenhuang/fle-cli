@@ -84,7 +84,6 @@ pages.forEach(page => {
   if (!/\.ftl$/.test(page.template)) {
     page.filename = page.filename || ('html/' + page.id + '.html');
   } else {
-    page.minify = false;
     page.filename = page.filename || ('ftl/' + page.id + '.ftl');
   }
 
@@ -131,6 +130,7 @@ var webpackConfig = {
     plugin.hash(),
     plugin.deepScope(),
     plugin.extractCSS(),
+    config.fle.copy && plugin.copy(config.fle.copy),
     config.upload && plugin.upload({
       distPath: distPath
     }),

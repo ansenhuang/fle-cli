@@ -37,7 +37,6 @@ pages.forEach(page => {
 
     page.filename = page.filename || ('html/' + page.id + '.html');
   } else {
-    page.minify = false;
     page.template = resolve(page.template);
 
     if (page.filename) {

@@ -18,6 +18,7 @@ var UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var VueLoaderPlugin = require('vue-loader/lib/plugin');
 var WebpackDeepScopePlugin = require('webpack-deep-scope-plugin').default;
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // my
 var NosUploadPlugin = require('./plugins/NosUpload');
@@ -194,4 +195,10 @@ exports.upload = (opt = {}) => {
 
 exports.deepScope = () => {
   return new WebpackDeepScopePlugin();
+}
+
+exports.copy = (patterns) => {
+  return new CopyWebpackPlugin(patterns, {
+    context: resolve('.')
+  });
 }
