@@ -1,3 +1,13 @@
+<a name="4.5.0"></a>
+# [4.5.0](https://github.com/ansenhuang/fle-cli/compare/v4.4.3...v4.5.0) (2018-09-18)
+
+
+### Features
+
+* copy at build ([1432e64](https://github.com/ansenhuang/fle-cli/commit/1432e64))
+
+
+
 <a name="4.4.3"></a>
 ## [4.4.3](https://github.com/ansenhuang/fle-cli/compare/v4.4.2...v4.4.3) (2018-09-07)
 
