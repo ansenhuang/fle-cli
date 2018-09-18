@@ -1,3 +1,13 @@
+<a name="4.5.1"></a>
+## [4.5.1](https://github.com/ansenhuang/fle-cli/compare/v4.5.0...v4.5.1) (2018-09-18)
+
+
+### Features
+
+* dev build ([0d22746](https://github.com/ansenhuang/fle-cli/commit/0d22746))
+
+
+
 <a name="4.5.0"></a>
 # [4.5.0](https://github.com/ansenhuang/fle-cli/compare/v4.4.3...v4.5.0) (2018-09-18)
 
