@@ -19,6 +19,7 @@ var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlug
 var VueLoaderPlugin = require('vue-loader/lib/plugin');
 var WebpackDeepScopePlugin = require('webpack-deep-scope-plugin').default;
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var WriteFilePlugin = require('write-file-webpack-plugin');
 
 // my
 var NosUploadPlugin = require('./plugins/NosUpload');
@@ -200,5 +201,11 @@ exports.deepScope = () => {
 exports.copy = (patterns) => {
   return new CopyWebpackPlugin(patterns, {
     context: resolve('.')
+  });
+}
+
+exports.writeFile = () => {
+  return new WriteFilePlugin({
+    test: /\.ftl$/
   });
 }
