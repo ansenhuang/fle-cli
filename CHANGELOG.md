@@ -1,3 +1,13 @@
+<a name="4.5.2"></a>
+## [4.5.2](https://github.com/ansenhuang/fle-cli/compare/v4.5.1...v4.5.2) (2018-09-19)
+
+
+### Performance Improvements
+
+* build copy ([3e9955a](https://github.com/ansenhuang/fle-cli/commit/3e9955a))
+
+
+
 <a name="4.5.1"></a>
 ## [4.5.1](https://github.com/ansenhuang/fle-cli/compare/v4.5.0...v4.5.1) (2018-09-18)
 
