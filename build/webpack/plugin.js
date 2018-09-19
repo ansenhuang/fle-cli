@@ -18,11 +18,11 @@ var UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var VueLoaderPlugin = require('vue-loader/lib/plugin');
 var WebpackDeepScopePlugin = require('webpack-deep-scope-plugin').default;
-var CopyWebpackPlugin = require('copy-webpack-plugin');
 var WriteFilePlugin = require('write-file-webpack-plugin');
 
 // my
 var NosUploadPlugin = require('./plugins/NosUpload');
+var CopyAssetsPlugin = require('./plugins/CopyAssets');
 
 // 这里将 Node 中使用的变量也传入到 Web 环境中，以方便使用
 exports.define = () => {
@@ -198,10 +198,11 @@ exports.deepScope = () => {
   return new WebpackDeepScopePlugin();
 }
 
-exports.copy = (patterns) => {
-  return new CopyWebpackPlugin(patterns, {
-    context: resolve('.')
-  });
+exports.copy = (copyPath) => {
+  return new CopyAssetsPlugin([{
+    from: resolve((config.upload ? 'public' : 'dist') + '/**/*.ftl'),
+    to: resolve(copyPath)
+  }]);
 }
 
 exports.writeFile = () => {

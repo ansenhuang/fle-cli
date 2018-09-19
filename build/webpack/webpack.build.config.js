@@ -130,13 +130,13 @@ var webpackConfig = {
     plugin.hash(),
     plugin.deepScope(),
     plugin.extractCSS(),
-    config.fle.copy && plugin.copy(config.fle.copy),
     config.upload && plugin.upload({
       distPath: distPath
     }),
     config.report && plugin.analyzer({
       filename: resolve('.cache/report/build.html')
-    })
+    }),
+    config.fle.copyPath && plugin.copy(config.fle.copyPath)
   ].filter(r => r).concat(htmls),
   externals: config.fle.externals
 };

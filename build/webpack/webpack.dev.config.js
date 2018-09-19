@@ -40,7 +40,7 @@ pages.forEach(page => {
   } else {
     page.template = resolve(page.template);
 
-    if (config.fle.devOutputPath) {
+    if (config.fle.copyPath) {
       page.dev = false;
       page.filename = page.filename || 'ftl/' + page.id + '.ftl';
     } else {
@@ -80,15 +80,15 @@ var webpackConfig = {
   devtool: 'cheap-module-eval-source-map',
   entry: entry,
   output: {
-    path: config.fle.devOutputPath ? resolve(config.fle.devOutputPath) : resolve('.'),
-    publicPath: config.fle.devOutputPath ? ('//' + config.fle.host + ':' + config.fle.port + '/') : '/',
+    path: config.fle.copyPath ? resolve(config.fle.copyPath) : resolve('.'),
+    publicPath: config.fle.copyPath ? ('//' + config.fle.host + ':' + config.fle.port + '/') : '/',
     filename: 'js/[name].js',
     chunkFilename: 'js/[name].js'
   },
   plugins: [
     config.fle.hot && plugin.hmr(),
     config.vconsole && plugin.vconsole(),
-    config.fle.devOutputPath && plugin.writeFile(),
+    config.fle.copyPath && plugin.writeFile(),
     plugin.friendlyErrors()
   ].filter(r => r).concat(htmls),
   externals: config.fle.externals,
