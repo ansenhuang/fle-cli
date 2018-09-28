@@ -81,7 +81,7 @@ var webpackConfig = {
   entry: entry,
   output: {
     path: config.fle.copyPath ? resolve(config.fle.copyPath) : resolve('.'),
-    publicPath: config.fle.copyPath ? ('//' + config.fle.host + ':' + config.fle.port + '/') : '/',
+    publicPath: config.fle.copyPath ? ((config.fle.https ? 'https:' : 'http:') + '//' + config.fle.host + ':' + config.fle.port + '/') : '/',
     filename: 'js/[name].js',
     chunkFilename: 'js/[name].js'
   },

@@ -51,7 +51,7 @@ if (config.fle.splitVendor) {
     test: /[\\/]node_modules[\\/]/,
     name: 'vendors',
     minSize: 30000,
-    minChunks: 1,
+    minChunks: 3,
     chunks: 'initial',
     priority: 1,
     reuseExistingChunk: true
