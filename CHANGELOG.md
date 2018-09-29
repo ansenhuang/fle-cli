@@ -1,3 +1,13 @@
+<a name="4.5.4"></a>
+## [4.5.4](https://github.com/ansenhuang/fle-cli/compare/v4.5.3...v4.5.4) (2018-09-29)
+
+
+### Bug Fixes
+
+* windows bug in dirname with space ([9bb578a](https://github.com/ansenhuang/fle-cli/commit/9bb578a))
+
+
+
 <a name="4.5.3"></a>
 ## [4.5.3](https://github.com/ansenhuang/fle-cli/compare/v4.5.2...v4.5.3) (2018-09-28)
 
