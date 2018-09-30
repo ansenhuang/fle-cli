@@ -1,3 +1,13 @@
+<a name="4.6.0"></a>
+# [4.6.0](https://github.com/ansenhuang/fle-cli/compare/v4.5.4...v4.6.0) (2018-09-30)
+
+
+### Features
+
+* sprites ([379b185](https://github.com/ansenhuang/fle-cli/commit/379b185))
+
+
+
 <a name="4.5.4"></a>
 ## [4.5.4](https://github.com/ansenhuang/fle-cli/compare/v4.5.3...v4.5.4) (2018-09-29)
 
