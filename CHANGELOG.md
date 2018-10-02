@@ -1,3 +1,13 @@
+<a name="4.6.1"></a>
+## [4.6.1](https://github.com/ansenhuang/fle-cli/compare/v4.6.0...v4.6.1) (2018-10-02)
+
+
+### Bug Fixes
+
+* node babel ([f15a423](https://github.com/ansenhuang/fle-cli/commit/f15a423))
+
+
+
 <a name="4.6.0"></a>
 # [4.6.0](https://github.com/ansenhuang/fle-cli/compare/v4.5.4...v4.6.0) (2018-09-30)
 
