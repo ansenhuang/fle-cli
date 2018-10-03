@@ -198,15 +198,17 @@ exports.deepScope = () => {
   return new WebpackDeepScopePlugin();
 }
 
+var copyExtnames = Array.isArray(config.fle.copyExtnames) ? config.fle.copyExtnames : ['ftl'];
+
 exports.copy = (copyPath) => {
   return new CopyAssetsPlugin([{
-    from: resolve((config.upload ? 'public' : 'dist') + '/**/*.ftl'),
+    from: resolve((config.upload ? 'public' : 'dist') + '/**/*.?(' + copyExtnames.join('|') + ')'),
     to: resolve(copyPath)
   }]);
 }
 
 exports.writeFile = () => {
   return new WriteFilePlugin({
-    test: /\.ftl$/
+    test: new RegExp('\\.(' + copyExtnames.join('|') + ')$')
   });
 }
