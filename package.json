@@ -1,6 +1,6 @@
 {
   "name": "fle-cli",
-  "version": "4.3.2",
+  "version": "4.6.4",
   "description": "A command line tool for front-end developer with zero configuration.",
   "bin": {
     "fle": "bin/fle"
@@ -26,11 +26,12 @@
   "homepage": "https://github.com/ansenhuang/fle-cli#readme",
   "dependencies": {
     "@fle/color": "^0.0.3",
-    "commander": "^2.14.1",
+    "commander": "^2.17.1",
     "cross-spawn": "^6.0.5",
     "glob": "^7.1.2",
-    "inquirer": "^5.2.0",
+    "inquirer": "^6.1.0",
     "rimraf": "^2.6.2",
+    "spritesmith": "^3.3.1",
     "update-notifier": "^2.5.0"
   },
   "engines": {

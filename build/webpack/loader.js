@@ -21,12 +21,15 @@ var vueStyleLoader = {
 };
 
 // css
+// 支持通过import导入样式变量
 var cssLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: config.dev,
-    modules: false,
-    importLoaders: 1
+    modules: true,
+    camelCase: true,
+    importLoaders: 1,
+    localIdentName: '[local]'
   }
 };
 
@@ -35,7 +38,7 @@ var moduleCSSLoader = {
   options: {
     sourceMap: config.dev,
     modules: true,
-    camelCase: 'only',
+    camelCase: true,
     importLoaders: 1,
     localIdentName: '[local]___[hash:base64:8]'
   }
@@ -103,7 +106,7 @@ exports.eslint = () => {
       cache: config.dev ? resolve('.cache/eslint') : false,
       failOnError: !config.dev, // 生产环境发现代码不合法，则中断编译
       useEslintrc: false,
-      configFile: fs.existsSync(resolve('.eslintrc')) ? resolve('.eslintrc') : null,
+      configFile: fs.existsSync(resolve('.eslintrc')) ? resolve('.eslintrc') : undefined,
       formatter: require('eslint-friendly-formatter'),
       baseConfig: {
         extends: [path.join(__dirname, './eslint.js')]
@@ -122,7 +125,7 @@ exports.babel = () => {
       options: Object.assign({
         cacheDirectory: resolve('.cache/babel'),
         babelrc: false,
-        extends: fs.existsSync(resolve('.babelrc')) ? resolve('.babelrc') : null
+        extends: fs.existsSync(resolve('.babelrc')) ? resolve('.babelrc') : undefined
       }, require(path.join(__dirname, './babel.js')))
     }
   };

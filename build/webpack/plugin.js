@@ -1,4 +1,4 @@
-var fs = require('fs');
+// var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 var notifier = require('node-notifier');
@@ -17,9 +17,12 @@ var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 var UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var VueLoaderPlugin = require('vue-loader/lib/plugin');
+var WebpackDeepScopePlugin = require('webpack-deep-scope-plugin').default;
+var WriteFilePlugin = require('write-file-webpack-plugin');
 
 // my
 var NosUploadPlugin = require('./plugins/NosUpload');
+var CopyAssetsPlugin = require('./plugins/CopyAssets');
 
 // 这里将 Node 中使用的变量也传入到 Web 环境中，以方便使用
 exports.define = () => {
@@ -52,9 +55,12 @@ exports.uglify = () => {
       compress: {
         unused: true,
         warnings: false,
-        drop_debugger: true
+        drop_debugger: true,
+        collapse_vars: true,
+        reduce_vars: true
       },
       output: {
+        beautify: false,
         comments: false
       }
     }
@@ -120,7 +126,6 @@ exports.optimizeCSS = () => {
   return new OptimizeCssAssetsPlugin({
     assetNameRegExp: /\.css$/g,
     cssProcessorOptions: {
-      safe: true,
       autoprefixer: { disable: true },
       mergeLonghand: false,
       discardComments: {
@@ -162,7 +167,8 @@ var htmlDefaults = {
     removeRedundantAttributes: true,
     useShortDoctype: true,
     removeEmptyAttributes: true,
-    removeStyleLinkTypeAttributes: true,
+    removeScriptTypeAttributes: false,
+    removeStyleLinkTypeAttributes: false,
     keepClosingSlash: true,
     minifyJS: true,
     minifyCSS: true,
@@ -188,5 +194,24 @@ exports.upload = (opt = {}) => {
     // uploadDone: (values) => {
     //   /* item: success, filename, url */
     // }
+  });
+}
+
+exports.deepScope = () => {
+  return new WebpackDeepScopePlugin();
+}
+
+var copyExtnames = Array.isArray(config.fle.copyExtnames) ? config.fle.copyExtnames : ['ftl'];
+
+exports.copy = (copyPath) => {
+  return new CopyAssetsPlugin([{
+    from: resolve((config.upload ? 'public' : 'dist') + '/**/*.?(' + copyExtnames.join('|') + ')'),
+    to: resolve(copyPath)
+  }]);
+}
+
+exports.writeFile = () => {
+  return new WriteFilePlugin({
+    test: new RegExp('\\.(' + copyExtnames.join('|') + ')$')
   });
 }
