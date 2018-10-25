@@ -1,3 +1,144 @@
+<a name="4.6.4"></a>
+## [4.6.4](https://github.com/ansenhuang/fle-cli/compare/v4.6.3...v4.6.4) (2018-10-17)
+
+
+
+<a name="4.6.3"></a>
+## [4.6.3](https://github.com/ansenhuang/fle-cli/compare/v4.6.2...v4.6.3) (2018-10-03)
+
+
+
+<a name="4.6.2"></a>
+## [4.6.2](https://github.com/ansenhuang/fle-cli/compare/v4.6.1...v4.6.2) (2018-10-02)
+
+
+### Bug Fixes
+
+* node babel ([33a6d61](https://github.com/ansenhuang/fle-cli/commit/33a6d61))
+
+
+
+<a name="4.6.1"></a>
+## [4.6.1](https://github.com/ansenhuang/fle-cli/compare/v4.6.0...v4.6.1) (2018-10-02)
+
+
+### Bug Fixes
+
+* node babel ([f15a423](https://github.com/ansenhuang/fle-cli/commit/f15a423))
+
+
+
+<a name="4.6.0"></a>
+# [4.6.0](https://github.com/ansenhuang/fle-cli/compare/v4.5.4...v4.6.0) (2018-09-30)
+
+
+### Features
+
+* sprites ([379b185](https://github.com/ansenhuang/fle-cli/commit/379b185))
+
+
+
+<a name="4.5.4"></a>
+## [4.5.4](https://github.com/ansenhuang/fle-cli/compare/v4.5.3...v4.5.4) (2018-09-29)
+
+
+### Bug Fixes
+
+* windows bug in dirname with space ([9bb578a](https://github.com/ansenhuang/fle-cli/commit/9bb578a))
+
+
+
+<a name="4.5.3"></a>
+## [4.5.3](https://github.com/ansenhuang/fle-cli/compare/v4.5.2...v4.5.3) (2018-09-28)
+
+
+
+<a name="4.5.2"></a>
+## [4.5.2](https://github.com/ansenhuang/fle-cli/compare/v4.5.1...v4.5.2) (2018-09-19)
+
+
+### Performance Improvements
+
+* build copy ([3e9955a](https://github.com/ansenhuang/fle-cli/commit/3e9955a))
+
+
+
+<a name="4.5.1"></a>
+## [4.5.1](https://github.com/ansenhuang/fle-cli/compare/v4.5.0...v4.5.1) (2018-09-18)
+
+
+### Features
+
+* dev build ([0d22746](https://github.com/ansenhuang/fle-cli/commit/0d22746))
+
+
+
+<a name="4.5.0"></a>
+# [4.5.0](https://github.com/ansenhuang/fle-cli/compare/v4.4.3...v4.5.0) (2018-09-18)
+
+
+### Features
+
+* copy at build ([1432e64](https://github.com/ansenhuang/fle-cli/commit/1432e64))
+
+
+
+<a name="4.4.3"></a>
+## [4.4.3](https://github.com/ansenhuang/fle-cli/compare/v4.4.2...v4.4.3) (2018-09-07)
+
+
+
+<a name="4.4.2"></a>
+## [4.4.2](https://github.com/ansenhuang/fle-cli/compare/v4.4.1...v4.4.2) (2018-09-06)
+
+
+
+<a name="4.4.1"></a>
+## [4.4.1](https://github.com/ansenhuang/fle-cli/compare/v4.4.0...v4.4.1) (2018-08-28)
+
+
+
+<a name="4.4.0"></a>
+# [4.4.0](https://github.com/ansenhuang/fle-cli/compare/v4.3.6...v4.4.0) (2018-08-21)
+
+
+### Bug Fixes
+
+* babel ([27d84e4](https://github.com/ansenhuang/fle-cli/commit/27d84e4))
+* babel ([806557c](https://github.com/ansenhuang/fle-cli/commit/806557c))
+
+
+
+<a name="4.3.6"></a>
+## [4.3.6](https://github.com/ansenhuang/fle-cli/compare/v4.3.5...v4.3.6) (2018-08-06)
+
+
+
+<a name="4.3.5"></a>
+## [4.3.5](https://github.com/ansenhuang/fle-cli/compare/v4.3.4...v4.3.5) (2018-07-24)
+
+
+
+<a name="4.3.4"></a>
+## [4.3.4](https://github.com/ansenhuang/fle-cli/compare/v4.3.3...v4.3.4) (2018-07-24)
+
+
+
+<a name="4.3.3"></a>
+## [4.3.3](https://github.com/ansenhuang/fle-cli/compare/v4.3.2...v4.3.3) (2018-07-24)
+
+
+### Bug Fixes
+
+* require exports.default ([fb8d021](https://github.com/ansenhuang/fle-cli/commit/fb8d021))
+
+
+### Features
+
+* import css with real object ([33e7be1](https://github.com/ansenhuang/fle-cli/commit/33e7be1))
+
+
+
 <a name="4.3.2"></a>
 ## [4.3.2](https://github.com/ansenhuang/fle-cli/compare/v4.3.2-0...v4.3.2) (2018-07-03)
 

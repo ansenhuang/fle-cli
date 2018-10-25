@@ -51,7 +51,7 @@ if (config.fle.splitVendor) {
     test: /[\\/]node_modules[\\/]/,
     name: 'vendors',
     minSize: 30000,
-    minChunks: 1,
+    minChunks: 3,
     chunks: 'initial',
     priority: 1,
     reuseExistingChunk: true
@@ -84,7 +84,6 @@ pages.forEach(page => {
   if (!/\.ftl$/.test(page.template)) {
     page.filename = page.filename || ('html/' + page.id + '.html');
   } else {
-    page.minify = false;
     page.filename = page.filename || ('ftl/' + page.id + '.ftl');
   }
 
@@ -129,13 +128,15 @@ var webpackConfig = {
   plugins: [
     plugin.merge(),
     plugin.hash(),
+    plugin.deepScope(),
     plugin.extractCSS(),
     config.upload && plugin.upload({
       distPath: distPath
     }),
     config.report && plugin.analyzer({
       filename: resolve('.cache/report/build.html')
-    })
+    }),
+    config.fle.copyPath && plugin.copy(config.fle.copyPath)
   ].filter(r => r).concat(htmls),
   externals: config.fle.externals
 };

@@ -47,6 +47,7 @@ program
     console.log('    build          编译生产环境代码');
     console.log('    lib            编译js库工程');
     console.log('    upload         上传图片或文件');
+    console.log('    sprite         将多张图片合成雪碧图');
     console.log();
   })
   .parse(process.argv);

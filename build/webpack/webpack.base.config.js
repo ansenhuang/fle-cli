@@ -15,7 +15,7 @@ var webpackConfig = {
       resolve('node_modules'),
       path.join(__dirname, '../../node_modules')
     ],
-    extensions: ['.js', '.vue', '.jsx', '.css'],
+    extensions: ['.js'],
     alias: {
       '@': resolve('src')
     }
@@ -27,6 +27,7 @@ var webpackConfig = {
     ]
   },
   module: {
+    noParse: [/\.min\.js$/],
     rules: [
       config.fle.eslint && loader.eslint(),
       loader.css(),

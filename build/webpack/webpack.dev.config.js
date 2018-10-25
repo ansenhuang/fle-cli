@@ -27,6 +27,7 @@ if (!pages.length) {
 
 pages.forEach(page => {
   entry[page.id] = page.entry;
+  page.dev = true;
 
   if (!/\.ftl$/.test(page.template)) {
     if (page.template[0] === '/') {
@@ -37,13 +38,17 @@ pages.forEach(page => {
 
     page.filename = page.filename || ('html/' + page.id + '.html');
   } else {
-    page.minify = false;
     page.template = resolve(page.template);
 
-    if (page.filename) {
-      page.filename = page.filename.replace(/\.ftl$/, '.html');
+    if (config.fle.copyPath) {
+      page.dev = false;
+      page.filename = page.filename || 'ftl/' + page.id + '.ftl';
     } else {
-      page.filename = 'ftl/' + page.id + '.html';
+      if (page.filename) {
+        page.filename = page.filename.replace(/\.ftl$/, '.html');
+      } else {
+        page.filename = 'ftl/' + page.id + '.html';
+      }
     }
   }
 
@@ -55,7 +60,6 @@ pages.forEach(page => {
 
   page.remUnit = config.fle.remUnit;
   page.uaId = ''; // 开发模式不统计pv
-  page.dev = true;
 
   htmlConfigs.push(page);
 });
@@ -76,13 +80,15 @@ var webpackConfig = {
   devtool: 'cheap-module-eval-source-map',
   entry: entry,
   output: {
-    publicPath: '/',
+    path: config.fle.copyPath ? resolve(config.fle.copyPath) : resolve('.'),
+    publicPath: config.fle.copyPath ? ((config.fle.https ? 'https:' : 'http:') + '//' + config.fle.host + ':' + config.fle.port + '/') : '/',
     filename: 'js/[name].js',
     chunkFilename: 'js/[name].js'
   },
   plugins: [
     config.fle.hot && plugin.hmr(),
     config.vconsole && plugin.vconsole(),
+    config.fle.copyPath && plugin.writeFile(),
     plugin.friendlyErrors()
   ].filter(r => r).concat(htmls),
   externals: config.fle.externals,
@@ -105,7 +111,8 @@ var webpackConfig = {
     disableHostCheck: true,
     overlay: true,
     watchOptions: {
-      poll: true
+      poll: true,
+      ignored: /node_modules/
     }
   }
 };
