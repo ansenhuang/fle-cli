@@ -1,0 +1,10 @@
+{
+  "name": "fle-boilerplate-miniprogram",
+  "version": "0.0.0",
+  "description": "A miniprogram project created by fle-cli.",
+  "keywords": ["fle", "webpack", "miniprogram"],
+  "author": "huangancheng",
+  "license": "MIT",
+  "dependencies": {
+  }
+}
