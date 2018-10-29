@@ -1,4 +1,4 @@
-var appInstance = getApp();
+var appInstance = getApp()
 
 function wxPromisify(fn) {
   return (obj = {}) => {
@@ -8,12 +8,10 @@ function wxPromisify(fn) {
           console.log("fail", resp)
           reject(resp)
         } else {
-          // console.log("success", resp)
-          resolve(resp);
+          resolve(resp)
         }
       }
       obj.fail = (resp) => {
-        // console.log("fail", resp)
         reject(resp)
       }
       fn(obj)
@@ -44,14 +42,14 @@ function wxCheckSession(obj) {
 
 function wxLogin(obj) {
   return wxPromisify(wx.login)(obj).then((res) => {
-    appInstance.globalData.code = res.code;
+    appInstance.globalData.code = res.code
     return Promise.resolve(res)
   })
 }
 
 function wxGetUserInfo(obj) {
   return wxPromisify(wx.getUserInfo)(obj).then((res) => {
-    appInstance.globalData.userInfo = res.userInfo;
+    appInstance.globalData.userInfo = res.userInfo
     return Promise.resolve(res)
   });
 }

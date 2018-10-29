@@ -39,9 +39,10 @@ export const reqwest = function (options = {}) {
         title: '登录已过期，请重新登录',
         icon: 'none'
       })
-      wx.navigateTo({
-        url: `/pages/login/login?targetUrl=/${encodeURIComponent(getCurrentPageUrl())}`
-      })
+      // 跳转到项目的登录页面
+      // wx.navigateTo({
+      //   url: `/pages/login/login?targetUrl=/${encodeURIComponent(getCurrentPageUrl())}`
+      // })
     }
     return Promise.reject(res.data)
   })
