@@ -1,3 +1,8 @@
+<a name="4.7.0"></a>
+# [4.7.0](https://github.com/ansenhuang/fle-cli/compare/v4.6.4...v4.7.0) (2018-10-29)
+
+
+
 <a name="4.6.4"></a>
 ## [4.6.4](https://github.com/ansenhuang/fle-cli/compare/v4.6.3...v4.6.4) (2018-10-17)
 
@@ -251,6 +256,11 @@
 
 <a name="4.1.2"></a>
 ## [4.1.2](https://github.com/ansenhuang/fle-cli/compare/v4.1.1...v4.1.2) (2018-06-13)
+
+
+### Features
+
+* stylelint ([264e4f8](https://github.com/ansenhuang/fle-cli/commit/264e4f8))
 
 
 
