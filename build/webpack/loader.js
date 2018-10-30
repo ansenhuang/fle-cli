@@ -55,18 +55,11 @@ var postCSSLoader = {
   }
 };
 
-var stylefmtLoader = {
-  loader: 'stylefmt-loader',
-  options: {
-    config: 'build/webpack/stylelint.config.js'
-  }
-};
-
 function getCSSLoaders (modules) {
   return config.dev ?
-    [config.vue ? vueStyleLoader : styleLoader, modules ? moduleCSSLoader : cssLoader, postCSSLoader, stylefmtLoader]
+    [config.vue ? vueStyleLoader : styleLoader, modules ? moduleCSSLoader : cssLoader, postCSSLoader]
     :
-    [MiniCssExtractPlugin.loader, modules ? moduleCSSLoader : cssLoader, postCSSLoader, stylefmtLoader]
+    [MiniCssExtractPlugin.loader, modules ? moduleCSSLoader : cssLoader, postCSSLoader]
 }
 
 exports.css = () => {

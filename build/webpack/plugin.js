@@ -130,9 +130,6 @@ exports.optimizeCSS = () => {
       mergeLonghand: false,
       discardComments: {
         removeAll: true
-      },
-      autoprefixer: {
-        browsers: config.fle.browsers
       }
     },
     canPrint: true
