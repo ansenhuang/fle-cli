@@ -54,30 +54,28 @@ export const formatDate = (timestamp) => {
   timestamp = /\d+/.test(timestamp) ? parseInt(timestamp, 10) : timestamp;
 
   const targetDate = new Date(timestamp);
-  let diff = (now - timestamp) / 1000;
+  let diff = (now - timestamp) / 1000;  //秒
 
   if (diff < 60) {
     return '刚刚';
   }
 
-  diff /= 60;
+  diff /= 60; //分
 
-  if (diff < 60) {
-    return Math.round(diff) + '分钟前';
+  if(diff < 60){
+    return parseInt(diff) + '分钟前'
   }
 
-  diff /= 60;
-  // diff /= 24;
+  diff /= 60; //时
 
   const hours = padding(targetDate.getHours()) + ':' + padding(targetDate.getMinutes());
 
-
   if (diff < nowDate.getHours()) {
-    return '今天 ' + hours;
+    return '今天' + hours;
   } else if (diff < nowDate.getHours() + 24) {
-    return '昨天 ' + hours;
+    return '昨天' + hours;
   } else if (diff < nowDate.getHours() + 48) {
-    return '前天 ' + hours;
+    return '前天' + hours;
   }
 
   const days = (targetDate.getMonth() + 1) + '月' + targetDate.getDate() + '日';
@@ -86,5 +84,5 @@ export const formatDate = (timestamp) => {
     return days + ' ' + hours;
   }
 
-  return targetDate.getUTCFullYear() + '年' + ' ' + days + ' ' + hours;
+  return targetDate.getUTCFullYear() + '年' + ' ' + days;
 }

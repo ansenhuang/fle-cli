@@ -1,13 +1,35 @@
 import wxAPI from '../utils/wxAPI';
 import {
   getXUserAgent,
-  getCurrentPageUrl
 } from '../utils/utils'
 import config from '../utils/config'
 
 const domain = `https://${config.host}`;
 
-const xUserAgent = getXUserAgent();
+export const getCurrentPageUrl = function () {
+  var pages = getCurrentPages()
+  var currentPage = pages[pages.length - 1]
+  var url = currentPage.route
+
+  return url
+}
+
+//获取小程序的协议header中所需的X-User-Agent,同时生成并存储设备ID
+export const getXUserAgent = function () {
+  let xUserAgent = wx.getStorageSync('xUserAgent');
+  if (!xUserAgent) {
+    const systemInfo = getApp().globalData.systemInfo;
+    let deviceId = wx.getStorageSync('deviceId');
+    if (!deviceId) {
+      deviceId = uuidv1();
+      wx.setStorageSync('deviceId', deviceId);
+    }
+    xUserAgent = `cpminiprogram/${config.clientVersion}/${config.protocolVersion} (${deviceId};${systemInfo.model};${systemInfo.screenHeight}x${systemInfo.screenWidth}) (${(systemInfo.system).replace(' ', ';')}) (miniprogram)`
+    wx.setStorageSync('xUserAgent', xUserAgent);
+  }
+  return xUserAgent;
+}
+
 /***
  * 数据请求方法
  * @param options object类型
@@ -26,7 +48,7 @@ export const reqwest = function (options = {}) {
     method: options.method || 'GET',
     dataType: options.dataType,
     header: {
-      "X-User-Agent": xUserAgent,
+      "X-User-Agent": getXUserAgent(),
       "X-Auth-Token": wx.getStorageSync('authToken') || '',
       "X-NO-CSRF": true,
       ...options.header
