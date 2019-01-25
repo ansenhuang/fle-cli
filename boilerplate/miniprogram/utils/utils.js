@@ -2,16 +2,7 @@ import wxAPI from './wxAPI'
 import {
   reqwest
 } from '../model/fetchAPI'
-import config from './config'
-import uuidv1 from '../deps/uuid';
 
-export const getCurrentPageUrl = function () {
-  var pages = getCurrentPages()
-  var currentPage = pages[pages.length - 1]
-  var url = currentPage.route
-
-  return url
-}
 
 // 蜗牛用于上报formId，其他产品问问后端能否跨域
 export const sendFormId = function (formId) {
@@ -43,21 +34,6 @@ export const sendFormId = function (formId) {
   })
 }
 
-//获取小程序的协议header中所需的X-User-Agent,同时生成并存储设备ID
-export const getXUserAgent = function () {
-  let xUserAgent = wx.getStorageSync('xUserAgent');
-  if (!xUserAgent) {
-    const systemInfo = getApp().globalData.systemInfo;
-    let deviceId = wx.getStorageSync('deviceId');
-    if (!deviceId) {
-      deviceId = uuidv1();
-      wx.setStorageSync('deviceId', deviceId);
-    }
-    xUserAgent = `miniprogram/${config.clientVersion}/${config.protocolVersion} (${deviceId};${systemInfo.model};${systemInfo.screenHeight}x${systemInfo.screenWidth}) (${(systemInfo.system).replace(' ', ';')}) (miniprogram)`
-    wx.setStorageSync('xUserAgent', xUserAgent);
-  }
-  return xUserAgent;
-}
 
 // 蜗牛小程序登录获取token
 export const weixinLogin = function (callBack) {
@@ -101,7 +77,13 @@ export const weixinLogin = function (callBack) {
               wx.setStorageSync('authToken', resp.authToken)
               // 用于获取模板消息
               fetchOpenId()
-              callBack && callBack()
+              // sendLoginRecord(1)
+              if (needUserInfo) {
+                return fetchUserInfo()
+              } else {
+                fetchUserInfo()
+                callBack && callBack()
+              }
             } else {
               wx.showToast({
                 title: `登录失败`,
@@ -136,5 +118,56 @@ export const fetchOpenId = () => {
     openId
   }) => {
     wx.setStorageSync('openId', openId)
+  })
+}
+
+export const sendLoginRecord = type => {
+  if(getApp()){
+    console.log('sendLoginRecord', type);
+    reqwest({
+      url: '/couple/login/record.json',
+      method: 'POST',
+      data: {
+        type
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+  }
+}
+
+export const fetchUserInfo = () => {
+  reqwest({
+    url: '/user/info.json',
+    method: 'GET'
+  }).then(resp => {
+    if (resp.code === 0) {
+      const {user} = resp;
+
+      wx.setStorageSync('user', user);
+      if (getApp()) {
+        getApp().DATracker.login(user.userId)
+      }
+      return Promise.resolve(user);
+    } else {
+      wx.showToast({
+        title: resp.msg,
+        icon: 'none',
+        duration: 3000
+      })
+      return Promise.reject();
+    }
+  })
+}
+
+export const getUserInfo = () => {
+  return new Promise(resolve => {
+    const userInfo = wx.getStorageSync('user');
+    if(userInfo){
+      resolve(userInfo)
+    }else{
+      return weixinLogin(null, null, true)
+    }
   })
 }
