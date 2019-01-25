@@ -1,6 +1,6 @@
 {
   "name": "fle-cli",
-  "version": "4.7.3",
+  "version": "4.7.4",
   "description": "A command line tool for front-end developer with zero configuration.",
   "bin": {
     "fle": "bin/fle"
