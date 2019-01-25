@@ -8,7 +8,7 @@ var { resolve } = require('./utils');
 var webpackConfig = {
   // entry: {},
   cache: true,
-  devtool: false,
+  // devtool: false,
   // output: {},
   resolve: {
     modules: [

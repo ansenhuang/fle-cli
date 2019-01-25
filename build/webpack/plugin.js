@@ -49,7 +49,7 @@ exports.uglify = () => {
     exclude: /\.min\.js$/,
     cache: true,
     parallel: true,
-    sourceMap: false,
+    sourceMap: config.fle.sourceMap === true,
     extractComments: false,
     uglifyOptions: {
       compress: {
