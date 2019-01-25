@@ -1,3 +1,13 @@
+<a name="4.7.4"></a>
+## [4.7.4](https://github.com/ansenhuang/fle-cli/compare/v4.7.3...v4.7.4) (2019-01-25)
+
+
+### Features
+
+* js sourceMap ([315dbd3](https://github.com/ansenhuang/fle-cli/commit/315dbd3))
+
+
+
 <a name="4.7.3"></a>
 ## [4.7.3](https://github.com/ansenhuang/fle-cli/compare/v4.7.2...v4.7.3) (2019-01-25)
 
