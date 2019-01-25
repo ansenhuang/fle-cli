@@ -1,3 +1,13 @@
+<a name="4.7.5"></a>
+## [4.7.5](https://github.com/ansenhuang/fle-cli/compare/v4.7.4...v4.7.5) (2019-01-25)
+
+
+### Bug Fixes
+
+* source map ([21b586a](https://github.com/ansenhuang/fle-cli/commit/21b586a))
+
+
+
 <a name="4.7.4"></a>
 ## [4.7.4](https://github.com/ansenhuang/fle-cli/compare/v4.7.3...v4.7.4) (2019-01-25)
 
