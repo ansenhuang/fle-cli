@@ -1,7 +1,7 @@
 {
   "name": "fle-build",
   "version": "1.0.0",
-  "fle-version": "4.0.0",
+  "fle-version": "*",
   "description": "packages for fle-cli to build.",
   "author": "huangancheng",
   "license": "ISC",
