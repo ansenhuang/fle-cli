@@ -4,11 +4,12 @@ var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 var config = require('./config');
 var { resolve } = require('./utils');
+var sourceMap = config.dev ? true : (!!config.fle.sourceMap);
 
 var styleLoader = {
   loader: 'style-loader',
   options: {
-    sourceMap: config.dev
+    sourceMap: sourceMap
   }
 };
 
@@ -16,7 +17,7 @@ var styleLoader = {
 var vueStyleLoader = {
   loader: 'vue-style-loader',
   options: {
-    sourceMap: config.dev
+    sourceMap: sourceMap
   }
 };
 
@@ -25,7 +26,7 @@ var vueStyleLoader = {
 var cssLoader = {
   loader: 'css-loader',
   options: {
-    sourceMap: config.dev,
+    sourceMap: sourceMap,
     modules: true,
     camelCase: true,
     importLoaders: 1,
@@ -36,7 +37,7 @@ var cssLoader = {
 var moduleCSSLoader = {
   loader: 'css-loader',
   options: {
-    sourceMap: config.dev,
+    sourceMap: sourceMap,
     modules: true,
     camelCase: true,
     importLoaders: 1,
@@ -48,7 +49,7 @@ var moduleCSSLoader = {
 var postCSSLoader = {
   loader: 'postcss-loader',
   options: {
-    sourceMap: config.dev,
+    sourceMap: sourceMap,
     config: {
       path: path.join(__dirname, './postcss.config.js')
     }
@@ -129,7 +130,7 @@ exports.vue = () => {
     test: /\.vue$/,
     loader: 'vue-loader',
     options: {
-      cssSourceMap: config.dev,
+      cssSourceMap: sourceMap,
       cacheBusting: true,
       transformToRequire: {
         video: ['src', 'poster'],

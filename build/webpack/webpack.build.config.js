@@ -107,7 +107,7 @@ var distPath = !config.upload ? resolve('dist') : resolve('.cache/dist');
 
 var webpackConfig = {
   mode: 'production',
-  devtool: config.fle.sourceMap || false,
+  devtool: config.fle.sourceMap === true ? 'source-map' : (config.fle.sourceMap || false),
   entry: entry,
   output: {
     path: distPath,

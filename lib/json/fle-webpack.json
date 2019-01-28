@@ -1,10 +1,12 @@
 {
+  "version": "*",
   "business": "",
   "eslint": true,
   "publicPath": "/",
   "splitVendor": true,
   "splitCommon": true,
   "vendors": {},
+  "sourceMap": false,
   "remUnit": 50,
   "port": 5000,
   "historyApiFallback": true,
