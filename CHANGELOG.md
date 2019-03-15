@@ -1,3 +1,13 @@
+<a name="4.8.1"></a>
+## [4.8.1](https://github.com/ansenhuang/fle-cli/compare/v4.8.0...v4.8.1) (2019-03-15)
+
+
+### Bug Fixes
+
+* react object-assign ([8ae5e05](https://github.com/ansenhuang/fle-cli/commit/8ae5e05))
+
+
+
 <a name="4.8.0"></a>
 # [4.8.0](https://github.com/ansenhuang/fle-cli/compare/v4.7.5...v4.8.0) (2019-01-28)
 
