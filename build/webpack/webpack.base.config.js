@@ -27,7 +27,7 @@ var webpackConfig = {
     ]
   },
   module: {
-    noParse: [/\.min\.js$/],
+    // noParse: [/\.min\.js$/],
     rules: [
       config.fle.eslint && loader.eslint(),
       loader.css(),

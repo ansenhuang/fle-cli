@@ -6,8 +6,7 @@
   "author": "huangancheng",
   "license": "MIT",
   "dependencies": {
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2",
-    "prop-types": "^15.6.1"
+    "react": "*",
+    "react-dom": "*"
   }
 }
